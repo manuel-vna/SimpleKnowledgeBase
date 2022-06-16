@@ -1,4 +1,4 @@
-package com.example.simpleknowledgebase.ui.slideshow
+package com.example.simpleknowledgebase.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,13 +8,14 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.simpleknowledgebase.R
-import com.example.simpleknowledgebase.databinding.FragmentSlideshowBinding
+import com.example.simpleknowledgebase.databinding.FragmentAddEntryBinding
+import com.example.simpleknowledgebase.viewmodels.AddEntryViewModel
 
-class SlideshowFragment : Fragment() {
 
-    private lateinit var slideshowViewModel: SlideshowViewModel
-    private var _binding: FragmentSlideshowBinding? = null
+class AddEntryFragment : Fragment() {
+
+    private lateinit var addEntryViewModel: AddEntryViewModel
+    private var _binding: FragmentAddEntryBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -25,14 +26,14 @@ class SlideshowFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        slideshowViewModel =
-            ViewModelProvider(this).get(SlideshowViewModel::class.java)
+        addEntryViewModel =
+            ViewModelProvider(this).get(AddEntryViewModel::class.java)
 
-        _binding = FragmentSlideshowBinding.inflate(inflater, container, false)
+        _binding = FragmentAddEntryBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textSlideshow
-        slideshowViewModel.text.observe(viewLifecycleOwner, Observer {
+        val textView: TextView = binding.addEntryText
+        addEntryViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root

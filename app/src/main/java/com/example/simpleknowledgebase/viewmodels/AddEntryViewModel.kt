@@ -1,13 +1,13 @@
-package com.example.simpleknowledgebase.ui.gallery
+package com.example.simpleknowledgebase.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class GalleryViewModel : ViewModel() {
+class AddEntryViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is gallery Fragment"
+        value = "This is AddEntryFragment"
     }
     val text: LiveData<String> = _text
 }

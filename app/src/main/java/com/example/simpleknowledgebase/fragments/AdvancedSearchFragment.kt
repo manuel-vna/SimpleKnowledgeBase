@@ -1,4 +1,4 @@
-package com.example.simpleknowledgebase.ui.home
+package com.example.simpleknowledgebase.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,13 +8,14 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.simpleknowledgebase.R
-import com.example.simpleknowledgebase.databinding.FragmentHomeBinding
+import com.example.simpleknowledgebase.databinding.FragmentAdvancedSearchBinding
 
-class HomeFragment : Fragment() {
+import com.example.simpleknowledgebase.viewmodels.AdvancedSearchViewModel
 
-    private lateinit var homeViewModel: HomeViewModel
-    private var _binding: FragmentHomeBinding? = null
+class AdvancedSearchFragment : Fragment() {
+
+    private lateinit var advancedSearchViewModel: AdvancedSearchViewModel
+    private var _binding: FragmentAdvancedSearchBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -25,14 +26,14 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
+        advancedSearchViewModel =
+            ViewModelProvider(this).get(AdvancedSearchViewModel::class.java)
 
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentAdvancedSearchBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
+        val textView: TextView = binding.advancedSearchText
+        advancedSearchViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root
