@@ -8,13 +8,13 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.simpleknowledgebase.databinding.FragmentHomeBinding
-import com.example.simpleknowledgebase.viewmodels.HomeViewModel
+import com.example.simpleknowledgebase.databinding.FragmentKeywordSearchBinding
+import com.example.simpleknowledgebase.viewmodels.KeywordSearchViewModel
 
-class HomeFragment : Fragment() {
+class KeywordSearchFragment : Fragment() {
 
-    private lateinit var homeViewModel: HomeViewModel
-    private var _binding: FragmentHomeBinding? = null
+    private lateinit var keywordSearchViewModel: KeywordSearchViewModel
+    private var _binding: FragmentKeywordSearchBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -25,14 +25,14 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
+        keywordSearchViewModel =
+            ViewModelProvider(this).get(KeywordSearchViewModel::class.java)
 
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentKeywordSearchBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
+        val textView: TextView = binding.keywordTvNoOfHits
+        keywordSearchViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root

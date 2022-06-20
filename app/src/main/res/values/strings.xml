@@ -10,4 +10,12 @@
     <string name="menu_home">Home</string>
     <string name="menu_advancedSearch">AdvancedSearch</string>
     <string name="menu_addEntry">AddEntry</string>
+
+    <!-- fragment_keyword_search.xml -->
+    <string name="keyword_btn_search">Search</string>
+    <string name="keyword_et_search">search keyword</string>
+    <string name="keyword_btn_addEntry">Add Entry</string>
+    <string name="keyword_btn_advancedSearch">Advanced</string>
+
+
 </resources>
