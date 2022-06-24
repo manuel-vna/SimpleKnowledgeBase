@@ -9,7 +9,11 @@
         android:id="@+id/nav_home"
         android:name="com.example.simpleknowledgebase.fragments.KeywordSearchFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_keyword_search" />
+        tools:layout="@layout/fragment_keyword_search" >
+        <action
+            android:id="@+id/action_nav_home_to_nav_add_entry"
+            app:destination="@id/nav_add_entry" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_advanced_search"

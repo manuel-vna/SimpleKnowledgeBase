@@ -17,5 +17,12 @@
     <string name="keyword_btn_addEntry">Add Entry</string>
     <string name="keyword_btn_advancedSearch">Advanced</string>
 
+    <!-- fragment_add_entry.xml -->
+    <string name="addentry_btn_addentry">Add entry</string>
+    <string name="addentry_btn_to_keyword">Home</string>
+    <string name="addentry_btn_clipboardDescription">Copy desc from clipboard</string>
+    <string name="addentry_btn_clipboardSource">Copy src from clipboard</string>
+
+
 
 </resources>
