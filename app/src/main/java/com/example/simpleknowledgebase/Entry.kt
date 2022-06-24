@@ -9,18 +9,18 @@ import androidx.room.PrimaryKey
 data class Entry (
     @PrimaryKey(autoGenerate = true)
     var id: Int,
+    var date: String,
     var title: String,
     var category: String,
-    var date: String,
     var description: String,
     var source: String
     )
 {
     @Ignore
-    constructor(id: Int, title: String, category: String, date: String): this(id, title,category,date,"empty", "empty")
+    constructor(id: Int,date: String, title: String, category: String): this(id,date, title,category,"empty", "empty")
 
     @Ignore
-    constructor(id: Int, title: String, category: String, date: String, description: String): this(id, title,category,date,description, "empty")
+    constructor(id: Int, date: String, title: String, category: String, description: String): this(id,date,title,category,description, "empty")
 }
 
 

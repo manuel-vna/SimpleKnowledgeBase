@@ -1,12 +1,14 @@
 package com.example.simpleknowledgebase.repositories
 
+
+import com.example.simpleknowledgebase.Entry
 import com.example.simpleknowledgebase.EntryDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class EntryRepository(private val entryDao: EntryDao) {
 
+class EntryRepository(private val entryDao: EntryDao) {
 
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
@@ -15,7 +17,13 @@ class EntryRepository(private val entryDao: EntryDao) {
         coroutineScope.launch(Dispatchers.IO) {
             entryDao.findKeyword(keyword)
         }
+    }
 
+
+    fun insertEntry(entry: Entry){
+        coroutineScope.launch(Dispatchers.IO) {
+            entryDao.insertEntry(entry)
+        }
     }
 
 }
