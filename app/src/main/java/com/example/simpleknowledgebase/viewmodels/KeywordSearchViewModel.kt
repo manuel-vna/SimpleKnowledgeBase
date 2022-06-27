@@ -1,13 +1,34 @@
 package com.example.simpleknowledgebase.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.*
+import com.example.simpleknowledgebase.Entry
+import com.example.simpleknowledgebase.EntryDatabase
+import com.example.simpleknowledgebase.repositories.EntryRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class KeywordSearchViewModel : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+class KeywordSearchViewModel(application: Application): AndroidViewModel(application) {
+
+    private val entryRepository: EntryRepository
+    private val searchResultsLivedata: MutableLiveData<List<Entry>>
+
+    init {
+        val entryDao = EntryDatabase.getInstance(application).entryDao()
+        entryRepository = EntryRepository(entryDao)
+        searchResultsLivedata = entryRepository.searchResults
     }
-    val text: LiveData<String> = _text
+
+
+    fun findKeyword(keyword: String) {
+            entryRepository.findKeyword(keyword)
+
+    }
+
+    fun getKeywordLiveData(): LiveData<List<Entry>> {
+        return searchResultsLivedata
+    }
+
+
 }

@@ -1,32 +1,31 @@
 package com.example.simpleknowledgebase.fragments
 
-import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
-import androidx.navigation.Navigation.findNavController
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.simpleknowledgebase.Entry
 import com.example.simpleknowledgebase.R
+import com.example.simpleknowledgebase.adapters.EntryRecyclerViewAdapter
 import com.example.simpleknowledgebase.databinding.FragmentKeywordSearchBinding
 import com.example.simpleknowledgebase.viewmodels.KeywordSearchViewModel
+
 
 class KeywordSearchFragment : Fragment() {
 
     private lateinit var keywordSearchViewModel: KeywordSearchViewModel
     private var _binding: FragmentKeywordSearchBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
+    private lateinit var entryRecyclerViewAdapter: EntryRecyclerViewAdapter
+    private lateinit var searchResults: List<Entry>
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,10 +39,6 @@ class KeywordSearchFragment : Fragment() {
         _binding = FragmentKeywordSearchBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.keywordTvNoOfHits
-        keywordSearchViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
         return root
     }
 
@@ -56,19 +51,53 @@ class KeywordSearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
+        // Button: Search
+        binding.keywordBtnSearch.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(view: View?) {
+                keywordSearchViewModel.findKeyword(binding.keywordEtSearch.text.toString())
+            }
+        })
+        // Button: Advanced
+        binding.keywordBtnAdvancedSearch.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(view: View?) {
+                findNavController().navigate(R.id.action_nav_home_to_nav_advanced_search)
+                Toast.makeText(context, "TBD", Toast.LENGTH_LONG).show()
+            }
+        })
+        //Button: Add Entry
         binding.keywordBtnAddEntry.setOnClickListener(object : View.OnClickListener {
             override fun onClick(view: View?) {
                 findNavController().navigate(R.id.action_nav_home_to_nav_add_entry)
-
             }
         })
 
+        // Live Data Observer
+        keywordSearchViewModel.getKeywordLiveData().observe(viewLifecycleOwner,object: Observer<List<Entry>> {
 
+            override fun onChanged(entries: List<Entry>) {
+
+                // get the recycler view item form its fragment.xml file
+                val recyclerView: RecyclerView = binding.keywordRvDisplayResults
+                //create the adapter by handing the data entryList to it
+                entryRecyclerViewAdapter = EntryRecyclerViewAdapter(entries)
+                // get a LayoutManager. There's no layoutManager for ConstraintLayout available. That's why LinerLayoutManager is used
+                val layoutManager = LinearLayoutManager(context)
+                // ??
+                recyclerView.layoutManager = layoutManager
+                //set the adapter for the recyclerView-xml-item
+                recyclerView.adapter = entryRecyclerViewAdapter
+            }
+        })
 
     }
 
 
-
-
 }
+
+
+
+
+
+
+
+

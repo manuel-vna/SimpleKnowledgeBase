@@ -17,6 +17,10 @@
     <string name="keyword_btn_addEntry">Add Entry</string>
     <string name="keyword_btn_advancedSearch">Advanced</string>
 
+    <!-- fragment_keyword_recycler_view.xml -->
+    <string name="keyword_rec_view_btn_openSource">Open Source</string>
+
+
     <!-- fragment_add_entry.xml -->
     <string name="addentry_btn_addentry">Add entry</string>
     <string name="addentry_btn_to_keyword">Home</string>

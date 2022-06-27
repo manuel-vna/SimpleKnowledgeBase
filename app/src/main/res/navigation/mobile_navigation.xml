@@ -13,17 +13,34 @@
         <action
             android:id="@+id/action_nav_home_to_nav_add_entry"
             app:destination="@id/nav_add_entry" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_advanced_search"
+            app:destination="@id/nav_advanced_search" />
     </fragment>
 
     <fragment
         android:id="@+id/nav_advanced_search"
         android:name="com.example.simpleknowledgebase.fragments.AdvancedSearchFragment"
         android:label="@string/menu_advancedSearch"
-        tools:layout="@layout/fragment_advanced_search" />
+        tools:layout="@layout/fragment_advanced_search" >
+        <action
+            android:id="@+id/action_nav_advanced_search_to_nav_home"
+            app:destination="@id/nav_home" />
+        <action
+            android:id="@+id/action_nav_advanced_search_to_nav_add_entry"
+            app:destination="@id/nav_add_entry" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_add_entry"
         android:name="com.example.simpleknowledgebase.fragments.AddEntryFragment"
         android:label="@string/menu_addEntry"
-        tools:layout="@layout/fragment_add_entry" />
+        tools:layout="@layout/fragment_add_entry" >
+        <action
+            android:id="@+id/action_nav_add_entry_to_nav_home"
+            app:destination="@id/nav_home" />
+        <action
+            android:id="@+id/action_nav_add_entry_to_nav_advanced_search"
+            app:destination="@id/nav_advanced_search" />
+    </fragment>
 </navigation>
