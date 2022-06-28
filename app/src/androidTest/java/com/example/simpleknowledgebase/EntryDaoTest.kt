@@ -11,7 +11,6 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
-
 @RunWith(AndroidJUnit4::class)
 @SmallTest
 class EntryDaoTest {
@@ -34,12 +33,12 @@ class EntryDaoTest {
         database.close()
     }
 
-    // Tests do not seem to work with id=0 of the Entry instance: Entry(0,date1,...), Reason unknown.
+// Tests do not seem to work with id=0 of the Entry instance: Entry(0,date1,...), Reason unknown.
 
     @Test
     fun insertEntry() = runTest {
 
-    val entry = Entry(5,"date1","title1","description2","date1","source1")
+        val entry = Entry(5,"date1","title1","description2","date1","source1")
         dao.insertEntry(entry)
         val allEntries = dao.findAll()
         assertThat(allEntries).contains(entry)
@@ -90,4 +89,3 @@ class EntryDaoTest {
 
 
 }
-
