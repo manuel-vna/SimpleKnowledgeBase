@@ -48,6 +48,8 @@ class EntryRecyclerViewAdapter(private val entryList: List<Entry>) : RecyclerVie
         val keyword_rec_view_tv_description: TextView = itemView.findViewById(R.id.keyword_rec_view_tv_description)
         val keyword_rec_view_tv_source: TextView = itemView.findViewById(R.id.keyword_rec_view_tv_source)
     }
+
+
 }
 
 
