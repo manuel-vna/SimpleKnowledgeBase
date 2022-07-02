@@ -1,6 +1,7 @@
 package com.example.simpleknowledgebase.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -86,11 +87,17 @@ class KeywordSearchFragment : Fragment() {
                 recyclerView.layoutManager = layoutManager
                 //set the adapter for the recyclerView-xml-item
                 recyclerView.adapter = entryRecyclerViewAdapter
+
+                entryRecyclerViewAdapter.setOnItemClickListener(object: EntryRecyclerViewAdapter.onItemClickListener {
+                    override fun onItemClick(position: Int) {
+                        Log.i("Debug_A", "Hallo Welt")
+                    }
+                })
+
             }
         })
 
     }
-
 
 }
 
