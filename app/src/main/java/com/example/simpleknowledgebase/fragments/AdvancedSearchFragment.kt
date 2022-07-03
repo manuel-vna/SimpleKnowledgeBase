@@ -1,6 +1,9 @@
 package com.example.simpleknowledgebase.fragments
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,9 +11,11 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.simpleknowledgebase.Entry
 import com.example.simpleknowledgebase.databinding.FragmentAdvancedSearchBinding
 
 import com.example.simpleknowledgebase.viewmodels.AdvancedSearchViewModel
+import java.io.Serializable
 
 class AdvancedSearchFragment : Fragment() {
 
@@ -28,6 +33,9 @@ class AdvancedSearchFragment : Fragment() {
     ): View? {
         advancedSearchViewModel =
             ViewModelProvider(this).get(AdvancedSearchViewModel::class.java)
+
+        var entry: Entry = arguments?.get("entry") as Entry
+        Log.i("Debug_A", "Entry: "+entry)
 
         _binding = FragmentAdvancedSearchBinding.inflate(inflater, container, false)
         val root: View = binding.root

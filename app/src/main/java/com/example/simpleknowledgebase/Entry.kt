@@ -3,6 +3,7 @@ package com.example.simpleknowledgebase
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 
 @Entity(tableName = "KbTable")
@@ -14,7 +15,7 @@ data class Entry (
     var category: String,
     var description: String,
     var source: String
-    )
+    ) : Serializable
 {
     @Ignore
     constructor(id: Int,date: String, title: String, category: String): this(id,date, title,category,"empty", "empty")

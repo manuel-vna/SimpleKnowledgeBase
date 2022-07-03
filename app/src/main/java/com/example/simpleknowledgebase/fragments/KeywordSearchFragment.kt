@@ -1,11 +1,13 @@
 package com.example.simpleknowledgebase.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -80,20 +82,20 @@ class KeywordSearchFragment : Fragment() {
                 // get the recycler view item form its fragment.xml file
                 val recyclerView: RecyclerView = binding.keywordRvDisplayResults
                 //create the adapter by handing the data entryList to it
-                entryRecyclerViewAdapter = EntryRecyclerViewAdapter(entries)
+                entryRecyclerViewAdapter = EntryRecyclerViewAdapter(requireContext(),entries)
                 // get a LayoutManager. There's no layoutManager for ConstraintLayout available. That's why LinerLayoutManager is used
                 val layoutManager = LinearLayoutManager(context)
                 // ??
                 recyclerView.layoutManager = layoutManager
                 //set the adapter for the recyclerView-xml-item
                 recyclerView.adapter = entryRecyclerViewAdapter
-
-                entryRecyclerViewAdapter.setOnItemClickListener(object: EntryRecyclerViewAdapter.onItemClickListener {
-                    override fun onItemClick(position: Int) {
-                        Log.i("Debug_A", "Hallo Welt")
+                // Callback that is called for Clicks on RecyclerView Items
+                entryRecyclerViewAdapter.setOnEntryItemClickListener(object: EntryRecyclerViewAdapter.onItemClickListener {
+                    override fun onItemClick(position: Int,entry: Entry) {
+                        var bundle: Bundle = bundleOf("entry" to entry)
+                        findNavController().navigate(R.id.action_nav_home_to_nav_advanced_search,bundle)
                     }
                 })
-
             }
         })
 

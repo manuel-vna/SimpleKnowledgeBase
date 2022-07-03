@@ -1,26 +1,32 @@
 package com.example.simpleknowledgebase.adapters
 
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.simpleknowledgebase.Entry
 import com.example.simpleknowledgebase.R
 
 
-class EntryRecyclerViewAdapter(private val entryList: List<Entry>) : RecyclerView.Adapter<EntryRecyclerViewAdapter.ViewHolder>() {
+class EntryRecyclerViewAdapter(val context: Context, private val entryList: List<Entry>) : RecyclerView.Adapter<EntryRecyclerViewAdapter.ViewHolder>() {
 
 
+    // Callback var,interface and function for OnClick events
     private lateinit var mListener: onItemClickListener
     interface onItemClickListener{
-        fun onItemClick(position :Int)
+        fun onItemClick(position :Int,entry: Entry)
     }
-    fun setOnItemClickListener(listener: onItemClickListener){
+    fun setOnEntryItemClickListener(listener: onItemClickListener){
         mListener = listener
     }
-
 
 
     // create new views
@@ -52,7 +58,7 @@ class EntryRecyclerViewAdapter(private val entryList: List<Entry>) : RecyclerVie
     }
 
     // Holds the views for adding values to it in onBindViwHolder
-    class ViewHolder(itemView: View,listener: onItemClickListener) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView: View,listener: onItemClickListener) : RecyclerView.ViewHolder(itemView) {
 
         val keyword_rec_view_tv_Date: TextView = itemView.findViewById(R.id.keyword_rec_view_tv_Date)
         val keyword_rec_view_tv_title: TextView = itemView.findViewById(R.id.keyword_rec_view_tv_title)
@@ -62,10 +68,24 @@ class EntryRecyclerViewAdapter(private val entryList: List<Entry>) : RecyclerVie
 
 
         init {
+            // Click Listener for updating/deleting an entry
             itemView.setOnClickListener {
-                listener.onItemClick(bindingAdapterPosition)
+                // entryList.get(bindingAdapterPosition): takes the current entry by its position from the entryList
+                listener.onItemClick(bindingAdapterPosition,entryList.get(bindingAdapterPosition))
+            }
+            // Click listener for opening the entry source URL in the default browser
+            itemView.findViewById<Button>(R.id.keyword_rec_view_btn_openSource).setOnClickListener(){
+                try {
+                    var openSourceURL: Intent = Intent(Intent.ACTION_VIEW, Uri.parse(entryList.get(bindingAdapterPosition).source))
+                    context?.startActivity(openSourceURL)
+                }
+                catch (e: Exception){
+                    Toast.makeText(context,"The URL could not be opened. Please check its format!",
+                        Toast.LENGTH_LONG).show();
+                }
             }
         }
+
 
     }
 
