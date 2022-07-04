@@ -1,6 +1,8 @@
 # SimpleKnowledgeBase
 
 <br>
+Project status: In Progress
+<br>
 
 ### Context
 
