@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_nav_home_to_nav_advanced_search"
             app:destination="@id/nav_advanced_search" />
+        <action
+            android:id="@+id/action_nav_home_to_updateDeleteEntryFragment"
+            app:destination="@id/updateDeleteEntryFragment" />
     </fragment>
 
     <fragment
@@ -29,6 +32,9 @@
         <action
             android:id="@+id/action_nav_advanced_search_to_nav_add_entry"
             app:destination="@id/nav_add_entry" />
+        <action
+            android:id="@+id/action_nav_advanced_search_to_updateDeleteEntryFragment"
+            app:destination="@id/updateDeleteEntryFragment" />
     </fragment>
 
     <fragment
@@ -41,6 +47,23 @@
             app:destination="@id/nav_home" />
         <action
             android:id="@+id/action_nav_add_entry_to_nav_advanced_search"
+            app:destination="@id/nav_advanced_search" />
+        <action
+            android:id="@+id/action_nav_add_entry_to_updateDeleteEntryFragment"
+            app:destination="@id/updateDeleteEntryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateDeleteEntryFragment"
+        android:name="com.example.simpleknowledgebase.fragments.UpdateDeleteEntryFragment"
+        android:label="UpdateDeleteEntryFragment" >
+        <action
+            android:id="@+id/action_updateDeleteEntryFragment_to_nav_home"
+            app:destination="@id/nav_home" />
+        <action
+            android:id="@+id/action_updateDeleteEntryFragment_to_nav_add_entry"
+            app:destination="@id/nav_add_entry" />
+        <action
+            android:id="@+id/action_updateDeleteEntryFragment_to_nav_advanced_search"
             app:destination="@id/nav_advanced_search" />
     </fragment>
 </navigation>

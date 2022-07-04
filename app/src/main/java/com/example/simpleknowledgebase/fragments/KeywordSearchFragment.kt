@@ -1,6 +1,6 @@
 package com.example.simpleknowledgebase.fragments
 
-import android.content.Context
+
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -85,15 +85,15 @@ class KeywordSearchFragment : Fragment() {
                 entryRecyclerViewAdapter = EntryRecyclerViewAdapter(requireContext(),entries)
                 // get a LayoutManager. There's no layoutManager for ConstraintLayout available. That's why LinerLayoutManager is used
                 val layoutManager = LinearLayoutManager(context)
-                // ??
+                // Calling RecyclerView's method 'SetLayoutManager()
                 recyclerView.layoutManager = layoutManager
-                //set the adapter for the recyclerView-xml-item
+                //Calling RecyclerView's method 'setAdapter()' and passing the adapter to it
                 recyclerView.adapter = entryRecyclerViewAdapter
-                // Callback that is called for Clicks on RecyclerView Items
+                // Callback that is used for Clicks on RecyclerView Items
                 entryRecyclerViewAdapter.setOnEntryItemClickListener(object: EntryRecyclerViewAdapter.onItemClickListener {
                     override fun onItemClick(position: Int,entry: Entry) {
                         var bundle: Bundle = bundleOf("entry" to entry)
-                        findNavController().navigate(R.id.action_nav_home_to_nav_advanced_search,bundle)
+                        findNavController().navigate(R.id.action_nav_home_to_updateDeleteEntryFragment,bundle)
                     }
                 })
             }

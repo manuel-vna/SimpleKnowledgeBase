@@ -28,6 +28,12 @@ class EntryRepository(private val entryDao: EntryDao) {
         }
     }
 
+    fun updateEntry(entry: Entry){
+        coroutineScope.launch(Dispatchers.IO) {
+            entryDao.updateEntry(entry)
+        }
+    }
+
     private fun asyncKeywordFind(keyword: String): Deferred<List<Entry>?> =
         coroutineScope.async(Dispatchers.IO) {
             return@async entryDao.findKeyword(keyword)
