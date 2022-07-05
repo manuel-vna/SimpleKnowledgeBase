@@ -34,6 +34,12 @@ class EntryRepository(private val entryDao: EntryDao) {
         }
     }
 
+    fun deleteEntry(entry: Entry){
+        coroutineScope.launch(Dispatchers.IO) {
+            entryDao.deleteEntry(entry)
+        }
+    }
+
     private fun asyncKeywordFind(keyword: String): Deferred<List<Entry>?> =
         coroutineScope.async(Dispatchers.IO) {
             return@async entryDao.findKeyword(keyword)

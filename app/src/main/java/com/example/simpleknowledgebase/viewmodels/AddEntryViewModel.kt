@@ -25,14 +25,4 @@ class AddEntryViewModel (application: Application): AndroidViewModel(application
         }
     }
 
-
-
-
-    /*
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is AddEntryFragment"
-    }
-    val text: LiveData<String> = _text
-    */
-
 }

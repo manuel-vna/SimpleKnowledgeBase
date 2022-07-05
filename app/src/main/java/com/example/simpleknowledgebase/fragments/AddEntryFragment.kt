@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.simpleknowledgebase.Entry
+import com.example.simpleknowledgebase.R
 import com.example.simpleknowledgebase.databinding.FragmentAddEntryBinding
 import com.example.simpleknowledgebase.viewmodels.AddEntryViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -22,11 +25,8 @@ class AddEntryFragment() : Fragment() {
     private var _binding: FragmentAddEntryBinding? = null
     // using the operator '!!' on '_binding' provides a non-nullable second binding-version
     private val binding get() = _binding!!
-
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
-
     private lateinit var addEntryViewModel: AddEntryViewModel
-
 
 
     override fun onCreateView(
@@ -48,7 +48,6 @@ class AddEntryFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
         binding.addentryBtnAdd.setOnClickListener(object : View.OnClickListener {
             override fun onClick(view: View?) {
@@ -76,16 +75,14 @@ class AddEntryFragment() : Fragment() {
         val description: String = binding.addentryActvAddDescription.text.toString()
         val source: String = binding.addentryActvAddSource.text.toString()
 
-
         coroutineScope.launch() {
 
             var entry = Entry(id,date,title,category,description,source)
             addEntryViewModel.insertEntry(entry)
-
+            findNavController().navigate(R.id.action_nav_add_entry_to_nav_home)
+            Toast.makeText(context, "Entry added", Toast.LENGTH_LONG).show()
         }
-
     }
-
 
 
 }

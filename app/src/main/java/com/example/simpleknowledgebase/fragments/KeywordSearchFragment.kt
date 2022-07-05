@@ -92,7 +92,7 @@ class KeywordSearchFragment : Fragment() {
                 // Callback that is used for Clicks on RecyclerView Items
                 entryRecyclerViewAdapter.setOnEntryItemClickListener(object: EntryRecyclerViewAdapter.onItemClickListener {
                     override fun onItemClick(position: Int,entry: Entry) {
-                        var bundle: Bundle = bundleOf("entry" to entry)
+                        var bundle: Bundle = bundleOf("entryFromKeywordSearchFragment" to entry)
                         findNavController().navigate(R.id.action_nav_home_to_updateDeleteEntryFragment,bundle)
                     }
                 })
