@@ -27,6 +27,12 @@
     <string name="addentry_btn_clipboardDescription">Copy desc from clipboard</string>
     <string name="addentry_btn_clipboardSource">Copy src from clipboard</string>
 
+    <!-- fragment_dialog_export_database -->
+    <string name="export_tv_title">Export database</string>
+    <string name="export_tv_description">Your database will be exported to your Downloads directory</string>
+    <string name="export_btn_cancel">Cancel</string>
+    <string name="export_btn_okay">TBD</string>
+
 
 
 </resources>
