@@ -7,9 +7,11 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
+    <!-- mobile_navigation.xml -->
     <string name="menu_home">Home</string>
-    <string name="menu_advancedSearch">AdvancedSearch</string>
-    <string name="menu_addEntry">AddEntry</string>
+    <string name="menu_advancedSearch">Advanced Search</string>
+    <string name="menu_addEntry">Add Entry</string>
+    <string name="menu_Category">Category Overview</string>
 
     <!-- fragment_keyword_search.xml -->
     <string name="keyword_btn_search">Search</string>

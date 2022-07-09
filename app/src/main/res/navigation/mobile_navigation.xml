@@ -35,6 +35,9 @@
         <action
             android:id="@+id/action_nav_advanced_search_to_updateDeleteEntryFragment"
             app:destination="@id/updateDeleteEntryFragment" />
+        <action
+            android:id="@+id/action_nav_advanced_search_to_categoryOverviewFragment"
+            app:destination="@id/categoryOverviewFragment" />
     </fragment>
 
     <fragment
@@ -51,6 +54,9 @@
         <action
             android:id="@+id/action_nav_add_entry_to_updateDeleteEntryFragment"
             app:destination="@id/updateDeleteEntryFragment" />
+        <action
+            android:id="@+id/action_nav_add_entry_to_categoryOverviewFragment"
+            app:destination="@id/categoryOverviewFragment" />
     </fragment>
     <fragment
         android:id="@+id/updateDeleteEntryFragment"
@@ -65,5 +71,25 @@
         <action
             android:id="@+id/action_updateDeleteEntryFragment_to_nav_advanced_search"
             app:destination="@id/nav_advanced_search" />
+        <action
+            android:id="@+id/action_updateDeleteEntryFragment_to_categoryOverviewFragment"
+            app:destination="@id/categoryOverviewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/categoryOverviewFragment"
+        android:name="com.example.simpleknowledgebase.fragments.CategoryOverviewFragment"
+        android:label="CategoryOverviewFragment" >
+        <action
+            android:id="@+id/action_categoryOverviewFragment_to_nav_advanced_search"
+            app:destination="@id/nav_advanced_search" />
+        <action
+            android:id="@+id/action_categoryOverviewFragment_to_updateDeleteEntryFragment"
+            app:destination="@id/updateDeleteEntryFragment" />
+        <action
+            android:id="@+id/action_categoryOverviewFragment_to_nav_home"
+            app:destination="@id/nav_home" />
+        <action
+            android:id="@+id/action_categoryOverviewFragment_to_nav_add_entry"
+            app:destination="@id/nav_add_entry" />
     </fragment>
 </navigation>
