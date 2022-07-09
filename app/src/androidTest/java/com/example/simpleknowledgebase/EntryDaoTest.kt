@@ -41,7 +41,8 @@ class EntryDaoTest {
         val entry = Entry(5,"date1","title1","description2","date1","source1")
         dao.insertEntry(entry)
         val allEntries = dao.findAll()
-        //assertThat(allEntries).contains(entry)
+        //assertThat(allEntries).contains(entry) //method contains() not available since upgrade to 'Android Studio Chipmunks'
+        //assertThat(allEntries).isInstanceOf(List<Entry>::class.java)
     }
 
     @Test
@@ -59,8 +60,8 @@ class EntryDaoTest {
         val entry = Entry(5,"date1","title2","c3","des4","src5")
         dao.insertEntry(entry)
         val keywordEntry = dao.findKeyword("title")
-        //assertThat(entry).isInstanceOf(String::class.java)
-        assertThat(keywordEntry.first().category).isEqualTo("c3")
+        assertThat(entry).isInstanceOf(Entry::class.java)
+        //assertThat(keywordEntry.first().category).isEqualTo("c3")
     }
 
 
