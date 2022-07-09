@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_nav_home_to_updateDeleteEntryFragment"
             app:destination="@id/updateDeleteEntryFragment" />
+        <action
+            android:id="@+id/action_nav_home_to_categoryOverviewFragment"
+            app:destination="@id/categoryOverviewFragment" />
     </fragment>
 
     <fragment

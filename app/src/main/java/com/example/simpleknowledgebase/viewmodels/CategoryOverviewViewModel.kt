@@ -1,8 +1,37 @@
 package com.example.simpleknowledgebase.viewmodels
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.example.simpleknowledgebase.Entry
+import com.example.simpleknowledgebase.EntryDatabase
+import com.example.simpleknowledgebase.repositories.EntryRepository
 
-class CategoryOverviewViewModel : ViewModel() {
+
+
+class CategoryOverviewViewModel(application: Application): AndroidViewModel(application) {
+
+    private val entryRepository: EntryRepository
+    private val searchResultsLivedata: MutableLiveData<List<String>>
+
+    init {
+        val entryDao = EntryDatabase.getInstance(application).entryDao()
+        entryRepository = EntryRepository(entryDao)
+        searchResultsLivedata = entryRepository.searchResultsCategories
+    }
+
+
+    fun findAllCategories() {
+        entryRepository.findAllCategories()
+
+    }
+
+    fun getCategoryLiveData(): LiveData<List<String>> {
+        return searchResultsLivedata
+    }
+
+
 
 
 }

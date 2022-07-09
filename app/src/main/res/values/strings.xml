@@ -18,6 +18,7 @@
     <string name="keyword_et_search">search keyword</string>
     <string name="keyword_btn_addEntry">Add Entry</string>
     <string name="keyword_btn_advancedSearch">Advanced</string>
+    <string name="keyword_btn_categoryOverview">Categories</string>
 
     <!-- fragment_keyword_recycler_view.xml -->
     <string name="keyword_rec_view_btn_openSource">Open Source</string>

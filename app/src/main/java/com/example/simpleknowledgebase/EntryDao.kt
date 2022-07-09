@@ -9,13 +9,15 @@ import androidx.room.*
 interface EntryDao {
 
     @Query("SELECT * FROM KbTable")
-    fun findAll():LiveData<List<Entry>>
+    fun findAll(): List<Entry>
+    //fun findAll():LiveData<List<Entry>>
 
     @Query("Select * FROM KbTable WHERE (title LIKE '%'||:keyword||'%' OR description LIKE '%'||:keyword||'%') " )
     // Room cannot handle MutableLiveData here
     fun findKeyword(keyword: String): List<Entry>
 
-    //TBD: More queries
+    @Query("SELECT category FROM KbTable")
+    fun findAllCategories(): List<String>
 
     @Insert
     fun insertEntry(entry: Entry)

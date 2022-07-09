@@ -14,13 +14,7 @@ class EntryRepository(private val entryDao: EntryDao) {
     private lateinit var keywordSearchViewModel: KeywordSearchViewModel
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
     val searchResults = MutableLiveData<List<Entry>>()
-
-
-    fun findKeyword(keyword: String){
-        coroutineScope.launch(Dispatchers.Main) {
-            searchResults.value = asyncKeywordFind(keyword).await()
-        }
-    }
+    val searchResultsCategories = MutableLiveData<List<String>>()
 
     fun insertEntry(entry: Entry){
         coroutineScope.launch(Dispatchers.IO) {
@@ -40,9 +34,28 @@ class EntryRepository(private val entryDao: EntryDao) {
         }
     }
 
+
+    fun findKeyword(keyword: String){
+        coroutineScope.launch(Dispatchers.Main) {
+            searchResults.value = asyncKeywordFind(keyword).await()
+        }
+    }
     private fun asyncKeywordFind(keyword: String): Deferred<List<Entry>?> =
         coroutineScope.async(Dispatchers.IO) {
             return@async entryDao.findKeyword(keyword)
         }
+
+
+    fun findAllCategories(){
+        coroutineScope.launch(Dispatchers.Main) {
+            searchResultsCategories.value = asyncCategoryFind().await()
+        }
+    }
+    private fun asyncCategoryFind(): Deferred<List<String>?> =
+        coroutineScope.async(Dispatchers.IO) {
+            return@async entryDao.findAllCategories()
+        }
+
+
 
 }
