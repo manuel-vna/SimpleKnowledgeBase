@@ -16,7 +16,7 @@ interface EntryDao {
     // Room cannot handle MutableLiveData here
     fun findKeyword(keyword: String): List<Entry>
 
-    @Query("SELECT category FROM KbTable")
+    @Query("SELECT DISTINCT category FROM KbTable ORDER BY category ASC")
     fun findAllCategories(): List<String>
 
     @Insert

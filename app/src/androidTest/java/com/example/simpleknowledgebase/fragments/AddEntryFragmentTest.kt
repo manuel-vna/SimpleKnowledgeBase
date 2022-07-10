@@ -37,7 +37,7 @@ class AddEntryFragmentTest {
             .perform(ViewActions.typeText("a very big company"))
         onView(ViewMatchers.isRoot()).perform(ViewActions.closeSoftKeyboard())
         onView(withId(R.id.addentry_actv_addSource))
-            .perform(ViewActions.typeText("abc")) //"https://www.google.de"))
+            .perform(ViewActions.typeText("https://www.google.de"))
         onView(ViewMatchers.isRoot()).perform(ViewActions.closeSoftKeyboard())
         onView(withId(R.id.addentry_btn_add)).perform(ViewActions.click())
 
@@ -50,7 +50,7 @@ class AddEntryFragmentTest {
             .perform(ViewActions.typeText("oracle"))
         Espresso.onView(ViewMatchers.withId(R.id.addentry_actv_addCategory))
             .perform(clearText())
-            .perform(ViewActions.typeText("company"))
+            .perform(ViewActions.typeText("acompany"))
         Espresso.onView(ViewMatchers.withId(R.id.addentry_actv_addDescription))
             .perform(clearText())
             .perform(ViewActions.typeText("headquarters moved to Austin,Texas"))
@@ -58,6 +58,46 @@ class AddEntryFragmentTest {
         Espresso.onView(ViewMatchers.withId(R.id.addentry_actv_addSource))
             .perform(clearText())
             .perform(ViewActions.typeText("https://www.oracle.com/"))
+        onView(ViewMatchers.isRoot()).perform(ViewActions.closeSoftKeyboard())
+        Espresso.onView(ViewMatchers.withId(R.id.addentry_btn_add)).perform(ViewActions.click())
+
+        // back to:  fragment_add_entry
+        onView(withId(R.id.keyword_btn_addEntry)).perform(ViewActions.click())
+
+        //second entry
+        Espresso.onView(ViewMatchers.withId(R.id.addentry_actv_addTitle))
+            .perform(clearText())
+            .perform(ViewActions.typeText("Greenpace"))
+        Espresso.onView(ViewMatchers.withId(R.id.addentry_actv_addCategory))
+            .perform(clearText())
+            .perform(ViewActions.typeText("ngo"))
+        Espresso.onView(ViewMatchers.withId(R.id.addentry_actv_addDescription))
+            .perform(clearText())
+            .perform(ViewActions.typeText("founded in Vancouver, Canada"))
+        onView(ViewMatchers.isRoot()).perform(ViewActions.closeSoftKeyboard())
+        Espresso.onView(ViewMatchers.withId(R.id.addentry_actv_addSource))
+            .perform(clearText())
+            .perform(ViewActions.typeText("https://en.wikipedia.org/wiki/Greenpeace"))
+        onView(ViewMatchers.isRoot()).perform(ViewActions.closeSoftKeyboard())
+        Espresso.onView(ViewMatchers.withId(R.id.addentry_btn_add)).perform(ViewActions.click())
+
+        // back to:  fragment_add_entry
+        onView(withId(R.id.keyword_btn_addEntry)).perform(ViewActions.click())
+
+        //second entry
+        Espresso.onView(ViewMatchers.withId(R.id.addentry_actv_addTitle))
+            .perform(clearText())
+            .perform(ViewActions.typeText("Arsenal London"))
+        Espresso.onView(ViewMatchers.withId(R.id.addentry_actv_addCategory))
+            .perform(clearText())
+            .perform(ViewActions.typeText("club"))
+        Espresso.onView(ViewMatchers.withId(R.id.addentry_actv_addDescription))
+            .perform(clearText())
+            .perform(ViewActions.typeText("based in London, UK"))
+        onView(ViewMatchers.isRoot()).perform(ViewActions.closeSoftKeyboard())
+        Espresso.onView(ViewMatchers.withId(R.id.addentry_actv_addSource))
+            .perform(clearText())
+            .perform(ViewActions.typeText("www.google.de"))
         onView(ViewMatchers.isRoot()).perform(ViewActions.closeSoftKeyboard())
         Espresso.onView(ViewMatchers.withId(R.id.addentry_btn_add)).perform(ViewActions.click())
 

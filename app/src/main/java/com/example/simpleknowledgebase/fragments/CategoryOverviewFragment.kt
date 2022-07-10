@@ -17,6 +17,7 @@ import com.example.simpleknowledgebase.R
 import com.example.simpleknowledgebase.adapters.CategoryRecyclerViewAdapter
 import com.example.simpleknowledgebase.adapters.EntryRecyclerViewAdapter
 import com.example.simpleknowledgebase.databinding.FragmentCategoryOverviewBinding
+import com.example.simpleknowledgebase.utils.CategoryRecyclerViewItemDecoration
 import com.example.simpleknowledgebase.viewmodels.CategoryOverviewViewModel
 
 
@@ -72,6 +73,11 @@ class CategoryOverviewFragment: Fragment() {
                 val layoutManager = LinearLayoutManager(context)
                 // Calling RecyclerView's method 'SetLayoutManager()
                 recyclerView.layoutManager = layoutManager
+
+                //#
+                recyclerView.addItemDecoration(CategoryRecyclerViewItemDecoration(64))
+                //#
+
                 //Calling RecyclerView's method 'setAdapter()' and passing the adapter to it
                 recyclerView.adapter = categoryRecyclerViewAdapter
 
