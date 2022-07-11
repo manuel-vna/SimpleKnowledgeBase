@@ -75,7 +75,7 @@ class CategoryOverviewFragment: Fragment() {
                 recyclerView.layoutManager = layoutManager
 
                 //#
-                recyclerView.addItemDecoration(CategoryRecyclerViewItemDecoration(64))
+                recyclerView.addItemDecoration(CategoryRecyclerViewItemDecoration(requireContext(),R.drawable.recyclerview_line_divider,64))
                 //#
 
                 //Calling RecyclerView's method 'setAdapter()' and passing the adapter to it
