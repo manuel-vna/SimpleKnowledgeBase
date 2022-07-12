@@ -49,12 +49,17 @@ class AddEntryFragment() : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.addEntryBtnHome.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(view: View?) {
+                findNavController().navigate(R.id.action_nav_add_entry_to_nav_home)
+            }
+        })
+
         binding.addentryBtnAdd.setOnClickListener(object : View.OnClickListener {
             override fun onClick(view: View?) {
                 insertEntry()
             }
         })
-
 
     }
 

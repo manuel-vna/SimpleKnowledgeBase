@@ -28,6 +28,8 @@ class KeywordSearchFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var entryRecyclerViewAdapter: EntryRecyclerViewAdapter
     private lateinit var searchResults: List<Entry>
+    private lateinit var categoryFromCategoryOverviewFragment: String
+    private lateinit var previousFragment: String
 
 
     override fun onCreateView(
@@ -42,17 +44,37 @@ class KeywordSearchFragment : Fragment() {
         _binding = FragmentKeywordSearchBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        // retrieve the previous fragment from the BackStack
+        val previousFragment = findNavController().previousBackStackEntry?.destination?.label
+
+        // CategoryOverviewFragment: Get category from navigation bundle if the previousFragment was CategoryOverviewFragment
+        if (previousFragment ==  "CategoryOverviewFragment") {
+            //receive category from fragment
+            categoryFromCategoryOverviewFragment = arguments?.get("categoryFromCategoryOverviewFragment") as String
+        }
+        else {
+            categoryFromCategoryOverviewFragment = ""
+        }
+
+
         return root
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        //displays entries by category that were chosen in the CategoryOverviewFragment
+        if (categoryFromCategoryOverviewFragment.isNotEmpty()){
+            keywordSearchViewModel.findCategory(categoryFromCategoryOverviewFragment)
+        }
 
         // Button: Search
         binding.keywordBtnSearch.setOnClickListener(object : View.OnClickListener {
@@ -81,7 +103,7 @@ class KeywordSearchFragment : Fragment() {
             }
         })
 
-        // Live Data Observer
+        // Live Data Observer: Keyword Search
         keywordSearchViewModel.getKeywordLiveData().observe(viewLifecycleOwner,object: Observer<List<Entry>> {
 
             override fun onChanged(entries: List<Entry>) {
@@ -99,6 +121,33 @@ class KeywordSearchFragment : Fragment() {
                 // Callback that is used for Clicks on RecyclerView Items
                 entryRecyclerViewAdapter.setOnEntryItemClickListener(object: EntryRecyclerViewAdapter.onItemClickListener {
                     override fun onItemClick(position: Int,entry: Entry) {
+                        // the function 'to' combines its left and right side into a Pair
+                        var bundle: Bundle = bundleOf("entryFromKeywordSearchFragment" to entry)
+                        findNavController().navigate(R.id.action_nav_home_to_updateDeleteEntryFragment,bundle)
+                    }
+                })
+            }
+        })
+
+        // Live Data Observer: Category Search triggered from CategoryOverviewFragment
+        keywordSearchViewModel.getCategoryLiveData().observe(viewLifecycleOwner,object: Observer<List<Entry>> {
+
+            override fun onChanged(entries: List<Entry>) {
+
+                // get the recycler view item form its fragment.xml file
+                val recyclerView: RecyclerView = binding.keywordRvDisplayResults
+                //create the adapter by handing the data entryList to it
+                entryRecyclerViewAdapter = EntryRecyclerViewAdapter(requireContext(),entries)
+                // get a LayoutManager. There's no layoutManager for ConstraintLayout available. That's why LinerLayoutManager is used
+                val layoutManager = LinearLayoutManager(context)
+                // Calling RecyclerView's method 'SetLayoutManager()
+                recyclerView.layoutManager = layoutManager
+                //Calling RecyclerView's method 'setAdapter()' and passing the adapter to it
+                recyclerView.adapter = entryRecyclerViewAdapter
+                // Callback that is used for Clicks on RecyclerView Items
+                entryRecyclerViewAdapter.setOnEntryItemClickListener(object: EntryRecyclerViewAdapter.onItemClickListener {
+                    override fun onItemClick(position: Int,entry: Entry) {
+                        // the function 'to' combines its left and right side into a Pair
                         var bundle: Bundle = bundleOf("entryFromKeywordSearchFragment" to entry)
                         findNavController().navigate(R.id.action_nav_home_to_updateDeleteEntryFragment,bundle)
                     }

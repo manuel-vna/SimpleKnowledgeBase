@@ -8,18 +8,22 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_home" />
+            android:title="@string/menu_home"
+            android:menuCategory="secondary"/>
         <item
-            android:id="@+id/categoryOverviewFragment"
+            android:id="@+id/nav_categoryOverviewFragment"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_Category" />
+            android:title="@string/menu_Category"
+            android:menuCategory="secondary"/>
         <item
             android:id="@+id/nav_advanced_search"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_advancedSearch" />
+            android:title="@string/menu_advancedSearch"
+            android:menuCategory="secondary"/>
         <item
             android:id="@+id/nav_add_entry"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_addEntry" />
+            android:title="@string/menu_addEntry"
+            android:menuCategory="secondary"/>
     </group>
 </menu>

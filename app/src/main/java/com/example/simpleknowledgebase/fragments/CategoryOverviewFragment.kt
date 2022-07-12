@@ -60,7 +60,7 @@ class CategoryOverviewFragment: Fragment() {
 
 
         // Live Data Observer that observers the findAllCategories() process
-        categoryOverviewViewModel.getCategoryLiveData().observe(viewLifecycleOwner,object:
+        categoryOverviewViewModel.getAllCategoriesLiveData().observe(viewLifecycleOwner,object:
             Observer<List<String>> {
 
             override fun onChanged(categories: List<String>) {
@@ -74,9 +74,9 @@ class CategoryOverviewFragment: Fragment() {
                 // Calling RecyclerView's method 'SetLayoutManager()
                 recyclerView.layoutManager = layoutManager
 
-                //#
-                recyclerView.addItemDecoration(CategoryRecyclerViewItemDecoration(requireContext(),R.drawable.recyclerview_line_divider,64))
-                //#
+                // add decoration to the category list: space and divider lines between list items
+                // not sure if parameter 'spaceSize' is dp or px. If it's not dp or sp, there would be problems in terms of an adaptive layout (ui).
+                recyclerView.addItemDecoration(CategoryRecyclerViewItemDecoration(requireContext(),R.drawable.recyclerview_line_divider, 64))
 
                 //Calling RecyclerView's method 'setAdapter()' and passing the adapter to it
                 recyclerView.adapter = categoryRecyclerViewAdapter
@@ -84,9 +84,8 @@ class CategoryOverviewFragment: Fragment() {
                 // Callback that is used for Clicks on RecyclerView Items
                 categoryRecyclerViewAdapter.setOnCategoryItemClickListener(object: CategoryRecyclerViewAdapter.onItemClickListener {
                     override fun onItemClick(position: Int,category: String) {
-                        //var bundle: Bundle = bundleOf("entryFromKeywordSearchFragment" to category)
-                        //findNavController().navigate(R.id.action_nav_home_to_updateDeleteEntryFragment,bundle)
-                        Toast.makeText(context, "TBD", Toast.LENGTH_LONG).show()
+                        var bundle: Bundle = bundleOf("categoryFromCategoryOverviewFragment" to category)
+                        findNavController().navigate(R.id.action_categoryOverviewFragment_to_nav_home,bundle)
                     }
                 })
 

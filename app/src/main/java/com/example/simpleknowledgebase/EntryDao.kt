@@ -12,12 +12,16 @@ interface EntryDao {
     fun findAll(): List<Entry>
     //fun findAll():LiveData<List<Entry>>
 
-    @Query("Select * FROM KbTable WHERE (title LIKE '%'||:keyword||'%' OR description LIKE '%'||:keyword||'%') " )
+    @Query("Select * FROM KbTable WHERE (title LIKE '%'||:keyword||'%' OR description LIKE '%'||:keyword||'%' OR category LIKE '%'||:keyword||'%') " )
     // Room cannot handle MutableLiveData here
     fun findKeyword(keyword: String): List<Entry>
 
     @Query("SELECT DISTINCT category FROM KbTable ORDER BY category ASC")
     fun findAllCategories(): List<String>
+
+    @Query("Select * FROM KbTable WHERE (category IS :keyword)")
+    // match exact string of category
+    fun findCategory(keyword: String): List<Entry>
 
     @Insert
     fun insertEntry(entry: Entry)

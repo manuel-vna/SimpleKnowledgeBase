@@ -94,6 +94,19 @@ class EntryDaoTest {
 
     }
 
+    @Test
+    fun getSingeleCategory() = runTest {
+
+        val entry1 = Entry(5,"date1","title1","category1","desc1","source1")
+        dao.insertEntry(entry1)
+        val entry2 = Entry(6,"date2","title2","category2","desc2","source2")
+        dao.insertEntry(entry2)
+        var category = dao.findCategory("category1")
+
+        assertThat(category.first().category).isEqualTo("category1")
+
+    }
+
 
 
 }

@@ -12,22 +12,30 @@ import kotlinx.coroutines.launch
 class KeywordSearchViewModel(application: Application): AndroidViewModel(application) {
 
     private val entryRepository: EntryRepository
-    private val searchResultsLivedata: MutableLiveData<List<Entry>>
+    private val keywordSearchResultsLivedata: MutableLiveData<List<Entry>>
+    private val categorySearchResultsLivedata: MutableLiveData<List<Entry>>
+
 
     init {
         val entryDao = EntryDatabase.getInstance(application).entryDao()
         entryRepository = EntryRepository(entryDao)
-        searchResultsLivedata = entryRepository.searchResults
+        keywordSearchResultsLivedata = entryRepository.searchResults
+        categorySearchResultsLivedata = entryRepository.searchResultsCategory
     }
 
 
     fun findKeyword(keyword: String) {
             entryRepository.findKeyword(keyword)
-
+    }
+    fun getKeywordLiveData(): LiveData<List<Entry>> {
+        return keywordSearchResultsLivedata
     }
 
-    fun getKeywordLiveData(): LiveData<List<Entry>> {
-        return searchResultsLivedata
+    fun findCategory(keyword: String) {
+        entryRepository.findCategory(keyword)
+    }
+    fun getCategoryLiveData(): LiveData<List<Entry>> {
+        return categorySearchResultsLivedata
     }
 
 

@@ -28,6 +28,8 @@ class CategoryOverviewFragmentTest {
     fun `display_category_recycler_view`() {
         
         onView(withId(R.id.keyword_btn_categoryOverview)).perform(ViewActions.click())
+        //onView(ViewMatchers.withId(R.id.categoryOverview_tv_category)).perform(ViewActions.click())
+
 
 
 

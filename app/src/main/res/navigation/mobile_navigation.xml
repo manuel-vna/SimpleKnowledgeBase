@@ -21,7 +21,7 @@
             app:destination="@id/updateDeleteEntryFragment" />
         <action
             android:id="@+id/action_nav_home_to_categoryOverviewFragment"
-            app:destination="@id/categoryOverviewFragment" />
+            app:destination="@id/nav_categoryOverviewFragment" />
     </fragment>
 
     <fragment
@@ -29,6 +29,12 @@
         android:name="com.example.simpleknowledgebase.fragments.AdvancedSearchFragment"
         android:label="@string/menu_advancedSearch"
         tools:layout="@layout/fragment_advanced_search" >
+
+        <argument
+            android:name="nav_advanced_search"
+            app:argType="string"
+            android:defaultValue="AdvancedSearchFragment"/>
+
         <action
             android:id="@+id/action_nav_advanced_search_to_nav_home"
             app:destination="@id/nav_home" />
@@ -40,7 +46,7 @@
             app:destination="@id/updateDeleteEntryFragment" />
         <action
             android:id="@+id/action_nav_advanced_search_to_categoryOverviewFragment"
-            app:destination="@id/categoryOverviewFragment" />
+            app:destination="@id/nav_categoryOverviewFragment" />
     </fragment>
 
     <fragment
@@ -59,7 +65,7 @@
             app:destination="@id/updateDeleteEntryFragment" />
         <action
             android:id="@+id/action_nav_add_entry_to_categoryOverviewFragment"
-            app:destination="@id/categoryOverviewFragment" />
+            app:destination="@id/nav_categoryOverviewFragment" />
     </fragment>
     <fragment
         android:id="@+id/updateDeleteEntryFragment"
@@ -76,10 +82,10 @@
             app:destination="@id/nav_advanced_search" />
         <action
             android:id="@+id/action_updateDeleteEntryFragment_to_categoryOverviewFragment"
-            app:destination="@id/categoryOverviewFragment" />
+            app:destination="@id/nav_categoryOverviewFragment" />
     </fragment>
     <fragment
-        android:id="@+id/categoryOverviewFragment"
+        android:id="@+id/nav_categoryOverviewFragment"
         android:name="com.example.simpleknowledgebase.fragments.CategoryOverviewFragment"
         android:label="CategoryOverviewFragment" >
         <action

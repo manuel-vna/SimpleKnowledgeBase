@@ -18,20 +18,15 @@ class CategoryOverviewViewModel(application: Application): AndroidViewModel(appl
     init {
         val entryDao = EntryDatabase.getInstance(application).entryDao()
         entryRepository = EntryRepository(entryDao)
-        searchResultsLivedata = entryRepository.searchResultsCategories
+        searchResultsLivedata = entryRepository.searchResultsAllCategories
     }
 
 
     fun findAllCategories() {
         entryRepository.findAllCategories()
-
     }
-
-    fun getCategoryLiveData(): LiveData<List<String>> {
+    fun getAllCategoriesLiveData(): LiveData<List<String>> {
         return searchResultsLivedata
     }
-
-
-
 
 }
