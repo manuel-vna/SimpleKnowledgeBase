@@ -47,8 +47,9 @@ class KeywordSearchFragment : Fragment() {
         // retrieve the previous fragment from the BackStack
         val previousFragment = findNavController().previousBackStackEntry?.destination?.label
 
-        // CategoryOverviewFragment: Get category from navigation bundle if the previousFragment was CategoryOverviewFragment
-        if (previousFragment ==  "CategoryOverviewFragment") {
+        // CategoryOverviewFragment implementation: Get category from navigation bundle:
+        // if the previousFragment was CategoryOverviewFragment AND an argument is delivered via the fragment transition
+        if (previousFragment ==  "CategoryOverviewFragment" && arguments?.get("categoryFromCategoryOverviewFragment") != null) {
             //receive category from fragment
             categoryFromCategoryOverviewFragment = arguments?.get("categoryFromCategoryOverviewFragment") as String
         }
