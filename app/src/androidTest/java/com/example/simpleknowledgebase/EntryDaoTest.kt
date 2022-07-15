@@ -107,6 +107,23 @@ class EntryDaoTest {
 
     }
 
+    @Test
+    fun getTotalRowNumber() = runTest {
+
+        val entry1 = Entry(5,"date1","title1","category1","desc1","source1") // row 1
+        dao.insertEntry(entry1)
+        val entry2 = Entry(6,"date2","title2","category2","desc2","source2") // row 2
+        dao.insertEntry(entry2)
+        val entry3 = Entry(7,"date3","title3","category3","desc3","source3") // row 3
+        dao.insertEntry(entry3)
+        val entry4 = Entry(8,"date4","title4","category4","desc4","source4") // row 3
+        dao.insertEntry(entry4)
+        var rowNumber = dao.getTotalRowNumber()
+
+        assertThat(rowNumber).isEqualTo(4)
+
+    }
+
 
 
 }

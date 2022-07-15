@@ -1,10 +1,15 @@
 <resources>
+
+
+
+    <!-- navigation drawer -->
     <string name="app_name">SimpleKnowledgeBase</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_title">0 entries</string>
     <string name="nav_header_desc">Navigation header</string>
+
+    <!-- nav app bar top -->
     <string name="action_settings">Export</string>
 
     <!-- mobile_navigation.xml -->

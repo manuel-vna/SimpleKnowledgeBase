@@ -12,10 +12,11 @@ import kotlinx.coroutines.*
 class EntryRepository(private val entryDao: EntryDao) {
 
     private lateinit var keywordSearchViewModel: KeywordSearchViewModel
-    private val coroutineScope = CoroutineScope(Dispatchers.Main)
+    private val coroutineScope = CoroutineScope(Dispatchers.IO)
     val searchResults = MutableLiveData<List<Entry>>()
     val searchResultsAllCategories = MutableLiveData<List<String>>()
     val searchResultsCategory = MutableLiveData<List<Entry>>()
+    val searchResultsRowNumber = MutableLiveData<Int>()
 
     fun insertEntry(entry: Entry){
         coroutineScope.launch(Dispatchers.IO) {
@@ -47,12 +48,13 @@ class EntryRepository(private val entryDao: EntryDao) {
         }
 
 
-    fun findAllCategories(){
+    fun findAllCategories() {
+        // coroutines that change UI elements can only be performed by the MAIN thread
         coroutineScope.launch(Dispatchers.Main) {
-            searchResultsAllCategories.value = asyncCategoryFind().await()
-        }
+        searchResultsAllCategories.setValue(categoryFindAsync().await())
     }
-    private fun asyncCategoryFind(): Deferred<List<String>?> =
+    }
+    private fun categoryFindAsync(): Deferred<List<String>?> =
         coroutineScope.async(Dispatchers.IO) {
             return@async entryDao.findAllCategories()
         }
@@ -60,14 +62,24 @@ class EntryRepository(private val entryDao: EntryDao) {
 
     fun findCategory(keyword: String){
         coroutineScope.launch(Dispatchers.Main) {
-            searchResultsCategory.value = asyncSingleCategoryFind(keyword).await()
+            searchResultsCategory.setValue(singleCategoryFindAsync(keyword).await())
         }
     }
-    private fun asyncSingleCategoryFind(keyword: String): Deferred<List<Entry>?> =
+    private fun singleCategoryFindAsync(keyword: String): Deferred<List<Entry>?> =
         coroutineScope.async(Dispatchers.IO) {
             return@async entryDao.findCategory(keyword)
         }
 
+
+    fun findTotalRowNumber(){
+        coroutineScope.launch(Dispatchers.Main) {
+            searchResultsRowNumber.setValue(totalRowNumberFindAsync().await())
+        }
+    }
+    private fun totalRowNumberFindAsync(): Deferred<Int> =
+        coroutineScope.async(Dispatchers.IO) {
+            return@async entryDao.findTotalRowNumber()
+        }
 
 
 }

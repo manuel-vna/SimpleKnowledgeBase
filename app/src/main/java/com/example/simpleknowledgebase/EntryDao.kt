@@ -20,8 +20,12 @@ interface EntryDao {
     fun findAllCategories(): List<String>
 
     @Query("Select * FROM KbTable WHERE (category IS :keyword)")
-    // match exact string of category
+    // match the exact string of a category
     fun findCategory(keyword: String): List<Entry>
+
+    @Query("Select COUNT() FROM KbTable ")
+    // get the amount of existing entries by retrieving the row numbers
+    fun findTotalRowNumber() : Int
 
     @Insert
     fun insertEntry(entry: Entry)
