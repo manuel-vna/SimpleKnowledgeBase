@@ -25,7 +25,7 @@ interface EntryDao {
 
     @Query("Select COUNT() FROM KbTable ")
     // get the amount of existing entries by retrieving the row numbers
-    fun findTotalRowNumber() : Int
+    fun findTotalRowNumber() : LiveData<Int>
 
     @Insert
     fun insertEntry(entry: Entry)

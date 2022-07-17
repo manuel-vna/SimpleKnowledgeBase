@@ -70,7 +70,7 @@ class EntryRepository(private val entryDao: EntryDao) {
             return@async entryDao.findCategory(keyword)
         }
 
-
+/*
     fun findTotalRowNumber(){
         coroutineScope.launch(Dispatchers.Main) {
             searchResultsRowNumber.setValue(totalRowNumberFindAsync().await())
@@ -80,6 +80,7 @@ class EntryRepository(private val entryDao: EntryDao) {
         coroutineScope.async(Dispatchers.IO) {
             return@async entryDao.findTotalRowNumber()
         }
+ */
 
 
 }

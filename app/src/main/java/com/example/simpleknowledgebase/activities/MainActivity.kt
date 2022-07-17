@@ -74,9 +74,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun setNavigationDrawerHeader(){
 
-        mainActivityViewModel.findTotalRowNumber()
-
-
         var navigationView: NavigationView = binding.navView
         var headerView: View = navigationView.getHeaderView(0)
         var navigationDrawerEntriesTotal: TextView = headerView.findViewById(R.id.nav_header_title)
