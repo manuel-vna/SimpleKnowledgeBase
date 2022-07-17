@@ -78,13 +78,11 @@ class MainActivity : AppCompatActivity() {
         var headerView: View = navigationView.getHeaderView(0)
         var navigationDrawerEntriesTotal: TextView = headerView.findViewById(R.id.nav_header_title)
 
-        mainActivityViewModel.getTotalRowNumberLiveData().observe(this,object: Observer<Int> {
-
+        mainActivityViewModel.observeTotalRowNumberLiveData().observe(this,object: Observer<Int> {
             override fun onChanged(rowCount: Int) {
                 navigationDrawerEntriesTotal.setText("$rowCount entries")
             }
         })
-
     }
 
 

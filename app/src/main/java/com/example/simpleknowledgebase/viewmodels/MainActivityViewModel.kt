@@ -14,7 +14,7 @@ class MainActivityViewModel(application: Application): AndroidViewModel(applicat
 
 
     private val entryRepository: EntryRepository
-    private val rowCountSearchResultsLivedata: MutableLiveData<Int>
+    private val rowCountSearchResultsLivedata: LiveData<Int>
 
 
     init {
@@ -25,10 +25,7 @@ class MainActivityViewModel(application: Application): AndroidViewModel(applicat
     }
 
 
-    fun findTotalRowNumber() {
-        entryRepository.findTotalRowNumber()
-    }
-    fun getTotalRowNumberLiveData(): LiveData<Int> {
+    fun observeTotalRowNumberLiveData(): LiveData<Int> {
         return rowCountSearchResultsLivedata
     }
 

@@ -1,6 +1,7 @@
 package com.example.simpleknowledgebase.repositories
 
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.simpleknowledgebase.Entry
 import com.example.simpleknowledgebase.EntryDao
@@ -16,7 +17,7 @@ class EntryRepository(private val entryDao: EntryDao) {
     val searchResults = MutableLiveData<List<Entry>>()
     val searchResultsAllCategories = MutableLiveData<List<String>>()
     val searchResultsCategory = MutableLiveData<List<Entry>>()
-    val searchResultsRowNumber = MutableLiveData<Int>()
+
 
     fun insertEntry(entry: Entry){
         coroutineScope.launch(Dispatchers.IO) {
@@ -70,17 +71,8 @@ class EntryRepository(private val entryDao: EntryDao) {
             return@async entryDao.findCategory(keyword)
         }
 
-/*
-    fun findTotalRowNumber(){
-        coroutineScope.launch(Dispatchers.Main) {
-            searchResultsRowNumber.setValue(totalRowNumberFindAsync().await())
-        }
-    }
-    private fun totalRowNumberFindAsync(): Deferred<Int> =
-        coroutineScope.async(Dispatchers.IO) {
-            return@async entryDao.findTotalRowNumber()
-        }
- */
+
+    var searchResultsRowNumber = entryDao.observeTotalRowNumber()
 
 
 }

@@ -10,7 +10,6 @@ interface EntryDao {
 
     @Query("SELECT * FROM KbTable")
     fun findAll(): List<Entry>
-    //fun findAll():LiveData<List<Entry>>
 
     @Query("Select * FROM KbTable WHERE (title LIKE '%'||:keyword||'%' OR description LIKE '%'||:keyword||'%' OR category LIKE '%'||:keyword||'%') " )
     // Room cannot handle MutableLiveData here
@@ -24,8 +23,7 @@ interface EntryDao {
     fun findCategory(keyword: String): List<Entry>
 
     @Query("Select COUNT() FROM KbTable ")
-    // get the amount of existing entries by retrieving the row numbers
-    fun findTotalRowNumber() : LiveData<Int>
+    fun observeTotalRowNumber() : LiveData<Int>
 
     @Insert
     fun insertEntry(entry: Entry)
