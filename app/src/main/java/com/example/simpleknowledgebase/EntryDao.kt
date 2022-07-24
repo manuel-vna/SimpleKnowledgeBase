@@ -25,6 +25,12 @@ interface EntryDao {
     @Query("Select COUNT() FROM KbTable ")
     fun observeTotalRowNumber() : LiveData<Int>
 
+    /*
+    //TBD: Adv. Search testing:
+    @Query("Select * FROM kbTable WHERE (date BETWEEN :dateFrom and :dateTo)")
+    suspend fun findEntriesOfDateTimespan(dateFrom: String, dateTo: String) : List<Entry>
+     */
+
     @Insert
     fun insertEntry(entry: Entry)
 

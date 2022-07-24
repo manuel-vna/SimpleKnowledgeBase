@@ -1,13 +1,34 @@
 package com.example.simpleknowledgebase.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import com.example.simpleknowledgebase.Entry
+import com.example.simpleknowledgebase.EntryDatabase
+import com.example.simpleknowledgebase.repositories.EntryRepository
 
-class AdvancedSearchViewModel : ViewModel() {
+//approach without using a Live<Data> wrapper
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is the AdvancedSearchFragment"
+class AdvancedSearchViewModel(application: Application): AndroidViewModel(application) {
+
+    private val entryRepository: EntryRepository
+    private  var searchResultsDate: List<Entry>? = null
+
+
+    init {
+        val entryDao = EntryDatabase.getInstance(application).entryDao()
+        entryRepository = EntryRepository(entryDao)
+        searchResultsDate = entryRepository.searchResultsDate
     }
-    val text: LiveData<String> = _text
+
+/*
+    fun findEntriesOfDateTimespan(dateFrom: String, dateTo: String) {
+        entryRepository.findEntriesOfDateTimespan(dateFrom, dateTo)
+    }
+    fun getEntriesOfDateTimespan(): List<Entry>? {
+        return searchResultsDate
+    }
+
+ */
+
 }
+

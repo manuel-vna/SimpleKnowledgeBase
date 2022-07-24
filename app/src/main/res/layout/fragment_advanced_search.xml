@@ -99,6 +99,7 @@
         android:text="@string/advancedSearch_tv_dateStart"
         android:textColor="@color/black"
         android:textSize="14sp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/guideline17"
         app:layout_constraintEnd_toStartOf="@+id/guideline16"
         app:layout_constraintStart_toStartOf="@+id/guideline14"
@@ -118,6 +119,7 @@
         android:text="@string/advancedSearch_tv_dateEnd"
         android:textColor="@color/black"
         android:textSize="14sp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/guideline18"
         app:layout_constraintEnd_toStartOf="@+id/guideline16"
         app:layout_constraintStart_toStartOf="@+id/guideline14" />
@@ -133,6 +135,41 @@
         app:layout_constraintStart_toStartOf="@+id/guideline14"
         app:layout_constraintTop_toTopOf="@+id/guideline18"
         tools:visibility="visible" />
+
+    <Button
+        android:id="@+id/advancedSearch_btn_Search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/advancedSearch_btn_Search"
+        app:layout_constraintEnd_toStartOf="@+id/advancedSearch_et_search"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/guideline14"
+        app:layout_constraintTop_toTopOf="@+id/guideline11" />
+
+    <EditText
+        android:id="@+id/advancedSearch_et_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@+id/advancedSearch_btn_clear"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/advancedSearch_btn_Search"
+        app:layout_constraintTop_toTopOf="@+id/guideline11"
+        tools:visibility="invisible" />
+
+    <Button
+        android:id="@+id/advancedSearch_btn_clear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/advancedSearch_btn_Clear"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline16"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/advancedSearch_et_search"
+        app:layout_constraintTop_toTopOf="@+id/guideline11" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
