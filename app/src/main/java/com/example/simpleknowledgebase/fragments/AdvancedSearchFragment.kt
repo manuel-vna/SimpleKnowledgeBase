@@ -98,10 +98,9 @@ class AdvancedSearchFragment : Fragment() {
                 var dateFromCalenderFormatted = dateFormat.format(dateFromCalender.time)
                 var dateToCalenderFormatted = dateFormat.format(dateToCalender.time)
 
-                Log.i("Debug_A",dateFromCalenderFormatted)
-                Log.i("Debug_A",dateToCalenderFormatted)
+                var searchResultsDate = advancedSearchViewModel.findEntriesOfDateTimeSpan(dateFromCalenderFormatted,dateToCalenderFormatted)
 
-                //advancedSearchViewModel.
+                Log.i("Debug_A",searchResultsDate.toString())
 
 
             }

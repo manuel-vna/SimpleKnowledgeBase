@@ -17,8 +17,9 @@ class EntryRepository(private val entryDao: EntryDao) {
     val searchResults = MutableLiveData<List<Entry>>()
     val searchResultsAllCategories = MutableLiveData<List<String>>()
     val searchResultsCategory = MutableLiveData<List<Entry>>()
-    //TBD: Adv. Search testing:
+    //In Testing: Adv. Search testing:
     var searchResultsDate: List<Entry>? = null
+    //private lateinit var searchResultsDate: List<Entry>
 
 
     fun insertEntry(entry: Entry){
@@ -39,6 +40,11 @@ class EntryRepository(private val entryDao: EntryDao) {
         }
     }
 
+    // observing the number of rows = number of entries
+
+    var searchResultsRowNumber = entryDao.observeTotalRowNumber()
+
+    // find entries by keyword
 
     fun findKeyword(keyword: String){
         coroutineScope.launch(Dispatchers.Main) {
@@ -50,6 +56,7 @@ class EntryRepository(private val entryDao: EntryDao) {
             return@async entryDao.findKeyword(keyword)
         }
 
+    // find all existing categories
 
     fun findAllCategories() {
         // coroutines that change UI elements can only be performed by the MAIN thread
@@ -62,6 +69,7 @@ class EntryRepository(private val entryDao: EntryDao) {
             return@async entryDao.findAllCategories()
         }
 
+    //find category by keyword
 
     fun findCategory(keyword: String){
         coroutineScope.launch(Dispatchers.Main) {
@@ -73,23 +81,24 @@ class EntryRepository(private val entryDao: EntryDao) {
             return@async entryDao.findCategory(keyword)
         }
 
+    // find entries by time date time spans
 
-    var searchResultsRowNumber = entryDao.observeTotalRowNumber()
-
-
-    //TBD: Adv. Search testing:
-
-    /*
-    fun findEntriesOfDateTimespan(dateFrom: String, dateTo: String){
-        coroutineScope.launch(Dispatchers.Main) {
-            searchResultsDate = dateFindAsync(dateFrom, dateTo).await()
-        }
-    }
-    private fun dateFindAsync(dateFrom: String, dateTo: String): Deferred<List<Entry>?> =
+    //approach 1: coroutine with async-await:
+    fun dateFindAsync(dateFrom: String, dateTo: String): Deferred<List<Entry>?> =
         coroutineScope.async(Dispatchers.IO) {
-            return@async entryDao.findEntriesOfDateTimespan(dateFrom, dateTo)
+            return@async entryDao.findEntriesOfDateTimeSpan(dateFrom, dateTo)
         }
 
+    //approach 2: coroutine with withContext():
+    /*
+    fun dateFindAsync(dateFrom: String, dateTo: String) : List<Entry> {
+        coroutineScope.launch {
+            searchResultsDate = withContext(Dispatchers.IO) {
+                entryDao.findEntriesOfDateTimeSpan(dateFrom, dateTo)
+            }
+        }
+        return searchResultsDate
+    }
      */
 
 
