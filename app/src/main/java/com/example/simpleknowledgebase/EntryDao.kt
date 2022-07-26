@@ -27,7 +27,7 @@ interface EntryDao {
 
     @Query("Select * FROM kbTable WHERE (date BETWEEN :dateFrom and :dateTo)")
     // async-await approach:
-    fun findEntriesOfDateTimeSpan(dateFrom: String, dateTo: String) : List<Entry>
+    suspend fun findEntriesOfDateTimeSpan(dateFrom: String, dateTo: String) : List<Entry>
     //withContext approach:
     //suspend fun findEntriesOfDateTimeSpan(dateFrom: String, dateTo: String) : List<Entry>
 

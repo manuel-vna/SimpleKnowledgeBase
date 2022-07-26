@@ -5,10 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import com.example.simpleknowledgebase.Entry
 import com.example.simpleknowledgebase.EntryDatabase
 import com.example.simpleknowledgebase.repositories.EntryRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 //approach without using a Live<Data> wrapper
 
@@ -19,7 +16,7 @@ class AdvancedSearchViewModel(application: Application): AndroidViewModel(applic
     private var searchResultsDate: List<Entry>? = null
     //private lateinit var searchResultsDate: List<Entry>
 
-    private val coroutineScope = CoroutineScope(Dispatchers.IO)
+    private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
 
     init {
@@ -30,8 +27,11 @@ class AdvancedSearchViewModel(application: Application): AndroidViewModel(applic
 
     fun findEntriesOfDateTimeSpan(dateFrom: String, dateTo: String) : List<Entry>? {
         coroutineScope.launch {
-            //async-await approach:
-            searchResultsDate = entryRepository.dateFindAsync(dateFrom, dateTo).await()
+            //1a async-await approach:
+            //searchResultsDate = entryRepository.dateFindAsync(dateFrom, dateTo).await()
+
+            // 1c
+            searchResultsDate = entryRepository.findEntriesOfDateTimeSpan(dateFrom, dateTo)
 
             // withContext() approach:
             //searchResultsDate = entryRepository.dateFindAsync(dateFrom, dateTo)
@@ -40,6 +40,13 @@ class AdvancedSearchViewModel(application: Application): AndroidViewModel(applic
     }
 
 
+    // 1b
+    /*
+    fun findEntriesOfDateTimeSpan(dateFrom: String, dateTo: String): Deferred<List<Entry>?> =
+        coroutineScope.async(Dispatchers.IO) {
+            return@async entryRepository.findEntriesOfDateTimeSpan(dateFrom, dateTo)
+        }
+     */
 
 }
 

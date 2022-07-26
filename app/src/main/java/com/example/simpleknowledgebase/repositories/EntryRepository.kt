@@ -1,6 +1,7 @@
 package com.example.simpleknowledgebase.repositories
 
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.simpleknowledgebase.Entry
@@ -83,11 +84,32 @@ class EntryRepository(private val entryDao: EntryDao) {
 
     // find entries by time date time spans
 
-    //approach 1: coroutine with async-await:
+    //approach 1 a: coroutine with async-await:
+    /*
     fun dateFindAsync(dateFrom: String, dateTo: String): Deferred<List<Entry>?> =
         coroutineScope.async(Dispatchers.IO) {
             return@async entryDao.findEntriesOfDateTimeSpan(dateFrom, dateTo)
         }
+     */
+
+    //approach 1b: coroutine with async-await:
+    /*
+    fun findEntriesOfDateTimeSpan(dateFrom: String, dateTo: String) : List<Entry>? {
+        coroutineScope.launch {
+            searchResultsDate = entryDao.findEntriesOfDateTimeSpan(dateFrom, dateTo)
+        }
+        return searchResultsDate
+    }
+     */
+
+    //approach 1c: coroutine with async-await:
+    fun findEntriesOfDateTimeSpan(dateFrom: String, dateTo: String) : List<Entry>? {
+        coroutineScope.launch {
+            searchResultsDate = entryDao.findEntriesOfDateTimeSpan(dateFrom, dateTo)
+            Log.i("Debug_A", "EntryRepository: "+searchResultsDate.toString())
+        }
+        return searchResultsDate
+    }
 
     //approach 2: coroutine with withContext():
     /*

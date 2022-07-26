@@ -12,8 +12,13 @@ import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.simpleknowledgebase.Entry
 import com.example.simpleknowledgebase.databinding.FragmentAdvancedSearchBinding
 import com.example.simpleknowledgebase.viewmodels.AdvancedSearchViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.lang.String.format
 import java.text.SimpleDateFormat
 import java.util.*
@@ -23,6 +28,9 @@ class AdvancedSearchFragment : Fragment() {
 
     private lateinit var advancedSearchViewModel: AdvancedSearchViewModel
     private var _binding: FragmentAdvancedSearchBinding? = null
+
+    //1b + 1c
+    private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
     private val binding get() = _binding!!
 
@@ -98,9 +106,35 @@ class AdvancedSearchFragment : Fragment() {
                 var dateFromCalenderFormatted = dateFormat.format(dateFromCalender.time)
                 var dateToCalenderFormatted = dateFormat.format(dateToCalender.time)
 
-                var searchResultsDate = advancedSearchViewModel.findEntriesOfDateTimeSpan(dateFromCalenderFormatted,dateToCalenderFormatted)
+                //1a
+                /*
+                var searchResultsDate = advancedSearchViewModel.findEntriesOfDateTimeSpan(
+                    dateFromCalenderFormatted,
+                    dateToCalenderFormatted
+                )
+                Log.i("Debug_A", searchResultsDate.toString())
+                 */
 
-                Log.i("Debug_A",searchResultsDate.toString())
+                // 1b
+                /*
+                coroutineScope.launch() {
+                    var searchResultsDate = advancedSearchViewModel.findEntriesOfDateTimeSpan(
+                        dateFromCalenderFormatted,
+                        dateToCalenderFormatted
+                    ).await()
+                    Log.i("Debug_A", searchResultsDate.toString())
+                }
+                 */
+
+                //1c
+                coroutineScope.launch() {
+                    var searchResultsDate = advancedSearchViewModel.findEntriesOfDateTimeSpan(
+                        dateFromCalenderFormatted,
+                        dateToCalenderFormatted
+                    )
+                    Log.i("Debug_A", "Fragment: "+searchResultsDate.toString())
+                }
+
 
 
             }
