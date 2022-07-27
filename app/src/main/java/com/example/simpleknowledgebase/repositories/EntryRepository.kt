@@ -4,8 +4,10 @@ package com.example.simpleknowledgebase.repositories
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModelProvider
 import com.example.simpleknowledgebase.Entry
 import com.example.simpleknowledgebase.EntryDao
+import com.example.simpleknowledgebase.viewmodels.AdvancedSearchViewModel
 import com.example.simpleknowledgebase.viewmodels.KeywordSearchViewModel
 import kotlinx.coroutines.*
 
@@ -82,46 +84,19 @@ class EntryRepository(private val entryDao: EntryDao) {
             return@async entryDao.findCategory(keyword)
         }
 
+
+
     // find entries by time date time spans
 
-    //approach 1 a: coroutine with async-await:
-    /*
-    fun dateFindAsync(dateFrom: String, dateTo: String): Deferred<List<Entry>?> =
-        coroutineScope.async(Dispatchers.IO) {
-            return@async entryDao.findEntriesOfDateTimeSpan(dateFrom, dateTo)
-        }
-     */
-
-    //approach 1b: coroutine with async-await:
-    /*
-    fun findEntriesOfDateTimeSpan(dateFrom: String, dateTo: String) : List<Entry>? {
-        coroutineScope.launch {
-            searchResultsDate = entryDao.findEntriesOfDateTimeSpan(dateFrom, dateTo)
-        }
-        return searchResultsDate
-    }
-     */
-
-    //approach 1c: coroutine with async-await:
-    fun findEntriesOfDateTimeSpan(dateFrom: String, dateTo: String) : List<Entry>? {
+    fun findEntriesOfDateTimeSpan(dateFrom: String, dateTo: String,returnEntriesOfDateTimeSpan : (List<Entry>?) -> Unit) {
         coroutineScope.launch {
             searchResultsDate = entryDao.findEntriesOfDateTimeSpan(dateFrom, dateTo)
             Log.i("Debug_A", "EntryRepository: "+searchResultsDate.toString())
+            returnEntriesOfDateTimeSpan(searchResultsDate)
         }
-        return searchResultsDate
     }
 
-    //approach 2: coroutine with withContext():
-    /*
-    fun dateFindAsync(dateFrom: String, dateTo: String) : List<Entry> {
-        coroutineScope.launch {
-            searchResultsDate = withContext(Dispatchers.IO) {
-                entryDao.findEntriesOfDateTimeSpan(dateFrom, dateTo)
-            }
-        }
-        return searchResultsDate
-    }
-     */
+
 
 
 }

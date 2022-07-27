@@ -11,6 +11,7 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.simpleknowledgebase.Entry
 import com.example.simpleknowledgebase.databinding.FragmentAdvancedSearchBinding
@@ -106,37 +107,13 @@ class AdvancedSearchFragment : Fragment() {
                 var dateFromCalenderFormatted = dateFormat.format(dateFromCalender.time)
                 var dateToCalenderFormatted = dateFormat.format(dateToCalender.time)
 
-                //1a
-                /*
-                var searchResultsDate = advancedSearchViewModel.findEntriesOfDateTimeSpan(
-                    dateFromCalenderFormatted,
-                    dateToCalenderFormatted
-                )
-                Log.i("Debug_A", searchResultsDate.toString())
-                 */
 
-                // 1b
-                /*
                 coroutineScope.launch() {
-                    var searchResultsDate = advancedSearchViewModel.findEntriesOfDateTimeSpan(
-                        dateFromCalenderFormatted,
-                        dateToCalenderFormatted
-                    ).await()
-                    Log.i("Debug_A", searchResultsDate.toString())
-                }
-                 */
-
-                //1c
-                coroutineScope.launch() {
-                    var searchResultsDate = advancedSearchViewModel.findEntriesOfDateTimeSpan(
+                    advancedSearchViewModel.findEntriesOfDateTimeSpan(
                         dateFromCalenderFormatted,
                         dateToCalenderFormatted
                     )
-                    Log.i("Debug_A", "Fragment: "+searchResultsDate.toString())
                 }
-
-
-
             }
             else if(binding.advancedSearchRbByTextField.isChecked){
                 Toast.makeText(context, "TBD", Toast.LENGTH_SHORT).show()
@@ -146,6 +123,7 @@ class AdvancedSearchFragment : Fragment() {
             }
 
         }
+
 
         //clear button
         binding.advancedSearchBtnClear.setOnClickListener { view ->
@@ -160,6 +138,12 @@ class AdvancedSearchFragment : Fragment() {
             binding.ContextSearchPickerDateTo.visibility = View.GONE
         }
 
+    }
+
+
+    // receive entries from dao
+    fun returnEntriesOfDateTimeSpan(searchResultsDate: List<Entry>?) {
+        Log.i("Debug_A", "EntryFragment: "+searchResultsDate.toString())
     }
 
 
