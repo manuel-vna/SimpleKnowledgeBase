@@ -21,8 +21,7 @@ class EntryRepository(private val entryDao: EntryDao) {
     val searchResultsAllCategories = MutableLiveData<List<String>>()
     val searchResultsCategory = MutableLiveData<List<Entry>>()
     //In Testing: Adv. Search testing:
-    var searchResultsDate: List<Entry>? = null
-    //private lateinit var searchResultsDate: List<Entry>
+    private lateinit var searchResultsDate: List<Entry>
 
 
     fun insertEntry(entry: Entry){
@@ -85,11 +84,10 @@ class EntryRepository(private val entryDao: EntryDao) {
         }
 
 
-
     // find entries by time date time spans
 
-    fun findEntriesOfDateTimeSpan(dateFrom: String, dateTo: String,returnEntriesOfDateTimeSpan : (List<Entry>?) -> Unit) {
-        coroutineScope.launch {
+    fun findEntriesOfDateTimeSpan(dateFrom: String, dateTo: String,returnEntriesOfDateTimeSpan : (List<Entry>) -> Unit) {
+        GlobalScope.launch(Dispatchers.Main) {
             searchResultsDate = entryDao.findEntriesOfDateTimeSpan(dateFrom, dateTo)
             Log.i("Debug_A", "EntryRepository: "+searchResultsDate.toString())
             returnEntriesOfDateTimeSpan(searchResultsDate)

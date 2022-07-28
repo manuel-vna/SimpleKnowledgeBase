@@ -18,13 +18,8 @@ import kotlinx.coroutines.*
 class AdvancedSearchViewModel(application: Application): AndroidViewModel(application) {
 
     private val entryRepository: EntryRepository
-    private var searchResultsDate: List<Entry>? = null
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
-    // static access to class AdvancedSearchFragment
-    companion object {
-        val advancedSearchFragment = AdvancedSearchFragment()
-    }
-
+    private val searchResultsDateLiveData = MutableLiveData<List<Entry>>()
 
 
     init {
@@ -35,12 +30,21 @@ class AdvancedSearchViewModel(application: Application): AndroidViewModel(applic
 
     fun findEntriesOfDateTimeSpan(dateFrom: String, dateTo: String) {
         coroutineScope.launch {
-            entryRepository.findEntriesOfDateTimeSpan(dateFrom, dateTo,::returnEntriesOfDateTimeSpan)
+            entryRepository.findEntriesOfDateTimeSpan(
+                dateFrom,
+                dateTo,
+                ::returnEntriesOfDateTimeSpan
+            )
         }
     }
-    fun returnEntriesOfDateTimeSpan(searchResultsDate: List<Entry>?) {
+
+    fun returnEntriesOfDateTimeSpan(searchResultsDate: List<Entry>) {
         Log.i("Debug_A", "EntryViewModel: " + searchResultsDate.toString())
-        advancedSearchFragment.returnEntriesOfDateTimeSpan(searchResultsDate)
+        searchResultsDateLiveData.setValue(searchResultsDate)
+    }
+
+    fun getDateTimeSpanLiveData(): LiveData<List<Entry>> {
+        return searchResultsDateLiveData
     }
 
 
