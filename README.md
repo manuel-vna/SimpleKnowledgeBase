@@ -6,13 +6,13 @@ Project status: In Progress
 
 ### Context
 
-This is a Kotlin version on basis of the Java project 'ITKnowledgeBase', which is another repo in the same Github space.
-Additionally this app tries to improve the user experience as well as the other app's overall architecture.
+This is a Kotlin version on basis of the Java project 'ITKnowledgeBase'. (another repo in this Github space)
 
 ### Description
 
 This mobile application provides a simple knowledge database. Information you don't want to forget can be saved and organised by the usage of four data fields: Title, Category, Description and Source-URL.
-You can save, edit and delete knowledge entries. Searching can be done by a general keyword or (TBD) within one of the above fields specifically or by a date timeframe. (TBD) All user created 'Categories' can be shown in an overview list.
+You can save, edit and delete knowledge entries. Searching can be done by a general keyword, by a date timeframe or (TBD) within one of the above fields specifically.
+All user created 'Categories' can be shown and searched in an overview list.
 
 <br>
 
@@ -34,6 +34,14 @@ RecyclerView, Live Data (Observer), AppBar with NavigationDrawer
 
 The fragments are included in one activity. Navigation between those works via a 'NavController' (Navigation Graph in res/layout/navigation_graph.xml)
 The app uses the MVVM desgin approach: UI Views - ViewModel + LiveData - Repository - Data Source.
-(TBD) A visualisation (UML) to show the structure of the app.
+
+- #### MVVM Architecture Details
+For the purpose of analysis more than one approach are in use:
+(1)
+Fragment<->ViewModel: Live Data Observation ; ViewModel<->Repository: cross-class variable access ; Repository<->Dao: async coroutine with await
+Used for: KeywordSearch*, CategoryOverview*
+(2)
+Fragment<->ViewModel: Live Data Observation ; ViewModel<->Repository: high-order function ; Repository<->Dao: coroutine with suspend
+Used for: AdvancedSearch*
 
 <br>
