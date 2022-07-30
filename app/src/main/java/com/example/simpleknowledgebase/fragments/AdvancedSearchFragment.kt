@@ -2,14 +2,11 @@ package com.example.simpleknowledgebase.fragments
 
 
 import android.os.Bundle
-import android.text.format.DateFormat.format
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioButton
-import android.widget.RadioGroup
-import android.widget.Toast
+import android.widget.*
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -25,8 +22,6 @@ import com.example.simpleknowledgebase.viewmodels.AdvancedSearchViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import java.lang.String.format
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -37,7 +32,6 @@ class AdvancedSearchFragment : Fragment() {
     private var _binding: FragmentAdvancedSearchBinding? = null
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
     private lateinit var entryRecyclerViewAdapter: EntryRecyclerViewAdapter
-
     private lateinit var recyclerView: RecyclerView
 
     private val binding get() = _binding!!
@@ -66,20 +60,48 @@ class AdvancedSearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // get the recycler view item from its fragment.xml file
+        recyclerView = binding.advancedSearchRv
+
         //checkbox clicks
         binding.advancedSearchRbDateSearch.setOnCheckedChangeListener { buttonView, isChecked ->
+
             if (isChecked) {
                 binding.advancedSearchTvDateStart.visibility = View.VISIBLE
                 binding.advancedSearchTvDateEnd.visibility = View.VISIBLE
                 binding.ContextSearchPickerDateFrom.visibility = View.VISIBLE
                 binding.ContextSearchPickerDateTo.visibility = View.VISIBLE
             }
-        }
-        binding.advancedSearchRbByTextField.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked) {
-                Toast.makeText(context, "TBD", Toast.LENGTH_SHORT).show()
+            else {
+                binding.advancedSearchTvDateStart.visibility = View.GONE
+                binding.advancedSearchTvDateEnd.visibility = View.GONE
+                binding.ContextSearchPickerDateFrom.visibility = View.GONE
+                binding.ContextSearchPickerDateTo.visibility = View.GONE
             }
         }
+
+        binding.advancedSearchRbByTextField.setOnCheckedChangeListener { buttonView, isChecked ->
+
+            if (isChecked) {
+                binding.advancedSearchSpnSearchbyTextField.visibility = View.VISIBLE
+                binding.advancedSearchEtSearch.visibility = View.VISIBLE
+            }
+            else {
+                binding.advancedSearchSpnSearchbyTextField.visibility = View.GONE
+                binding.advancedSearchEtSearch.visibility = View.GONE
+            }
+        }
+
+        //spinner field
+        val spinner: Spinner = binding.advancedSearchSpnSearchbyTextField
+        val adapterArray = ArrayAdapter(
+            activity!!,
+            android.R.layout.simple_spinner_item, resources
+                .getStringArray(R.array.advancedSearch_spinner_SearchbyTextField)
+        )
+        adapterArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adapterArray
+
 
         // search button click
 
@@ -124,7 +146,23 @@ class AdvancedSearchFragment : Fragment() {
                     )
                 }
             } else if (binding.advancedSearchRbByTextField.isChecked) {
-                Toast.makeText(context, "TBD", Toast.LENGTH_SHORT).show()
+
+                if(spinner.selectedItem == "Title"){
+                    Toast.makeText(context, "t", Toast.LENGTH_SHORT).show()
+
+                }
+                else if(spinner.selectedItem == "Category") {
+                    Toast.makeText(context, "c", Toast.LENGTH_SHORT).show()
+
+                }
+                else if(spinner.selectedItem == "Description") {
+                    Toast.makeText(context, "d", Toast.LENGTH_SHORT).show()
+
+                }
+                else if(spinner.selectedItem == "Source-URL") {
+                    Toast.makeText(context, "s", Toast.LENGTH_SHORT).show()
+                }
+
             } else {
                 Toast.makeText(context, "Please choose a search variant", Toast.LENGTH_SHORT).show()
             }
@@ -132,9 +170,8 @@ class AdvancedSearchFragment : Fragment() {
         }
 
 
-        //clear button
-        binding.advancedSearchBtnClear.setOnClickListener { view ->
-
+        //clear data
+        fun clear_data(){
             //clear radio group
             binding.advancedSearchRgSearchPick.clearCheck()
 
@@ -143,6 +180,20 @@ class AdvancedSearchFragment : Fragment() {
             binding.advancedSearchTvDateEnd.visibility = View.GONE
             binding.ContextSearchPickerDateFrom.visibility = View.GONE
             binding.ContextSearchPickerDateTo.visibility = View.GONE
+
+            //remove text field related fields
+            binding.advancedSearchSpnSearchbyTextField.visibility = View.GONE
+            binding.advancedSearchEtSearch.visibility = View.GONE
+
+            //clear current recycler view data
+            entryRecyclerViewAdapter = EntryRecyclerViewAdapter(requireContext(),listOf())
+            recyclerView.adapter = entryRecyclerViewAdapter
+        }
+
+
+        //clear button of ui
+        binding.advancedSearchBtnClear.setOnClickListener { view ->
+            clear_data()
         }
 
 
@@ -153,8 +204,6 @@ class AdvancedSearchFragment : Fragment() {
 
                 Log.i("Debug_A", "EntryFragment: " + searchResultsDate.toString())
 
-                // get the recycler view item form its fragment.xml file
-                val recyclerView: RecyclerView = binding.advancedSearchRv
                 //create the adapter by handing the data entryList to it
                 entryRecyclerViewAdapter = EntryRecyclerViewAdapter(requireContext(),searchResultsDate)
                 // get a LayoutManager. There's no layoutManager for ConstraintLayout available. That's why LinerLayoutManager is used

@@ -86,11 +86,29 @@ class EntryRepository(private val entryDao: EntryDao) {
 
     // find entries by time date time spans
 
-    fun findEntriesOfDateTimeSpan(dateFrom: String, dateTo: String,returnEntriesOfDateTimeSpan : (List<Entry>) -> Unit) {
+    fun findEntriesOfDateTimeSpan(
+        dateFrom: String,
+        dateTo: String,
+        returnEntriesOfDateTimeSpan: (List<Entry>) -> Unit
+    ) {
         GlobalScope.launch(Dispatchers.Main) {
             searchResultsDate = entryDao.findEntriesOfDateTimeSpan(dateFrom, dateTo)
-            Log.i("Debug_A", "EntryRepository: "+searchResultsDate.toString())
+            Log.i("Debug_A", "EntryRepository -Date: " + searchResultsDate.toString())
             returnEntriesOfDateTimeSpan(searchResultsDate)
+        }
+    }
+
+    // find entries by advanced search field
+
+    fun findEntriesOfAdvancedSearchField(
+        field: String,
+        keyword: String,
+        returnEntriesOfAdvancedSearchField: (List<Entry>) -> Unit
+    ) {
+        GlobalScope.launch(Dispatchers.Main) {
+            searchResultsDate = entryDao.findEntriesOfDateTimeSpan(field, keyword)
+            Log.i("Debug_A", "EntryRepository - Field: " + searchResultsDate.toString())
+            returnEntriesOfAdvancedSearchField(searchResultsDate)
         }
     }
 

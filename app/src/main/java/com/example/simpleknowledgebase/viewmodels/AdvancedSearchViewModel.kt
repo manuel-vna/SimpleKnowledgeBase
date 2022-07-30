@@ -20,6 +20,7 @@ class AdvancedSearchViewModel(application: Application): AndroidViewModel(applic
     private val entryRepository: EntryRepository
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
     private val searchResultsDateLiveData = MutableLiveData<List<Entry>>()
+    private val searchResultsFieldLiveData = MutableLiveData<List<Entry>>()
 
 
     init {
@@ -27,6 +28,7 @@ class AdvancedSearchViewModel(application: Application): AndroidViewModel(applic
         entryRepository = EntryRepository(entryDao)
     }
 
+    // date time span methods
 
     fun findEntriesOfDateTimeSpan(dateFrom: String, dateTo: String) {
         coroutineScope.launch {
@@ -37,14 +39,32 @@ class AdvancedSearchViewModel(application: Application): AndroidViewModel(applic
             )
         }
     }
-
     fun returnEntriesOfDateTimeSpan(searchResultsDate: List<Entry>) {
-        Log.i("Debug_A", "EntryViewModel: " + searchResultsDate.toString())
+        Log.i("Debug_A", "EntryViewModel - Date: " + searchResultsDate.toString())
         searchResultsDateLiveData.setValue(searchResultsDate)
     }
-
     fun getDateTimeSpanLiveData(): LiveData<List<Entry>> {
         return searchResultsDateLiveData
+    }
+
+
+    // field search methods
+
+    fun findAdvancedSearchField(field: String, keyword: String){
+        coroutineScope.launch {
+            entryRepository.findEntriesOfAdvancedSearchField(
+                field,
+                keyword,
+                ::returnEntriesOfAdvancedSearchField
+            )
+        }
+    }
+    fun returnEntriesOfAdvancedSearchField(searchResultsField: List<Entry>) {
+        Log.i("Debug_A", "EntryViewModel - Field: " + searchResultsField.toString())
+        searchResultsFieldLiveData.setValue(searchResultsField)
+    }
+    fun getAdvancedSearchFieldLiveData(): LiveData<List<Entry>>{
+        return searchResultsFieldLiveData
     }
 
 
