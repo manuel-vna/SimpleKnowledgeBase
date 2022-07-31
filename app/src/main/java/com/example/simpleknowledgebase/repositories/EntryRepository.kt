@@ -20,8 +20,8 @@ class EntryRepository(private val entryDao: EntryDao) {
     val searchResults = MutableLiveData<List<Entry>>()
     val searchResultsAllCategories = MutableLiveData<List<String>>()
     val searchResultsCategory = MutableLiveData<List<Entry>>()
-    //In Testing: Adv. Search testing:
     private lateinit var searchResultsDate: List<Entry>
+    private lateinit var searchResultsAdvancedSearchField: List<Entry>
 
 
     fun insertEntry(entry: Entry){
@@ -106,9 +106,14 @@ class EntryRepository(private val entryDao: EntryDao) {
         returnEntriesOfAdvancedSearchField: (List<Entry>) -> Unit
     ) {
         GlobalScope.launch(Dispatchers.Main) {
-            searchResultsDate = entryDao.findEntriesOfDateTimeSpan(field, keyword)
-            Log.i("Debug_A", "EntryRepository - Field: " + searchResultsDate.toString())
-            returnEntriesOfAdvancedSearchField(searchResultsDate)
+            when(field){
+                "title" -> searchResultsAdvancedSearchField = entryDao.findAdvancedSearchTitle(keyword)
+                "category" -> searchResultsAdvancedSearchField = entryDao.findAdvancedSearchCategory(keyword)
+                "description" -> searchResultsAdvancedSearchField = entryDao.findAdvancedSearchDescription(keyword)
+                "source" -> searchResultsAdvancedSearchField = entryDao.findAdvancedSearchSource(keyword)
+            }
+            Log.i("Debug_A", "EntryRepository - Field: " + searchResultsAdvancedSearchField.toString())
+            returnEntriesOfAdvancedSearchField(searchResultsAdvancedSearchField)
         }
     }
 

@@ -138,7 +138,7 @@ class AdvancedSearchFragment : Fragment() {
                 var dateFromCalenderFormatted = dateFormat.format(dateFromCalender.time)
                 var dateToCalenderFormatted = dateFormat.format(dateToCalender.time)
 
-
+                // start path to DAO
                 coroutineScope.launch() {
                     advancedSearchViewModel.findEntriesOfDateTimeSpan(
                         dateFromCalenderFormatted,
@@ -147,20 +147,26 @@ class AdvancedSearchFragment : Fragment() {
                 }
             } else if (binding.advancedSearchRbByTextField.isChecked) {
 
+                var keyword: String = binding.advancedSearchEtSearch.text.toString()
+
                 if(spinner.selectedItem == "Title"){
                     Toast.makeText(context, "t", Toast.LENGTH_SHORT).show()
+                    advancedSearchViewModel.findAdvancedSearchField("title", keyword)
 
                 }
                 else if(spinner.selectedItem == "Category") {
                     Toast.makeText(context, "c", Toast.LENGTH_SHORT).show()
+                    advancedSearchViewModel.findAdvancedSearchField("category", keyword)
 
                 }
                 else if(spinner.selectedItem == "Description") {
                     Toast.makeText(context, "d", Toast.LENGTH_SHORT).show()
+                    advancedSearchViewModel.findAdvancedSearchField("description", keyword)
 
                 }
                 else if(spinner.selectedItem == "Source-URL") {
                     Toast.makeText(context, "s", Toast.LENGTH_SHORT).show()
+                    advancedSearchViewModel.findAdvancedSearchField("source", keyword)
                 }
 
             } else {
@@ -170,7 +176,6 @@ class AdvancedSearchFragment : Fragment() {
         }
 
 
-        //clear data
         fun clear_data(){
             //clear radio group
             binding.advancedSearchRgSearchPick.clearCheck()
@@ -188,6 +193,9 @@ class AdvancedSearchFragment : Fragment() {
             //clear current recycler view data
             entryRecyclerViewAdapter = EntryRecyclerViewAdapter(requireContext(),listOf())
             recyclerView.adapter = entryRecyclerViewAdapter
+
+            //clear EditText field
+            binding.advancedSearchEtSearch.text.clear()
         }
 
 
@@ -197,29 +205,36 @@ class AdvancedSearchFragment : Fragment() {
         }
 
 
-        // Live Data Observer: Set entries to RecyclerView
+        fun observerOnChanged(searchResults: List<Entry>){
+            //create the adapter by handing the data entryList to it
+            entryRecyclerViewAdapter = EntryRecyclerViewAdapter(requireContext(),searchResults)
+            // get a LayoutManager. There's no layoutManager for ConstraintLayout available. That's why LinerLayoutManager is used
+            val layoutManager = LinearLayoutManager(context)
+            // Calling RecyclerView's method 'SetLayoutManager()
+            recyclerView.layoutManager = layoutManager
+            //Calling RecyclerView's method 'setAdapter()' and passing the adapter to it
+            recyclerView.adapter = entryRecyclerViewAdapter
+            // Callback that is used for Clicks on RecyclerView Items
+            entryRecyclerViewAdapter.setOnEntryItemClickListener(object: EntryRecyclerViewAdapter.onItemClickListener {
+                override fun onItemClick(position: Int,entry: Entry) {
+                    // the function 'to' combines its left and right side into a Pair
+                    var bundle: Bundle = bundleOf("entryFromKeywordSearchFragment" to entry)
+                    findNavController().navigate(R.id.action_nav_home_to_updateDeleteEntryFragment,bundle)
+                }
+            })
+        }
+        // Live Data Observer for Input 'Date Time Span': Set entries to RecyclerView
         advancedSearchViewModel.getDateTimeSpanLiveData().observe(viewLifecycleOwner,object: Observer<List<Entry>> {
 
             override fun onChanged(searchResultsDate: List<Entry>) {
+                observerOnChanged(searchResultsDate)
+            }
+        })
+        // Live Data Observer for Input 'Date Time Span': Set entries to RecyclerView
+        advancedSearchViewModel.getAdvancedSearchFieldLiveData().observe(viewLifecycleOwner,object: Observer<List<Entry>> {
 
-                Log.i("Debug_A", "EntryFragment: " + searchResultsDate.toString())
-
-                //create the adapter by handing the data entryList to it
-                entryRecyclerViewAdapter = EntryRecyclerViewAdapter(requireContext(),searchResultsDate)
-                // get a LayoutManager. There's no layoutManager for ConstraintLayout available. That's why LinerLayoutManager is used
-                val layoutManager = LinearLayoutManager(context)
-                // Calling RecyclerView's method 'SetLayoutManager()
-                recyclerView.layoutManager = layoutManager
-                //Calling RecyclerView's method 'setAdapter()' and passing the adapter to it
-                recyclerView.adapter = entryRecyclerViewAdapter
-                // Callback that is used for Clicks on RecyclerView Items
-                entryRecyclerViewAdapter.setOnEntryItemClickListener(object: EntryRecyclerViewAdapter.onItemClickListener {
-                    override fun onItemClick(position: Int,entry: Entry) {
-                        // the function 'to' combines its left and right side into a Pair
-                        var bundle: Bundle = bundleOf("entryFromKeywordSearchFragment" to entry)
-                        findNavController().navigate(R.id.action_nav_home_to_updateDeleteEntryFragment,bundle)
-                    }
-                })
+            override fun onChanged(searchResultsAdvancedSearchField: List<Entry>) {
+                observerOnChanged(searchResultsAdvancedSearchField)
             }
         })
 

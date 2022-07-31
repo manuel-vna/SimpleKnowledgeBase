@@ -28,10 +28,17 @@ interface EntryDao {
     @Query("Select * FROM kbTable WHERE (date BETWEEN :dateFrom and :dateTo)")
     suspend fun findEntriesOfDateTimeSpan(dateFrom: String, dateTo: String) : List<Entry>
 
-    @Query("Select * FROM KbTable WHERE (:field LIKE '%'||:keyword||'%')")
-    // match the exact string of a specific search field
-    fun findAdvancedSearchField(field: String, keyword: String): List<Entry>
+    @Query("Select * FROM KbTable WHERE (title LIKE '%'||:keyword||'%')")
+    suspend fun findAdvancedSearchTitle(keyword: String) : List<Entry>
 
+    @Query("Select * FROM KbTable WHERE (category LIKE '%'||:keyword||'%')")
+    suspend fun findAdvancedSearchCategory(keyword: String) : List<Entry>
+
+    @Query("Select * FROM KbTable WHERE (description LIKE '%'||:keyword||'%')")
+    suspend fun findAdvancedSearchDescription(keyword: String) : List<Entry>
+
+    @Query("Select * FROM KbTable WHERE (source LIKE '%'||:keyword||'%')")
+    suspend fun findAdvancedSearchSource(keyword: String) : List<Entry>
 
 
     @Insert
