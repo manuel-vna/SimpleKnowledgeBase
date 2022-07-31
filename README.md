@@ -33,10 +33,10 @@ RecyclerView, Live Data (Observer), AppBar with NavigationDrawer
 ### App Architecture
 
 The fragments are included in one activity. Navigation between those works via a 'NavController' (Navigation Graph in res/layout/navigation_graph.xml)
-The app uses the MVVM desgin approach: UI Views - ViewModel + LiveData - Repository - Data Source.
+The app uses the MVVM design approach: UI Views - ViewModel + LiveData - Repository - Data Source.
 
 - #### MVVM Architecture Details
-For the purpose of analysis more than one approach are in use:
+For the purpose of analysis more than one approaches are in use:
 (1)
 Fragment<->ViewModel: Live Data Observation ; ViewModel<->Repository: cross-class variable access ; Repository<->Dao: async coroutine with await
 Used for: KeywordSearch*, CategoryOverview*

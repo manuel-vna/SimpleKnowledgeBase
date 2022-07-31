@@ -142,7 +142,7 @@
         android:layout_height="wrap_content"
         android:text="@string/advancedSearch_btn_Search"
         app:layout_constraintBottom_toTopOf="@+id/guideline19"
-        app:layout_constraintEnd_toStartOf="@+id/advancedSearch_btn_clear"
+        app:layout_constraintEnd_toStartOf="@+id/advancedSearch_tv_numberOfHits"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline11" />
@@ -156,7 +156,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline16"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/advancedSearch_btn_Search"
+        app:layout_constraintStart_toEndOf="@+id/advancedSearch_tv_numberOfHits"
         app:layout_constraintTop_toTopOf="@+id/guideline11" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -189,6 +189,21 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline12"
         app:layout_constraintStart_toStartOf="@+id/guideline14"
         app:layout_constraintTop_toTopOf="@+id/guideline19"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/advancedSearch_tv_numberOfHits"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/guideline19"
+        app:layout_constraintEnd_toStartOf="@+id/advancedSearch_btn_clear"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/advancedSearch_btn_Search"
+        app:layout_constraintTop_toTopOf="@+id/guideline11"
+        tools:text="5"
         tools:visibility="visible" />
 
 

@@ -2,10 +2,10 @@ package com.example.simpleknowledgebase.fragments
 
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.*
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -196,6 +196,9 @@ class AdvancedSearchFragment : Fragment() {
 
             //clear EditText field
             binding.advancedSearchEtSearch.text.clear()
+
+            //remove number of Hits
+            binding.advancedSearchTvNumberOfHits.setVisibility(View.GONE)
         }
 
 
@@ -222,6 +225,14 @@ class AdvancedSearchFragment : Fragment() {
                     findNavController().navigate(R.id.action_nav_home_to_updateDeleteEntryFragment,bundle)
                 }
             })
+
+            //output number of entry hits
+            if (searchResults.size > 0) {
+                binding.advancedSearchTvNumberOfHits.setVisibility(View.VISIBLE)
+                binding.advancedSearchTvNumberOfHits.text = searchResults.size.toString()
+            } else {
+                binding.advancedSearchTvNumberOfHits.text = "0"
+            }
         }
         // Live Data Observer for Input 'Date Time Span': Set entries to RecyclerView
         advancedSearchViewModel.getDateTimeSpanLiveData().observe(viewLifecycleOwner,object: Observer<List<Entry>> {
