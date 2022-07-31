@@ -20,7 +20,7 @@ All user created 'Categories' can be shown and searched in an overview list.
 The app covers the following aspects of Android programming:
 
 - #### Saving data in a local database
-Persistence Room Library, Dao
+Persistence Room Library, DAO, High-Order functions, Lambda with SAM, Coroutines
 
 - #### Adaptive Layout
 Constraint layout with Guidelines and Chains, Landscape Mode

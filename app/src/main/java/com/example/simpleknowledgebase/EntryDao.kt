@@ -31,9 +31,6 @@ interface EntryDao {
     @Query("Select * FROM KbTable WHERE (title LIKE '%'||:keyword||'%')")
     suspend fun findAdvancedSearchTitle(keyword: String) : List<Entry>
 
-    @Query("Select * FROM KbTable WHERE (category LIKE '%'||:keyword||'%')")
-    suspend fun findAdvancedSearchCategory(keyword: String) : List<Entry>
-
     @Query("Select * FROM KbTable WHERE (description LIKE '%'||:keyword||'%')")
     suspend fun findAdvancedSearchDescription(keyword: String) : List<Entry>
 

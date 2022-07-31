@@ -50,7 +50,6 @@
     <!-- advancedSearch_spinner_SearchbyTextField -->
     <string-array name="advancedSearch_spinner_SearchbyTextField">
         <item>Title</item>
-        <item>Category</item>
         <item>Description</item>
         <item>Source-URL</item>
     </string-array>

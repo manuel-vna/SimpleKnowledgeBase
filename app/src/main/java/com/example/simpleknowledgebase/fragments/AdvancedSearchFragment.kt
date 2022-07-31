@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.*
+import android.widget.TextView.OnEditorActionListener
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -103,20 +103,16 @@ class AdvancedSearchFragment : Fragment() {
         spinner.adapter = adapterArray
 
 
-        // search button click
 
-        //var checkedRadioButtonId: Int = binding.advancedSearchRgSearchPick.checkedRadioButtonId
-        binding.advancedSearchBtnSearch.setOnClickListener { view ->
+        fun searchQuery(){
 
             if (binding.advancedSearchRbDateSearch.isChecked) {
-                Toast.makeText(context, "advancedSearchRbDateSearch", Toast.LENGTH_SHORT).show()
 
                 //remove date input related fields
                 binding.advancedSearchTvDateStart.visibility = View.GONE
                 binding.advancedSearchTvDateEnd.visibility = View.GONE
                 binding.ContextSearchPickerDateFrom.visibility = View.GONE
                 binding.ContextSearchPickerDateTo.visibility = View.GONE
-
 
                 var dateFromCalender: Calendar = Calendar.getInstance()
                 var dateToCalender: Calendar = Calendar.getInstance()
@@ -150,30 +146,27 @@ class AdvancedSearchFragment : Fragment() {
                 var keyword: String = binding.advancedSearchEtSearch.text.toString()
 
                 if(spinner.selectedItem == "Title"){
-                    Toast.makeText(context, "t", Toast.LENGTH_SHORT).show()
                     advancedSearchViewModel.findAdvancedSearchField("title", keyword)
-
-                }
-                else if(spinner.selectedItem == "Category") {
-                    Toast.makeText(context, "c", Toast.LENGTH_SHORT).show()
-                    advancedSearchViewModel.findAdvancedSearchField("category", keyword)
-
                 }
                 else if(spinner.selectedItem == "Description") {
-                    Toast.makeText(context, "d", Toast.LENGTH_SHORT).show()
                     advancedSearchViewModel.findAdvancedSearchField("description", keyword)
-
                 }
                 else if(spinner.selectedItem == "Source-URL") {
-                    Toast.makeText(context, "s", Toast.LENGTH_SHORT).show()
                     advancedSearchViewModel.findAdvancedSearchField("source", keyword)
                 }
-
             } else {
                 Toast.makeText(context, "Please choose a search variant", Toast.LENGTH_SHORT).show()
             }
-
         }
+        // search button click: search query
+        binding.advancedSearchBtnSearch.setOnClickListener { view ->
+            searchQuery()
+        }
+        // search field ClickListener (pressing enter): search query
+        binding.advancedSearchEtSearch.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
+            searchQuery()
+            true
+        })
 
 
         fun clear_data(){

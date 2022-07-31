@@ -108,7 +108,6 @@ class EntryRepository(private val entryDao: EntryDao) {
         GlobalScope.launch(Dispatchers.Main) {
             when(field){
                 "title" -> searchResultsAdvancedSearchField = entryDao.findAdvancedSearchTitle(keyword)
-                "category" -> searchResultsAdvancedSearchField = entryDao.findAdvancedSearchCategory(keyword)
                 "description" -> searchResultsAdvancedSearchField = entryDao.findAdvancedSearchDescription(keyword)
                 "source" -> searchResultsAdvancedSearchField = entryDao.findAdvancedSearchSource(keyword)
             }
