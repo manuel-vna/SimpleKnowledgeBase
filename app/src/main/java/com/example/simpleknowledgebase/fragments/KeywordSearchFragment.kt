@@ -87,7 +87,6 @@ class KeywordSearchFragment : Fragment() {
         binding.keywordBtnAdvancedSearch.setOnClickListener(object : View.OnClickListener {
             override fun onClick(view: View?) {
                 findNavController().navigate(R.id.action_nav_home_to_nav_advanced_search)
-                Toast.makeText(context, "TBD", Toast.LENGTH_LONG).show()
             }
         })
         // Button Categories

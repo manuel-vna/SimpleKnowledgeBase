@@ -74,7 +74,7 @@
         app:layout_constraintGuide_percent="0.95" />
 
     <DatePicker
-        android:id="@+id/ContextSearchPickerDateFrom"
+        android:id="@+id/advancedSearch_dp_DateFrom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:calendarViewShown="false"
@@ -125,7 +125,7 @@
         app:layout_constraintStart_toStartOf="@+id/guideline14" />
 
     <DatePicker
-        android:id="@+id/ContextSearchPickerDateTo"
+        android:id="@+id/advancedSearch_dp_DateTo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:calendarViewShown="false"

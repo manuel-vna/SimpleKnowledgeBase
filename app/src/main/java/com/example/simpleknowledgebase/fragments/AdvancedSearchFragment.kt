@@ -2,6 +2,7 @@ package com.example.simpleknowledgebase.fragments
 
 
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -69,14 +70,14 @@ class AdvancedSearchFragment : Fragment() {
             if (isChecked) {
                 binding.advancedSearchTvDateStart.visibility = View.VISIBLE
                 binding.advancedSearchTvDateEnd.visibility = View.VISIBLE
-                binding.ContextSearchPickerDateFrom.visibility = View.VISIBLE
-                binding.ContextSearchPickerDateTo.visibility = View.VISIBLE
+                binding.advancedSearchDpDateFrom.visibility = View.VISIBLE
+                binding.advancedSearchDpDateTo.visibility = View.VISIBLE
             }
             else {
                 binding.advancedSearchTvDateStart.visibility = View.GONE
                 binding.advancedSearchTvDateEnd.visibility = View.GONE
-                binding.ContextSearchPickerDateFrom.visibility = View.GONE
-                binding.ContextSearchPickerDateTo.visibility = View.GONE
+                binding.advancedSearchDpDateFrom.visibility = View.GONE
+                binding.advancedSearchDpDateTo.visibility = View.GONE
             }
         }
 
@@ -111,22 +112,22 @@ class AdvancedSearchFragment : Fragment() {
                 //remove date input related fields
                 binding.advancedSearchTvDateStart.visibility = View.GONE
                 binding.advancedSearchTvDateEnd.visibility = View.GONE
-                binding.ContextSearchPickerDateFrom.visibility = View.GONE
-                binding.ContextSearchPickerDateTo.visibility = View.GONE
+                binding.advancedSearchDpDateFrom.visibility = View.GONE
+                binding.advancedSearchDpDateTo.visibility = View.GONE
 
                 var dateFromCalender: Calendar = Calendar.getInstance()
                 var dateToCalender: Calendar = Calendar.getInstance()
 
                 //save date picks in calender class object
                 dateFromCalender.set(
-                    binding.ContextSearchPickerDateFrom.year,
-                    binding.ContextSearchPickerDateFrom.month,
-                    binding.ContextSearchPickerDateFrom.dayOfMonth
+                    binding.advancedSearchDpDateFrom.year,
+                    binding.advancedSearchDpDateFrom.month,
+                    binding.advancedSearchDpDateFrom.dayOfMonth
                 )
                 dateToCalender.set(
-                    binding.ContextSearchPickerDateTo.year,
-                    binding.ContextSearchPickerDateTo.month,
-                    binding.ContextSearchPickerDateTo.dayOfMonth
+                    binding.advancedSearchDpDateTo.year,
+                    binding.advancedSearchDpDateTo.month,
+                    binding.advancedSearchDpDateTo.dayOfMonth
                 )
 
                 // format calender objects to preferred date string
@@ -176,8 +177,8 @@ class AdvancedSearchFragment : Fragment() {
             //remove date input related fields
             binding.advancedSearchTvDateStart.visibility = View.GONE
             binding.advancedSearchTvDateEnd.visibility = View.GONE
-            binding.ContextSearchPickerDateFrom.visibility = View.GONE
-            binding.ContextSearchPickerDateTo.visibility = View.GONE
+            binding.advancedSearchDpDateFrom.visibility = View.GONE
+            binding.advancedSearchDpDateTo.visibility = View.GONE
 
             //remove text field related fields
             binding.advancedSearchSpnSearchbyTextField.visibility = View.GONE
@@ -191,7 +192,7 @@ class AdvancedSearchFragment : Fragment() {
             binding.advancedSearchEtSearch.text.clear()
 
             //remove number of Hits
-            binding.advancedSearchTvNumberOfHits.setVisibility(View.GONE)
+            binding.advancedSearchTvNumberOfHits.visibility = View.GONE
         }
 
 
@@ -220,11 +221,12 @@ class AdvancedSearchFragment : Fragment() {
             })
 
             //output number of entry hits
-            if (searchResults.size > 0) {
-                binding.advancedSearchTvNumberOfHits.setVisibility(View.VISIBLE)
+            binding.advancedSearchTvNumberOfHits.setVisibility(View.VISIBLE)
+            if (searchResults.isNotEmpty()) {
                 binding.advancedSearchTvNumberOfHits.text = searchResults.size.toString()
             } else {
                 binding.advancedSearchTvNumberOfHits.text = "0"
+                Toast.makeText(context, "No hits in database!", Toast.LENGTH_SHORT).show()
             }
         }
         // Live Data Observer for Input 'Date Time Span': Set entries to RecyclerView
