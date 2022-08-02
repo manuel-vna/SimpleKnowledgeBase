@@ -11,6 +11,7 @@ class HelperFunctions {
 
     companion object {
 
+        // function hideKeyboard() added as an extension function of class Fragment
         fun Fragment.hideKeyboard() {
             view?.let { activity?.hideKeyboard(it) }
         }

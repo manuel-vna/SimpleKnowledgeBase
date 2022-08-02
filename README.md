@@ -17,7 +17,7 @@ All user created 'Categories' can be shown and searched in an overview list.
 
 <br>
 
-### Components
+### Areas
 The app covers the following aspects of Android programming:
 
 - #### Saving data in a local database

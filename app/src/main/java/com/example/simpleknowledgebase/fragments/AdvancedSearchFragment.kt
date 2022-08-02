@@ -164,7 +164,7 @@ class AdvancedSearchFragment : Fragment() {
         // search button click: search query
         binding.advancedSearchBtnSearch.setOnClickListener { view ->
             searchQuery()
-            // call hideKeyboard() of class util.HelperFunctions
+            // calling extension function hideKeyboard() of class fragment which is defined in class: util.HelperFunctions
             hideKeyboard()
         }
         // search field ClickListener (pressing enter): search query
