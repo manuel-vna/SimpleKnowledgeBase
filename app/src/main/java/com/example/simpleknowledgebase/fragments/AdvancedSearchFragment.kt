@@ -19,6 +19,8 @@ import com.example.simpleknowledgebase.Entry
 import com.example.simpleknowledgebase.R
 import com.example.simpleknowledgebase.adapters.EntryRecyclerViewAdapter
 import com.example.simpleknowledgebase.databinding.FragmentAdvancedSearchBinding
+import com.example.simpleknowledgebase.utils.HelperFunctions
+import com.example.simpleknowledgebase.utils.HelperFunctions.Companion.hideKeyboard
 import com.example.simpleknowledgebase.viewmodels.AdvancedSearchViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -162,6 +164,8 @@ class AdvancedSearchFragment : Fragment() {
         // search button click: search query
         binding.advancedSearchBtnSearch.setOnClickListener { view ->
             searchQuery()
+            // call hideKeyboard() of class util.HelperFunctions
+            hideKeyboard()
         }
         // search field ClickListener (pressing enter): search query
         binding.advancedSearchEtSearch.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
