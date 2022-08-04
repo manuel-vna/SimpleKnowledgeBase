@@ -18,6 +18,7 @@ import com.example.simpleknowledgebase.Entry
 import com.example.simpleknowledgebase.R
 import com.example.simpleknowledgebase.adapters.EntryRecyclerViewAdapter
 import com.example.simpleknowledgebase.databinding.FragmentKeywordSearchBinding
+import com.example.simpleknowledgebase.utils.HelperFunctions.Companion.hideKeyboard
 import com.example.simpleknowledgebase.viewmodels.KeywordSearchViewModel
 
 
@@ -81,6 +82,9 @@ class KeywordSearchFragment : Fragment() {
         binding.keywordBtnSearch.setOnClickListener(object : View.OnClickListener {
             override fun onClick(view: View?) {
                 keywordSearchViewModel.findKeyword(binding.keywordEtSearch.text.toString())
+
+                // calling extension function hideKeyboard() of class fragment which is defined in class: util.HelperFunctions
+                hideKeyboard()
             }
         })
         // Button: Advanced

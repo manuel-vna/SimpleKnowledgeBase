@@ -19,7 +19,6 @@ import com.example.simpleknowledgebase.Entry
 import com.example.simpleknowledgebase.R
 import com.example.simpleknowledgebase.adapters.EntryRecyclerViewAdapter
 import com.example.simpleknowledgebase.databinding.FragmentAdvancedSearchBinding
-import com.example.simpleknowledgebase.utils.HelperFunctions
 import com.example.simpleknowledgebase.utils.HelperFunctions.Companion.hideKeyboard
 import com.example.simpleknowledgebase.viewmodels.AdvancedSearchViewModel
 import kotlinx.coroutines.CoroutineScope
