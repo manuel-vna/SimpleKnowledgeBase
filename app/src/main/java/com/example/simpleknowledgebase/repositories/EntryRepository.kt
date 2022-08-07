@@ -91,10 +91,16 @@ class EntryRepository(private val entryDao: EntryDao) {
         dateTo: String,
         returnEntriesOfDateTimeSpan: (List<Entry>) -> Unit
     ) {
-        GlobalScope.launch(Dispatchers.Main) {
+        // context 'IO' for call to the DAO
+        GlobalScope.launch(Dispatchers.IO) {
             searchResultsDate = entryDao.findEntriesOfDateTimeSpan(dateFrom, dateTo)
-            Log.i("Debug_A", "EntryRepository -Date: " + searchResultsDate.toString())
-            returnEntriesOfDateTimeSpan(searchResultsDate)
+            //Log.i("Debug_A", "EntryRepository -Date: " + searchResultsDate.toString())
+
+            // change context to main Thread for upcoming UI processing
+            withContext(Dispatchers.Main) {
+                returnEntriesOfDateTimeSpan(searchResultsDate)
+            }
+
         }
     }
 
@@ -105,14 +111,20 @@ class EntryRepository(private val entryDao: EntryDao) {
         keyword: String,
         returnEntriesOfAdvancedSearchField: (List<Entry>) -> Unit
     ) {
-        GlobalScope.launch(Dispatchers.Main) {
+        // context 'IO' for call to the DAO
+        GlobalScope.launch(Dispatchers.IO) {
             when(field){
                 "title" -> searchResultsAdvancedSearchField = entryDao.findAdvancedSearchTitle(keyword)
                 "description" -> searchResultsAdvancedSearchField = entryDao.findAdvancedSearchDescription(keyword)
                 "source" -> searchResultsAdvancedSearchField = entryDao.findAdvancedSearchSource(keyword)
             }
-            Log.i("Debug_A", "EntryRepository - Field: " + searchResultsAdvancedSearchField.toString())
-            returnEntriesOfAdvancedSearchField(searchResultsAdvancedSearchField)
+            //Log.i("Debug_A", "EntryRepository - Field: " + searchResultsAdvancedSearchField.toString())
+
+            // change context to main Thread for upcoming UI processing
+            withContext(Dispatchers.Main) {
+                returnEntriesOfAdvancedSearchField(searchResultsAdvancedSearchField)
+            }
+
         }
     }
 

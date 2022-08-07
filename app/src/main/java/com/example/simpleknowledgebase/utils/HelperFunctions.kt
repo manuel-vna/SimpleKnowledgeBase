@@ -13,6 +13,7 @@ class HelperFunctions {
     companion object {
         // function hideKeyboard() added as an extension function of class Fragment
         fun Fragment.hideKeyboard() {
+            //scope function let{} (lambda) assures that its body is only executed if view != null
             view?.let { activity?.hideKeyboard(it) }
         }
         fun Activity.hideKeyboard() {
