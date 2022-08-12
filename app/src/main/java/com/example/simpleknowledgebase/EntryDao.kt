@@ -1,7 +1,7 @@
 package com.example.simpleknowledgebase
 
+import android.database.Cursor
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.room.*
 
 
@@ -36,6 +36,9 @@ interface EntryDao {
 
     @Query("Select * FROM KbTable WHERE (source LIKE '%'||:keyword||'%')")
     suspend fun findAdvancedSearchSource(keyword: String) : List<Entry>
+
+    @Query("Select * from KbTable")
+    fun getAllEntriesAsCursor() : Cursor
 
 
     @Insert

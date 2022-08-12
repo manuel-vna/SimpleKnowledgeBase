@@ -14,12 +14,15 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 
 
-class AppPermissions() {
+class AppPermissions(activity: Activity, context: Context) {
 
     //if-Blocks: Android 11 or higher
     //else-Blocks: Below Android 11
 
-    private fun checkExportPermission(context:Context): Boolean {
+    var activity: Activity = activity
+    var context: Context = context
+
+    fun checkExportPermission(): Boolean {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             return true
         }
@@ -29,7 +32,7 @@ class AppPermissions() {
         }
     }
 
-    private fun requestExportPermission(activity: Activity) {
+    fun requestExportPermission() {
         ActivityCompat.requestPermissions(
             activity,
             arrayOf(permission.WRITE_EXTERNAL_STORAGE),
@@ -37,7 +40,7 @@ class AppPermissions() {
         )
     }
 
-    private fun checkImportPermission(context:Context): Boolean {
+    fun checkImportPermission(context:Context): Boolean {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             Environment.isExternalStorageManager()
         } else {
@@ -49,7 +52,7 @@ class AppPermissions() {
         }
     }
 
-    private fun requestImportPermission(activity: Activity, context: Context) {
+    fun requestImportPermission(activity: Activity, context: Context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             try {
                 val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)

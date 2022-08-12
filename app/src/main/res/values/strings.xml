@@ -37,7 +37,7 @@
     <string name="export_tv_title">Export database</string>
     <string name="export_tv_description">Your database will be exported to your Downloads directory</string>
     <string name="export_btn_cancel">Cancel</string>
-    <string name="export_btn_okay">TBD</string>
+    <string name="export_btn_okay">Okay</string>
 
     <!-- fragment_advanced_search -->
     <string name="advancedSearch_rb_DateSearch">Search by date</string>
