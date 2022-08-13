@@ -2,22 +2,25 @@ package com.example.simpleknowledgebase.fragments
 
 import android.app.Application
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.lifecycleScope
 import com.example.simpleknowledgebase.EntryDatabase
 import com.example.simpleknowledgebase.databinding.FragmentDialogExportDatabaseBinding
 import com.example.simpleknowledgebase.utils.AppPermissions
 import com.example.simpleknowledgebase.utils.ExportDatabase
+import kotlinx.coroutines.*
 
 
 class ExportDatabaseDialogFragment  : DialogFragment(){
 
     private var _binding: FragmentDialogExportDatabaseBinding? = null
     private val binding get() = _binding!!
-    //var appDb: EntryDatabase? = null
+    var exportSuccess: String = "unknown"
 
 
     companion object {
@@ -37,7 +40,6 @@ class ExportDatabaseDialogFragment  : DialogFragment(){
         savedInstanceState: Bundle?
     ): View? {
 
-        //return inflater.inflate(R.layout.fragment_dialog_export_database, container, false)
 
         _binding = FragmentDialogExportDatabaseBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -62,27 +64,55 @@ class ExportDatabaseDialogFragment  : DialogFragment(){
                 appPermissions.requestExportPermission()
             }
 
+
             var exportDatabase: ExportDatabase = ExportDatabase(appDb)
-            var writingSuccess = exportDatabase.runExport()
-            dismiss() // close popup window
 
-            if (writingSuccess) {
-                Toast.makeText(
-                    context,
-                    "Storing data at: 'storage/emulated/0/Download'",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-            else{
-                Toast.makeText(
-                    context,
-                    "Export failed!",
-                    Toast.LENGTH_SHORT
-                ).show()
 
+            fun displayToast(exportSuccess: String) {
+                dismiss()
+                if (exportSuccess == "success") {
+                    Toast.makeText(
+                        context,
+                        "Storing data at: 'storage/emulated/0/Download'",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else if(exportSuccess == "empty"){
+                    Toast.makeText(
+                        context,
+                        "Database is empty!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                else {
+                    Toast.makeText(
+                        context,
+                        "Export failed!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
+
+            fun doWorkAsync(): Deferred<String> =
+                GlobalScope.async(Dispatchers.IO) {
+                return@async exportDatabase.runExport() }
+
+            //Dispatchers.Main is important since the ui-toast 'displayToast()' is called within this coroutine. lifecycleScope.launch() could be used alternatively {
+            GlobalScope.launch(Dispatchers.Main) {
+            exportSuccess = doWorkAsync().await()
+                displayToast(exportSuccess)
+            }
+
         }
     }
 
-
 }
+
+/*
+TO DO
+
+- test export in api levels 28 and 30,33 (scoped storage introduce in android 11 / api level 30)
+
+- write automated tests
+
+ */
