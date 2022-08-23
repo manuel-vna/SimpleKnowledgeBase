@@ -30,6 +30,7 @@ import com.example.simpleknowledgebase.databinding.ActivityMainBinding
 import com.example.simpleknowledgebase.fragments.ExportDatabaseDialogFragment
 import com.example.simpleknowledgebase.viewmodels.KeywordSearchViewModel
 import com.example.simpleknowledgebase.viewmodels.MainActivityViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.net.URLClassLoader.newInstance
 import javax.xml.datatype.DatatypeFactory.newInstance
 import javax.xml.transform.TransformerFactory.newInstance
@@ -55,6 +56,7 @@ class MainActivity : AppCompatActivity() {
 
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation_view) // NEW: Bottom Navigation Bar
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -65,14 +67,16 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        bottomNavigationView.setupWithNavController(navController)  // NEW: Bottom Navigation Bar
 
         setNavigationDrawerHeader()
 
     }
 
+
     private fun setNavigationDrawerHeader(){
 
-        var navigationView: NavigationView = binding.navView
+        var navigationView: NavigationView= binding.navView
         var headerView: View = navigationView.getHeaderView(0)
         var navigationDrawerEntriesTotal: TextView = headerView.findViewById(R.id.nav_header_title)
 

@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Manuel.von.Au/StudioProjects/SimpleKnowledgeBase/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3345" />
         <entry key="..\:/Users/Manuel.von.Au/StudioProjects/SimpleKnowledgeBase/app/src/main/res/drawable/ic_menu_gallery.xml" value="0.318" />
+        <entry key="..\:/Users/Manuel.von.Au/StudioProjects/SimpleKnowledgeBase/app/src/main/res/drawable/ic_menu_slideshow.xml" value="0.3345" />
         <entry key="..\:/Users/Manuel.von.Au/StudioProjects/SimpleKnowledgeBase/app/src/main/res/drawable/recyclerview_line_divider.xml" value="0.318" />
         <entry key="..\:/Users/Manuel.von.Au/StudioProjects/SimpleKnowledgeBase/app/src/main/res/drawable/side_nav_bar.xml" value="0.318" />
         <entry key="..\:/Users/Manuel.von.Au/StudioProjects/SimpleKnowledgeBase/app/src/main/res/layout-land/fragment_keyword_search.xml" value="0.44479166666666664" />
@@ -20,6 +22,7 @@
         <entry key="..\:/Users/Manuel.von.Au/StudioProjects/SimpleKnowledgeBase/app/src/main/res/layout/nav_content_main.xml" value="0.36302083333333335" />
         <entry key="..\:/Users/Manuel.von.Au/StudioProjects/SimpleKnowledgeBase/app/src/main/res/layout/nav_header_main.xml" value="0.36302083333333335" />
         <entry key="..\:/Users/Manuel.von.Au/StudioProjects/SimpleKnowledgeBase/app/src/main/res/menu/activity_main_drawer.xml" value="0.4466666666666667" />
+        <entry key="..\:/Users/Manuel.von.Au/StudioProjects/SimpleKnowledgeBase/app/src/main/res/menu/bottom_navigation_bar.xml" value="0.3619791666666667" />
         <entry key="..\:/Users/Manuel.von.Au/StudioProjects/SimpleKnowledgeBase/app/src/main/res/menu/main.xml" value="0.425" />
       </map>
     </option>
