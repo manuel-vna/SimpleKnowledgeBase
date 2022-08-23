@@ -4,18 +4,18 @@
     <item
         android:id="@+id/nav_home"
         android:title="Home"
-        android:icon="@drawable/ic_menu_camera"/>
+        android:icon="@drawable/ic_baseline_home_24"/>
     <item
         android:id="@+id/nav_add_entry"
         android:title="Add Entry"
-        android:icon="@drawable/ic_menu_gallery"/>
+        android:icon="@drawable/ic_baseline_playlist_add_24"/>
     <item
         android:id="@+id/nav_categoryOverviewFragment"
-        android:title="Category Search"
-        android:icon="@drawable/ic_menu_slideshow"/>
+        android:title="Categories"
+        android:icon="@drawable/ic_baseline_category_24"/>
     <item
         android:id="@+id/nav_advanced_search"
-        android:title="Advanced Search"
-        android:icon="@drawable/ic_menu_gallery"/>
+        android:title="Advanced"
+        android:icon="@drawable/ic_baseline_search_24"/>
 
 </menu>

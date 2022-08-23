@@ -87,25 +87,6 @@ class KeywordSearchFragment : Fragment() {
                 hideKeyboard()
             }
         })
-        // Button: Advanced
-        binding.keywordBtnAdvancedSearch.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(view: View?) {
-                findNavController().navigate(R.id.action_nav_home_to_nav_advanced_search)
-            }
-        })
-        // Button Categories
-        binding.keywordBtnCategoryOverview?.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(view: View?) {
-                findNavController().navigate(R.id.action_nav_home_to_categoryOverviewFragment)
-            }
-        })
-
-        //Button: Add Entry
-        binding.keywordBtnAddEntry.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(view: View?) {
-                findNavController().navigate(R.id.action_nav_home_to_nav_add_entry)
-            }
-        })
 
         // Live Data Observer: Keyword Search
         keywordSearchViewModel.getKeywordLiveData().observe(viewLifecycleOwner,object: Observer<List<Entry>> {

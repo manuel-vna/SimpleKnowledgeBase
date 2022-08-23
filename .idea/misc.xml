@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Manuel.von.Au/StudioProjects/SimpleKnowledgeBase/app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.336" />
+        <entry key="..\:/Users/Manuel.von.Au/StudioProjects/SimpleKnowledgeBase/app/src/main/res/drawable/ic_baseline_playlist_add_24.xml" value="0.336" />
+        <entry key="..\:/Users/Manuel.von.Au/StudioProjects/SimpleKnowledgeBase/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.336" />
         <entry key="..\:/Users/Manuel.von.Au/StudioProjects/SimpleKnowledgeBase/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3345" />
         <entry key="..\:/Users/Manuel.von.Au/StudioProjects/SimpleKnowledgeBase/app/src/main/res/drawable/ic_menu_gallery.xml" value="0.318" />
         <entry key="..\:/Users/Manuel.von.Au/StudioProjects/SimpleKnowledgeBase/app/src/main/res/drawable/ic_menu_slideshow.xml" value="0.3345" />
