@@ -9,7 +9,8 @@
     <string name="nav_header_desc">Navigation header</string>
 
     <!-- nav app bar top -->
-    <string name="action_settings">Export</string>
+    <string name="action_settings_Export">Export Database</string>
+    <string name="action_settings_Import">Import Database</string>
 
     <!-- mobile_navigation.xml -->
     <string name="menu_home">Home</string>

@@ -96,12 +96,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
 
-        R.id.action_settings -> {
-
-            //Toast.makeText(this, "TBD", Toast.LENGTH_LONG).show()
-
+        R.id.action_settings_Export -> {
             ExportDatabaseDialogFragment.newInstance().show(supportFragmentManager, ExportDatabaseDialogFragment.TAG)
-
+            true
+        }
+        R.id.action_settings_Import -> {
+            //TBD
             true
         }
         else -> {
