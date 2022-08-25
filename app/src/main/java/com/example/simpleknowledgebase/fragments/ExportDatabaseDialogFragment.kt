@@ -2,13 +2,11 @@ package com.example.simpleknowledgebase.fragments
 
 import android.app.Application
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.lifecycleScope
 import com.example.simpleknowledgebase.EntryDatabase
 import com.example.simpleknowledgebase.databinding.FragmentDialogExportDatabaseBinding
 import com.example.simpleknowledgebase.utils.AppPermissions

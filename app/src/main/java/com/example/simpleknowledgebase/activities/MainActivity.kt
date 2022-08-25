@@ -28,6 +28,7 @@ import com.example.simpleknowledgebase.R
 import com.example.simpleknowledgebase.adapters.EntryRecyclerViewAdapter
 import com.example.simpleknowledgebase.databinding.ActivityMainBinding
 import com.example.simpleknowledgebase.fragments.ExportDatabaseDialogFragment
+import com.example.simpleknowledgebase.utils.ImportDatabase
 import com.example.simpleknowledgebase.viewmodels.KeywordSearchViewModel
 import com.example.simpleknowledgebase.viewmodels.MainActivityViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -41,8 +42,17 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
+    //variable that refers to the class: ImportDatabase
+    lateinit var observerImportDatabase : ImportDatabase
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // create instance of class ImportDatabase in order to access its public methods later
+        observerImportDatabase = ImportDatabase(application,activityResultRegistry)
+        // include class ImportDatabase into the lifecycle environment by adding it as observer
+        lifecycle.addObserver(observerImportDatabase)
 
         mainActivityViewModel =
             ViewModelProvider(this).get(MainActivityViewModel::class.java)
@@ -101,7 +111,8 @@ class MainActivity : AppCompatActivity() {
             true
         }
         R.id.action_settings_Import -> {
-            //TBD
+            //call method in class ImportDatabase
+            observerImportDatabase.selectImportFile()
             true
         }
         else -> {

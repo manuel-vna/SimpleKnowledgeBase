@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.simpleknowledgebase.Entry
 import com.example.simpleknowledgebase.EntryDatabase
 import com.example.simpleknowledgebase.repositories.EntryRepository
 
