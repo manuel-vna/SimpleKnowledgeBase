@@ -14,7 +14,10 @@ import com.example.simpleknowledgebase.EntryDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-
+import java.io.BufferedReader
+import java.io.FileNotFoundException
+import java.io.InputStream
+import java.io.InputStreamReader
 
 
 class ImportDatabase(context: Context, private val registry : ActivityResultRegistry) : DefaultLifecycleObserver {
@@ -22,6 +25,9 @@ class ImportDatabase(context: Context, private val registry : ActivityResultRegi
     lateinit var activityResultLauncherImport: ActivityResultLauncher<Intent>
     var context = context
     var appDb: EntryDatabase = EntryDatabase.getInstance(context)
+
+    var lastDbId: Int = 0 // default value for an empty database
+    lateinit var importLinePointer: String
 
 
     override fun onCreate(owner: LifecycleOwner) {
@@ -32,19 +38,23 @@ class ImportDatabase(context: Context, private val registry : ActivityResultRegi
 
 
             GlobalScope.launch(Dispatchers.IO){
-                try {
-                    val cursor: Cursor = appDb.entryDao().getAllEntriesAsCursor()
-                    cursor.moveToLast()
-                    val dbColumnIndex: Int = cursor.getColumnIndex("id")
-                    val lastDbId: Int = cursor.getInt(dbColumnIndex)
 
-                } catch (e: Exception) {
-                    Log.i("Debug_A", "Database Status: No entries yet")
+                // Retrieving the value of the column 'id' for the very last row.
+                // This is achieved by setting the cursor to the last row, checking with 'cursor.position >= 0' if there is a row at all
+                // Then the index of the column 'id' is retrieved
+                // which is used to retrieve the value of the column 'id' of the last row of the table
+                val cursor: Cursor = appDb.entryDao().getAllEntriesAsCursor()
+                cursor.moveToLast()
+                if (cursor.position >= 0) {
+                    var dbColumnIndex: Int = cursor.getColumnIndex("id") //columnIndexes: column 'id' == 0, 'date' == 1, 'title' == 2, etc.
+                    lastDbId = cursor.getInt(dbColumnIndex)
                 }
+
+                //TBD
+
 
 
             }
-
         }
     }
 
