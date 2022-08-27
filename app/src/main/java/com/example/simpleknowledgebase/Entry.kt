@@ -22,6 +22,10 @@ data class Entry (
 
     @Ignore
     constructor(id: Int, date: String, title: String, category: String, description: String): this(id,date,title,category,description, "empty")
+
+    //Test
+    @Ignore
+    constructor(title: String, category: String, description: String,source:String): this(0,"empty",title,category,description, source)
 }
 
 

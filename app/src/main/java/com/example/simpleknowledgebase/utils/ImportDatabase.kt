@@ -10,6 +10,7 @@ import androidx.activity.result.ActivityResultRegistry
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
+import com.example.simpleknowledgebase.Entry
 import com.example.simpleknowledgebase.EntryDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -33,8 +34,12 @@ class ImportDatabase(context: Context, private val registry : ActivityResultRegi
     override fun onCreate(owner: LifecycleOwner) {
         activityResultLauncherImport = registry.register("key",owner,ActivityResultContracts.StartActivityForResult()) { result ->
 
-            val data: Intent? = result.data
+            val data: Intent? = result?.data
             val uri: Uri? = data?.data
+
+            if (data == null || uri == null){
+                //TBD: ui error message
+            }
 
 
             GlobalScope.launch(Dispatchers.IO){
@@ -50,8 +55,26 @@ class ImportDatabase(context: Context, private val registry : ActivityResultRegi
                     lastDbId = cursor.getInt(dbColumnIndex)
                 }
 
-                //TBD
+                val inputStream: InputStream? = context.contentResolver.openInputStream(uri!!)
+                if (inputStream == null){
+                    //TBD: ui error message
+                }
 
+
+                fun readCsv(inputStream: InputStream): List<Entry> {
+                    val reader = inputStream.bufferedReader()
+                    return reader.lineSequence()
+                        .filter { it.isNotBlank() }
+                        .map {
+                            val (title,category,description,source) =
+                                it.split(';', ignoreCase = false, limit = 4)
+                            Entry(title, category,description,source)
+                        }.toList()
+                }
+                val entriesImportList = readCsv(inputStream!!)
+
+
+                Log.i("Debug_A",entriesImportList.toString())
 
 
             }
