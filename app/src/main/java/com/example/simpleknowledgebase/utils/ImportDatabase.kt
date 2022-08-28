@@ -62,14 +62,18 @@ class ImportDatabase(context: Context, private val registry : ActivityResultRegi
 
 
                 fun readCsv(inputStream: InputStream): List<Entry> {
-                    val reader = inputStream.bufferedReader()
-                    return reader.lineSequence()
-                        .filter { it.isNotBlank() }
+
+                    // read data in a buffer
+                    val reader: BufferedReader = inputStream.bufferedReader()
+
+                    return reader.useLines {
+                        it.filter { it.isNotBlank() }
                         .map {
                             val (title,category,description,source) =
                                 it.split(';', ignoreCase = false, limit = 4)
                             Entry(title, category,description,source)
                         }.toList()
+                    }
                 }
                 val entriesImportList = readCsv(inputStream!!)
 
