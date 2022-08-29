@@ -2,39 +2,29 @@ package com.example.simpleknowledgebase.activities
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.navigation.NavigationView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.bundleOf
-import androidx.fragment.app.FragmentManager.TAG
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.simpleknowledgebase.Entry
 import com.example.simpleknowledgebase.R
-import com.example.simpleknowledgebase.adapters.EntryRecyclerViewAdapter
 import com.example.simpleknowledgebase.databinding.ActivityMainBinding
 import com.example.simpleknowledgebase.fragments.ExportDatabaseDialogFragment
 import com.example.simpleknowledgebase.utils.ImportDatabase
-import com.example.simpleknowledgebase.viewmodels.KeywordSearchViewModel
 import com.example.simpleknowledgebase.viewmodels.MainActivityViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import java.net.URLClassLoader.newInstance
-import javax.xml.datatype.DatatypeFactory.newInstance
-import javax.xml.transform.TransformerFactory.newInstance
+import com.google.android.material.navigation.NavigationView
+import kotlinx.coroutines.delay
 
 class MainActivity : AppCompatActivity() {
 
@@ -126,4 +116,6 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+
+
 }

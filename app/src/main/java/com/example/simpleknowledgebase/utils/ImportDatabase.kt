@@ -10,22 +10,30 @@ import androidx.activity.result.ActivityResultRegistry
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ViewModelProvider
 import com.example.simpleknowledgebase.Entry
+import com.example.simpleknowledgebase.EntryDao
 import com.example.simpleknowledgebase.EntryDatabase
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import com.example.simpleknowledgebase.activities.MainActivity
+import com.example.simpleknowledgebase.viewmodels.AddEntryViewModel
+import kotlinx.coroutines.*
 import java.io.BufferedReader
 import java.io.FileNotFoundException
 import java.io.InputStream
 import java.io.InputStreamReader
+import java.time.LocalDateTime
 
 
 class ImportDatabase(context: Context, private val registry : ActivityResultRegistry) : DefaultLifecycleObserver {
 
     lateinit var activityResultLauncherImport: ActivityResultLauncher<Intent>
     var context = context
-    var appDb: EntryDatabase = EntryDatabase.getInstance(context)
+    val appDb: EntryDatabase = EntryDatabase.getInstance(context)
+    val entryDao: EntryDao = appDb.entryDao()
+
+    private val coroutineScope = CoroutineScope(Dispatchers.IO)
+    val mainActivity = MainActivity()
+
 
     var lastDbId: Int = 0 // default value for an empty database
     lateinit var importLinePointer: String
@@ -33,6 +41,7 @@ class ImportDatabase(context: Context, private val registry : ActivityResultRegi
 
     override fun onCreate(owner: LifecycleOwner) {
         activityResultLauncherImport = registry.register("key",owner,ActivityResultContracts.StartActivityForResult()) { result ->
+
 
             val data: Intent? = result?.data
             val uri: Uri? = data?.data
@@ -42,7 +51,7 @@ class ImportDatabase(context: Context, private val registry : ActivityResultRegi
             }
 
 
-            GlobalScope.launch(Dispatchers.IO){
+            val importFromFile = coroutineScope.launch(){
 
                 // Retrieving the value of the column 'id' for the very last row.
                 // This is achieved by setting the cursor to the last row, checking with 'cursor.position >= 0' if there is a row at all
@@ -78,10 +87,24 @@ class ImportDatabase(context: Context, private val registry : ActivityResultRegi
                 val entriesImportList = readCsv(inputStream!!)
 
 
-                Log.i("Debug_A",entriesImportList.toString())
+                for (entry in entriesImportList) {
+                    lastDbId += 1
 
+                    val id: Int = lastDbId
+                    val date: String = LocalDateTime.now().toString()
+                    val title: String = entry.title
+                    val category: String = entry.category
+                    val description: String = entry.description
+                    val source: String = entry.source
+
+                    entryDao.insertEntry(Entry(id,date,title,category,description,source))
+
+                    //TBD: message in ui that import is done
+
+                }
 
             }
+
         }
     }
 
