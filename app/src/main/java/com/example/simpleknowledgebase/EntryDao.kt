@@ -41,8 +41,11 @@ interface EntryDao {
     fun getAllEntriesAsCursor() : Cursor
 
 
+    //Test
     @Insert
-    fun insertEntry(entry: Entry)
+    fun insertEntry(entry: Entry) : Long
+    //@Insert
+    //fun insertEntry(entry: Entry)
 
     @Update
     fun updateEntry(entry: Entry)

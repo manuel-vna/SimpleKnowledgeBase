@@ -9,6 +9,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.ActivityResultRegistry
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import com.example.simpleknowledgebase.Entry
@@ -21,6 +22,7 @@ import java.io.BufferedReader
 import java.io.FileNotFoundException
 import java.io.InputStream
 import java.io.InputStreamReader
+import java.lang.Exception
 import java.time.LocalDateTime
 
 
@@ -34,24 +36,20 @@ class ImportDatabase(context: Context, private val registry : ActivityResultRegi
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
     val mainActivity = MainActivity()
 
-
+    lateinit var entriesImportList: List<Entry>
     var lastDbId: Int = 0 // default value for an empty database
-    lateinit var importLinePointer: String
+    var newIdsInDb: MutableList<Long> = ArrayList()
 
 
     override fun onCreate(owner: LifecycleOwner) {
-        activityResultLauncherImport = registry.register("key",owner,ActivityResultContracts.StartActivityForResult()) { result ->
 
+        activityResultLauncherImport = registry.register("key",owner,ActivityResultContracts.StartActivityForResult()) { result ->
 
             val data: Intent? = result?.data
             val uri: Uri? = data?.data
 
-            if (data == null || uri == null){
-                //TBD: ui error message
-            }
 
-
-            val importFromFile = coroutineScope.launch(){
+            coroutineScope.launch(){
 
                 // Retrieving the value of the column 'id' for the very last row.
                 // This is achieved by setting the cursor to the last row, checking with 'cursor.position >= 0' if there is a row at all
@@ -65,9 +63,6 @@ class ImportDatabase(context: Context, private val registry : ActivityResultRegi
                 }
 
                 val inputStream: InputStream? = context.contentResolver.openInputStream(uri!!)
-                if (inputStream == null){
-                    //TBD: ui error message
-                }
 
 
                 fun readCsv(inputStream: InputStream): List<Entry> {
@@ -84,8 +79,10 @@ class ImportDatabase(context: Context, private val registry : ActivityResultRegi
                         }.toList()
                     }
                 }
-                val entriesImportList = readCsv(inputStream!!)
+                entriesImportList = readCsv(inputStream!!)
 
+                //list of new table IDs (=rows) has to be empty for every new import run
+                newIdsInDb.clear()
 
                 for (entry in entriesImportList) {
                     lastDbId += 1
@@ -97,12 +94,18 @@ class ImportDatabase(context: Context, private val registry : ActivityResultRegi
                     val description: String = entry.description
                     val source: String = entry.source
 
-                    entryDao.insertEntry(Entry(id,date,title,category,description,source))
-
-                    //TBD: message in ui that import is done
+                    var successCode = entryDao.insertEntry(Entry(id,date,title,category,description,source))
+                    newIdsInDb.add(successCode)
 
                 }
 
+                // this Boolean compares if the amount of initially retrieved rows from the file matches
+                val importSuccess: Boolean = newIdsInDb.count() == entriesImportList.count()
+
+
+                withContext(Dispatchers.Main){
+                    mainActivity.importFinishedMessage(context,importSuccess)
+                }
             }
 
         }
@@ -110,13 +113,20 @@ class ImportDatabase(context: Context, private val registry : ActivityResultRegi
 
 
     fun selectImportFile(){
+
         var data = Intent(Intent.ACTION_GET_CONTENT)
         data.addCategory(Intent.CATEGORY_OPENABLE)
         val mimeTypes = arrayOf("text/csv", "text/comma-separated-values")
         data.type = "*/*"
         data.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
         data = Intent.createChooser(data, "Choose a file")
-        activityResultLauncherImport.launch(data)
+
+        try {
+            activityResultLauncherImport.launch(data)
+        }
+        catch(e: Exception) {
+            mainActivity.importErrorMessage(context)
+        }
     }
 
 }

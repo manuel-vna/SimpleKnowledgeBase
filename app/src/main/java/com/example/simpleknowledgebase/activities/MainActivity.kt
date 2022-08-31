@@ -1,7 +1,9 @@
 package com.example.simpleknowledgebase.activities
 
 
+import android.content.Context
 import android.os.Bundle
+import android.util.AttributeSet
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -74,6 +76,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+
     private fun setNavigationDrawerHeader(){
 
         var navigationView: NavigationView= binding.navView
@@ -115,6 +118,20 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    //the context is passed from the caller in the class 'ImportDatabase'
+    fun importFinishedMessage(context: Context,importSuccess: Boolean){
+        if (importSuccess) {
+            Toast.makeText(context, R.string.importFinishedMessage, Toast.LENGTH_SHORT).show()
+        }
+        else {
+            Log.i("Debug_A",R.string.importErrorMessage.toString())
+        }
+    }
+
+    fun importErrorMessage(context: Context){
+        Toast.makeText(context, R.string.importErrorMessage, Toast.LENGTH_SHORT).show()
     }
 
 

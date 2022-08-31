@@ -55,6 +55,9 @@
         <item>Source-URL</item>
     </string-array>
 
+    <!-- ImportDatabase -->
+    <string name="importFinishedMessage">CSV imported!</string>
+    <string name="importErrorMessage">Import failed!</string>
 
 
 </resources>
