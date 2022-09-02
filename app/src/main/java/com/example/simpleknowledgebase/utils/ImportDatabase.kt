@@ -9,20 +9,16 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.ActivityResultRegistry
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.DefaultLifecycleObserver
-import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.ViewModelProvider
 import com.example.simpleknowledgebase.Entry
 import com.example.simpleknowledgebase.EntryDao
 import com.example.simpleknowledgebase.EntryDatabase
 import com.example.simpleknowledgebase.activities.MainActivity
-import com.example.simpleknowledgebase.viewmodels.AddEntryViewModel
 import kotlinx.coroutines.*
+import org.apache.commons.csv.CSVFormat
+import org.apache.commons.csv.CSVParser
 import java.io.BufferedReader
-import java.io.FileNotFoundException
 import java.io.InputStream
-import java.io.InputStreamReader
-import java.lang.Exception
 import java.time.LocalDateTime
 
 
@@ -36,7 +32,7 @@ class ImportDatabase(context: Context, private val registry : ActivityResultRegi
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
     val mainActivity = MainActivity()
 
-    lateinit var entriesImportList: List<Entry>
+    var entriesImportList: MutableList<Entry> = ArrayList()
     var lastDbId: Int = 0 // default value for an empty database
     var newIdsInDb: MutableList<Long> = ArrayList()
 
@@ -65,43 +61,61 @@ class ImportDatabase(context: Context, private val registry : ActivityResultRegi
                 val inputStream: InputStream? = context.contentResolver.openInputStream(uri!!)
 
 
-                fun readCsv(inputStream: InputStream): List<Entry> {
+                fun readCsv(inputStream: InputStream): MutableList<Entry> {
 
-                    // read data in a buffer
                     val reader: BufferedReader = inputStream.bufferedReader()
+                    val csvFormat: CSVFormat = CSVFormat.DEFAULT.builder()
+                        .setDelimiter(';')
+                        .setEscape('/')
+                        .build();
+                    val csvParser = CSVParser(reader, csvFormat);
 
-                    return reader.useLines {
-                        it.filter { it.isNotBlank() }
-                        .map {
-                            val (title,category,description,source) =
-                                it.split(';', ignoreCase = false, limit = 4)
-                            Entry(title, category,description,source)
-                        }.toList()
+                    for (csvRecord in csvParser) {
+
+                        // row tih column size !=  4: drop row and record the according line numbers
+                        if (csvRecord.size() != 4){
+                            Log.i("Debug_A",csvRecord.toString())
+                            continue
+                        }
+
+                        //increase the id which belongs to each new row
+                        lastDbId += 1
+
+                        val id: Int = lastDbId
+                        val date: String = LocalDateTime.now().toString()
+                        val title: String = csvRecord.get(0)
+                        val category: String = csvRecord.get(1)
+                        val description: String = csvRecord.get(2)
+                        val source: String = csvRecord.get(3)
+
+                        entriesImportList += Entry(id, date, title, category, description, source)
+
                     }
+                    return entriesImportList
                 }
+
                 entriesImportList = readCsv(inputStream!!)
+
 
                 //list of new table IDs (=rows) has to be empty for every new import run
                 newIdsInDb.clear()
 
-                for (entry in entriesImportList) {
-                    lastDbId += 1
-
-                    val id: Int = lastDbId
-                    val date: String = LocalDateTime.now().toString()
-                    val title: String = entry.title
-                    val category: String = entry.category
-                    val description: String = entry.description
-                    val source: String = entry.source
-
-                    var successCode = entryDao.insertEntry(Entry(id,date,title,category,description,source))
-                    newIdsInDb.add(successCode)
-
+                // add collected entries to the database
+                try {
+                    for (entry in entriesImportList) {
+                        var successCode = entryDao.insertEntry(entry)
+                        newIdsInDb.add(successCode)
+                    }
+                } catch(e: Exception){
+                    newIdsInDb.clear()
+                    Log.i("Debug_A", "Import failed with Exception: $e")
                 }
 
                 // this Boolean compares if the amount of initially retrieved rows from the file matches
                 val importSuccess: Boolean = newIdsInDb.count() == entriesImportList.count()
 
+                // clear entry elements
+                entriesImportList.clear()
 
                 withContext(Dispatchers.Main){
                     mainActivity.importFinishedMessage(context,importSuccess)
@@ -121,12 +135,11 @@ class ImportDatabase(context: Context, private val registry : ActivityResultRegi
         data.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
         data = Intent.createChooser(data, "Choose a file")
 
-        try {
-            activityResultLauncherImport.launch(data)
-        }
-        catch(e: Exception) {
-            mainActivity.importErrorMessage(context)
-        }
+        activityResultLauncherImport.launch(data)
+
+        //TBD:
+        //mainActivity.importErrorMessage(context)
+
     }
 
 }

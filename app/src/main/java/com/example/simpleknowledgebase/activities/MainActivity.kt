@@ -104,6 +104,15 @@ class MainActivity : AppCompatActivity() {
             true
         }
         R.id.action_settings_Import -> {
+
+            // TBD add 'Don't as me again' popup to Import workflow
+            // Contents of the popup:
+
+            // - A semicolon (;) is expected as delimiter
+            // - Literal semicolons can be escaped via '/'
+            // - The following 4 columns are expected: Title, Category, Description and Source.
+            // - Rows with columns sizes that are unequal 4 are dropped
+
             //call method in class ImportDatabase
             observerImportDatabase.selectImportFile()
             true
