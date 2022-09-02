@@ -39,13 +39,17 @@ class MainActivity : AppCompatActivity() {
     lateinit var observerImportDatabase : ImportDatabase
 
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
 
         // create instance of class ImportDatabase in order to access its public methods later
         observerImportDatabase = ImportDatabase(application,activityResultRegistry)
         // include class ImportDatabase into the lifecycle environment by adding it as observer
         lifecycle.addObserver(observerImportDatabase)
+
 
         mainActivityViewModel =
             ViewModelProvider(this).get(MainActivityViewModel::class.java)
@@ -106,12 +110,9 @@ class MainActivity : AppCompatActivity() {
         }
         R.id.action_settings_Import -> {
 
-            // TBD add 'Don't as me again' popup to Import workflow
-            // Contents of the popup:
-            ImportDatabaseDialogFragment.newInstance().show(supportFragmentManager, ImportDatabaseDialogFragment.TAG)
-
+            //ImportDatabaseDialogFragment.newInstance().show(supportFragmentManager, ImportDatabaseDialogFragment.TAG)
             //call method in class ImportDatabase
-            //observerImportDatabase.selectImportFile()
+            observerImportDatabase.selectImportFile()
             true
         }
         else -> {

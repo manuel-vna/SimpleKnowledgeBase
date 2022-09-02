@@ -7,9 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.Observer
 import com.example.simpleknowledgebase.EntryDatabase
 import com.example.simpleknowledgebase.activities.MainActivity
 import com.example.simpleknowledgebase.databinding.FragmentDialogImportDatabaseBinding
+import com.example.simpleknowledgebase.utils.ImportDatabase
 
 class ImportDatabaseDialogFragment  : DialogFragment(){
 
@@ -17,7 +19,6 @@ class ImportDatabaseDialogFragment  : DialogFragment(){
     private val binding get() = _binding!!
 
     val mainActivity = MainActivity()
-
 
     companion object {
         const val TAG = "ImportDatabaseDialogFragment"
@@ -54,6 +55,9 @@ class ImportDatabaseDialogFragment  : DialogFragment(){
 
         binding.importBtnOkay.setOnClickListener() {
             Toast.makeText(context, "You did it!", Toast.LENGTH_SHORT).show()
+            //mainActiviy.startImportProcess()
+
+
         }
 
     }

@@ -8,13 +8,19 @@ import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.ActivityResultRegistry
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.example.simpleknowledgebase.Entry
 import com.example.simpleknowledgebase.EntryDao
 import com.example.simpleknowledgebase.EntryDatabase
+import com.example.simpleknowledgebase.R
 import com.example.simpleknowledgebase.activities.MainActivity
-import kotlinx.coroutines.*
+import com.example.simpleknowledgebase.fragments.ImportDatabaseDialogFragment
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVParser
 import java.io.BufferedReader
@@ -35,6 +41,12 @@ class ImportDatabase(context: Context, private val registry : ActivityResultRegi
     var entriesImportList: MutableList<Entry> = ArrayList()
     var lastDbId: Int = 0 // default value for an empty database
     var newIdsInDb: MutableList<Long> = ArrayList()
+
+    //filed input length definitions
+    private val titleMax: Int = R.string.titleMax.toInt()
+    private val categoryMax: Int = R.string.categoryMax.toInt()
+    private val descriptionMax: Int = R.string.descriptionMax.toInt()
+    private val sourceMax: Int = R.string.sourceMax.toInt()
 
 
     override fun onCreate(owner: LifecycleOwner) {
@@ -83,8 +95,8 @@ class ImportDatabase(context: Context, private val registry : ActivityResultRegi
 
                         val id: Int = lastDbId
                         val date: String = LocalDateTime.now().toString()
-                        val title: String = csvRecord.get(0)
-                        val category: String = csvRecord.get(1)
+                        var title: String = if (csvRecord.get(0).length <= titleMax) csvRecord.get(0) else csvRecord.get(0).substring(0, titleMax)
+                        val category: String = if (csvRecord.get(1).length <= categoryMax) csvRecord.get(1) else csvRecord.get(1).substring(0, categoryMax)
                         val description: String = csvRecord.get(2)
                         val source: String = csvRecord.get(3)
 
@@ -138,7 +150,13 @@ class ImportDatabase(context: Context, private val registry : ActivityResultRegi
 
         //TBD:
         //mainActivity.importErrorMessage(context)
+    }
 
+    fun openImportInfoWindow(supportFragmentManager2: FragmentManager){
+        var supportFragmentManager = supportFragmentManager2
+        // TBD add 'Don't as me again' popup to Import workflow
+        // Contents of the popup:
+        ImportDatabaseDialogFragment.newInstance().show(supportFragmentManager, ImportDatabaseDialogFragment.TAG)
     }
 
 }
