@@ -36,9 +36,16 @@
 
     <!-- fragment_dialog_export_database -->
     <string name="export_tv_title">Export database</string>
-    <string name="export_tv_description">Your database will be exported to your Downloads directory</string>
+    <string name="export_tv_description">Your database will be exported \nto your Downloads directory</string>
     <string name="export_btn_cancel">Cancel</string>
     <string name="export_btn_okay">Okay</string>
+
+    <!-- fragment_dialog_import_database -->
+    <string name="import_tv_title">Import database</string>
+    <string name="import_tv_description">\n- Expected delimiter = ;\n- Expected escape character / \n- Expected columns: Title, Category, Description, Source\n- Expected column size: 4</string>
+    <string name="import_btn_cancel">Cancel</string>
+    <string name="import_btn_okay">Okay</string>
+    <string name="import_btn_DontShowAgain">Dont show this again</string>
 
     <!-- fragment_advanced_search -->
     <string name="advancedSearch_rb_DateSearch">Search by date</string>

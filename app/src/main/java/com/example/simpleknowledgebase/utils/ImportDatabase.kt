@@ -107,7 +107,6 @@ class ImportDatabase(context: Context, private val registry : ActivityResultRegi
                         newIdsInDb.add(successCode)
                     }
                 } catch(e: Exception){
-                    newIdsInDb.clear()
                     Log.i("Debug_A", "Import failed with Exception: $e")
                 }
 

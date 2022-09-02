@@ -22,6 +22,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.simpleknowledgebase.R
 import com.example.simpleknowledgebase.databinding.ActivityMainBinding
 import com.example.simpleknowledgebase.fragments.ExportDatabaseDialogFragment
+import com.example.simpleknowledgebase.fragments.ImportDatabaseDialogFragment
 import com.example.simpleknowledgebase.utils.ImportDatabase
 import com.example.simpleknowledgebase.viewmodels.MainActivityViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -107,14 +108,10 @@ class MainActivity : AppCompatActivity() {
 
             // TBD add 'Don't as me again' popup to Import workflow
             // Contents of the popup:
-
-            // - A semicolon (;) is expected as delimiter
-            // - Literal semicolons can be escaped via '/'
-            // - The following 4 columns are expected: Title, Category, Description and Source.
-            // - Rows with columns sizes that are unequal 4 are dropped
+            ImportDatabaseDialogFragment.newInstance().show(supportFragmentManager, ImportDatabaseDialogFragment.TAG)
 
             //call method in class ImportDatabase
-            observerImportDatabase.selectImportFile()
+            //observerImportDatabase.selectImportFile()
             true
         }
         else -> {
@@ -128,6 +125,7 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+
 
     //the context is passed from the caller in the class 'ImportDatabase'
     fun importFinishedMessage(context: Context,importSuccess: Boolean){
