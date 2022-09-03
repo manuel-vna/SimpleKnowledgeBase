@@ -65,10 +65,10 @@
     <!-- ImportDatabase -->
     <string name="importFinishedMessage">CSV imported!</string>
     <string name="importErrorMessage">Import failed!</string>
-    <string name="titleMax">50</string>
-    <string name="categoryMax">20</string>
-    <string name="descriptionMax">500</string>
-    <string name="sourceMax">400</string>
+    <string name="titleMax">50</string> <!-- currently not in use: hading problem to include ints from here in a .kt file-->
+    <string name="categoryMax">20</string> <!-- currently not in use -->
+    <string name="descriptionMax">500</string> <!-- currently not in use -->
+    <string name="sourceMax">400</string> <!-- currently not in use -->
 
 
 </resources>

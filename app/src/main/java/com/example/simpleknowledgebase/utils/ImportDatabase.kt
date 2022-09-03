@@ -43,10 +43,10 @@ class ImportDatabase(context: Context, private val registry : ActivityResultRegi
     var newIdsInDb: MutableList<Long> = ArrayList()
 
     //filed input length definitions
-    private val titleMax: Int = R.string.titleMax.toInt()
-    private val categoryMax: Int = R.string.categoryMax.toInt()
-    private val descriptionMax: Int = R.string.descriptionMax.toInt()
-    private val sourceMax: Int = R.string.sourceMax.toInt()
+    private val titleMax: Int = 50
+    private val categoryMax: Int = 20
+    private val descriptionMax: Int = 500
+    private val sourceMax: Int = 400
 
 
     override fun onCreate(owner: LifecycleOwner) {
@@ -93,12 +93,14 @@ class ImportDatabase(context: Context, private val registry : ActivityResultRegi
                         //increase the id which belongs to each new row
                         lastDbId += 1
 
+
                         val id: Int = lastDbId
                         val date: String = LocalDateTime.now().toString()
+                        //checks included if the strings are too long. If yes, strings are shortened via substring()
                         var title: String = if (csvRecord.get(0).length <= titleMax) csvRecord.get(0) else csvRecord.get(0).substring(0, titleMax)
                         val category: String = if (csvRecord.get(1).length <= categoryMax) csvRecord.get(1) else csvRecord.get(1).substring(0, categoryMax)
-                        val description: String = csvRecord.get(2)
-                        val source: String = csvRecord.get(3)
+                        val description: String = if (csvRecord.get(2).length <= descriptionMax) csvRecord.get(2) else csvRecord.get(2).substring(0, descriptionMax)
+                        val source: String = if (csvRecord.get(3).length <= sourceMax) csvRecord.get(3) else csvRecord.get(3).substring(0, sourceMax)
 
                         entriesImportList += Entry(id, date, title, category, description, source)
 
