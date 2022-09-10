@@ -86,6 +86,8 @@ class UpdateDeleteEntryFragment: Fragment() {
         entry.source = updateDeleteTvSource
 
         updateDeleteViewModel.updateEntry(entry)
+
+        findNavController().navigate(R.id.action_updateDeleteEntryFragment_to_nav_home)
         Toast.makeText(context, "Entry updated", Toast.LENGTH_LONG).show()
     }
 
