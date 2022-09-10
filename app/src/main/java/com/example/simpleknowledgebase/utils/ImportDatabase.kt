@@ -14,13 +14,8 @@ import androidx.lifecycle.LifecycleOwner
 import com.example.simpleknowledgebase.Entry
 import com.example.simpleknowledgebase.EntryDao
 import com.example.simpleknowledgebase.EntryDatabase
-import com.example.simpleknowledgebase.R
 import com.example.simpleknowledgebase.activities.MainActivity
-import com.example.simpleknowledgebase.fragments.ImportDatabaseDialogFragment
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVParser
 import java.io.BufferedReader
@@ -28,7 +23,7 @@ import java.io.InputStream
 import java.time.LocalDateTime
 
 
-class ImportDatabase(context: Context, private val registry : ActivityResultRegistry) : DefaultLifecycleObserver {
+class ImportDatabase(context: Context, private val registry : ActivityResultRegistry,fragmentManager: FragmentManager) : DefaultLifecycleObserver {
 
     lateinit var activityResultLauncherImport: ActivityResultLauncher<Intent>
     var context = context
@@ -42,11 +37,16 @@ class ImportDatabase(context: Context, private val registry : ActivityResultRegi
     var lastDbId: Int = 0 // default value for an empty database
     var newIdsInDb: MutableList<Long> = ArrayList()
 
+    // count successfully and unsuccessfully imported lines
+    private var lineCountSuccess: Int = 0
+    private var lineCountError: Int = 0
+
     //filed input length definitions
     private val titleMax: Int = 50
     private val categoryMax: Int = 20
     private val descriptionMax: Int = 500
     private val sourceMax: Int = 400
+
 
 
     override fun onCreate(owner: LifecycleOwner) {
@@ -56,8 +56,7 @@ class ImportDatabase(context: Context, private val registry : ActivityResultRegi
             val data: Intent? = result?.data
             val uri: Uri? = data?.data
 
-
-            coroutineScope.launch(){
+            coroutineScope.launch(Dispatchers.IO) {
 
                 // Retrieving the value of the column 'id' for the very last row.
                 // This is achieved by setting the cursor to the last row, checking with 'cursor.position >= 0' if there is a row at all
@@ -66,12 +65,16 @@ class ImportDatabase(context: Context, private val registry : ActivityResultRegi
                 val cursor: Cursor = appDb.entryDao().getAllEntriesAsCursor()
                 cursor.moveToLast()
                 if (cursor.position >= 0) {
-                    var dbColumnIndex: Int = cursor.getColumnIndex("id") //columnIndexes: column 'id' == 0, 'date' == 1, 'title' == 2, etc.
+                    var dbColumnIndex: Int =
+                        cursor.getColumnIndex("id") //columnIndexes: column 'id' == 0, 'date' == 1, 'title' == 2, etc.
                     lastDbId = cursor.getInt(dbColumnIndex)
                 }
 
                 val inputStream: InputStream? = context.contentResolver.openInputStream(uri!!)
 
+                //reset success count variables
+                lineCountSuccess = 0
+                lineCountError = 0
 
                 fun readCsv(inputStream: InputStream): MutableList<Entry> {
 
@@ -83,26 +86,39 @@ class ImportDatabase(context: Context, private val registry : ActivityResultRegi
                     val csvParser = CSVParser(reader, csvFormat);
 
                     for (csvRecord in csvParser) {
-
                         // row tih column size !=  4: drop row and record the according line numbers
-                        if (csvRecord.size() != 4){
-                            Log.i("Debug_A",csvRecord.toString())
+                        if (csvRecord.size() != 4) {
+                            Log.i("Debug_A", csvRecord.toString())
+                            lineCountError += 1
                             continue
                         }
 
                         //increase the id which belongs to each new row
                         lastDbId += 1
 
-
                         val id: Int = lastDbId
                         val date: String = LocalDateTime.now().toString()
                         //checks included if the strings are too long. If yes, strings are shortened via substring()
-                        var title: String = if (csvRecord.get(0).length <= titleMax) csvRecord.get(0) else csvRecord.get(0).substring(0, titleMax)
-                        val category: String = if (csvRecord.get(1).length <= categoryMax) csvRecord.get(1) else csvRecord.get(1).substring(0, categoryMax)
-                        val description: String = if (csvRecord.get(2).length <= descriptionMax) csvRecord.get(2) else csvRecord.get(2).substring(0, descriptionMax)
-                        val source: String = if (csvRecord.get(3).length <= sourceMax) csvRecord.get(3) else csvRecord.get(3).substring(0, sourceMax)
+                        var title: String =
+                            if (csvRecord.get(0).length <= titleMax) csvRecord.get(0) else csvRecord.get(
+                                0
+                            ).substring(0, titleMax)
+                        val category: String =
+                            if (csvRecord.get(1).length <= categoryMax) csvRecord.get(1) else csvRecord.get(
+                                1
+                            ).substring(0, categoryMax)
+                        val description: String =
+                            if (csvRecord.get(2).length <= descriptionMax) csvRecord.get(2) else csvRecord.get(
+                                2
+                            ).substring(0, descriptionMax)
+                        val source: String =
+                            if (csvRecord.get(3).length <= sourceMax) csvRecord.get(3) else csvRecord.get(
+                                3
+                            ).substring(0, sourceMax)
 
                         entriesImportList += Entry(id, date, title, category, description, source)
+
+                        lineCountSuccess += 1
 
                     }
                     return entriesImportList
@@ -120,7 +136,7 @@ class ImportDatabase(context: Context, private val registry : ActivityResultRegi
                         var successCode = entryDao.insertEntry(entry)
                         newIdsInDb.add(successCode)
                     }
-                } catch(e: Exception){
+                } catch (e: Exception) {
                     Log.i("Debug_A", "Import failed with Exception: $e")
                 }
 
@@ -130,8 +146,14 @@ class ImportDatabase(context: Context, private val registry : ActivityResultRegi
                 // clear entry elements
                 entriesImportList.clear()
 
-                withContext(Dispatchers.Main){
-                    mainActivity.importFinishedMessage(context,importSuccess)
+                //display the results of the import to the user
+                withContext(Dispatchers.Main) {
+                    mainActivity.importFinishedMessage(
+                        context,
+                        importSuccess,
+                        lineCountSuccess,
+                        lineCountError
+                    )
                 }
             }
 
@@ -150,15 +172,5 @@ class ImportDatabase(context: Context, private val registry : ActivityResultRegi
 
         activityResultLauncherImport.launch(data)
 
-        //TBD:
-        //mainActivity.importErrorMessage(context)
     }
-
-    fun openImportInfoWindow(supportFragmentManager2: FragmentManager){
-        var supportFragmentManager = supportFragmentManager2
-        // TBD add 'Don't as me again' popup to Import workflow
-        // Contents of the popup:
-        ImportDatabaseDialogFragment.newInstance().show(supportFragmentManager, ImportDatabaseDialogFragment.TAG)
-    }
-
 }

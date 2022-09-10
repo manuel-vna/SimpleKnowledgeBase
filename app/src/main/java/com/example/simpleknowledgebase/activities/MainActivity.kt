@@ -3,7 +3,6 @@ package com.example.simpleknowledgebase.activities
 
 import android.content.Context
 import android.os.Bundle
-import android.util.AttributeSet
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -22,12 +21,10 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.simpleknowledgebase.R
 import com.example.simpleknowledgebase.databinding.ActivityMainBinding
 import com.example.simpleknowledgebase.fragments.ExportDatabaseDialogFragment
-import com.example.simpleknowledgebase.fragments.ImportDatabaseDialogFragment
 import com.example.simpleknowledgebase.utils.ImportDatabase
 import com.example.simpleknowledgebase.viewmodels.MainActivityViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
-import kotlinx.coroutines.delay
 
 class MainActivity : AppCompatActivity() {
 
@@ -46,7 +43,7 @@ class MainActivity : AppCompatActivity() {
 
 
         // create instance of class ImportDatabase in order to access its public methods later
-        observerImportDatabase = ImportDatabase(application,activityResultRegistry)
+        observerImportDatabase = ImportDatabase(application,activityResultRegistry,supportFragmentManager)
         // include class ImportDatabase into the lifecycle environment by adding it as observer
         lifecycle.addObserver(observerImportDatabase)
 
@@ -81,7 +78,6 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
     private fun setNavigationDrawerHeader(){
 
         var navigationView: NavigationView= binding.navView
@@ -102,6 +98,7 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
+
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
 
         R.id.action_settings_Export -> {
@@ -110,8 +107,6 @@ class MainActivity : AppCompatActivity() {
         }
         R.id.action_settings_Import -> {
 
-            //ImportDatabaseDialogFragment.newInstance().show(supportFragmentManager, ImportDatabaseDialogFragment.TAG)
-            //call method in class ImportDatabase
             observerImportDatabase.selectImportFile()
             true
         }
@@ -128,18 +123,28 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+
     //the context is passed from the caller in the class 'ImportDatabase'
-    fun importFinishedMessage(context: Context,importSuccess: Boolean){
+    fun importFinishedMessage(context: Context,
+                              importSuccess: Boolean,
+                              lineCountSuccess: Int,
+                              lineCountError: Int ){
+
         if (importSuccess) {
-            Toast.makeText(context, R.string.importFinishedMessage, Toast.LENGTH_SHORT).show()
+            try {
+                Toast.makeText(context,
+                    "Imported Lines: $lineCountSuccess \n" +
+                        "Lines with Errors: $lineCountError",
+                        Toast.LENGTH_LONG).show()
+            }
+            catch(e:Exception){
+                Log.i("Debug_A", "Exception: $e")
+            }
+
         }
         else {
             Log.i("Debug_A",R.string.importErrorMessage.toString())
         }
-    }
-
-    fun importErrorMessage(context: Context){
-        Toast.makeText(context, R.string.importErrorMessage, Toast.LENGTH_SHORT).show()
     }
 
 
