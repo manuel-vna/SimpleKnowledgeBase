@@ -11,10 +11,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/guideline19"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline22"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toStartOf="@+id/guideline22"
+        app:layout_constraintStart_toStartOf="@+id/guideline14"
+        app:layout_constraintTop_toTopOf="@+id/guideline28">
 
         <RadioButton
             android:id="@+id/advancedSearch_rb_DateSearch"
@@ -30,25 +29,11 @@
     </RadioGroup>
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.09" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.31" />
-
-    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.96" />
+        app:layout_constraintGuide_percent="0.85" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/advancedSearch_rv"
@@ -57,7 +42,7 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline13"
         app:layout_constraintEnd_toStartOf="@+id/guideline16"
         app:layout_constraintStart_toStartOf="@+id/guideline14"
-        app:layout_constraintTop_toTopOf="@+id/guideline12" />
+        app:layout_constraintTop_toTopOf="@+id/guideline19" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline14"
@@ -80,50 +65,11 @@
         android:calendarViewShown="false"
         android:datePickerMode="spinner"
         android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/guideline13"
         app:layout_constraintEnd_toStartOf="@+id/guideline22"
         app:layout_constraintStart_toStartOf="@+id/guideline14"
-        app:layout_constraintTop_toTopOf="@+id/guideline17"
+        app:layout_constraintTop_toTopOf="@+id/guideline19"
         tools:visibility="visible" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline17"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.39" />
-
-    <TextView
-        android:id="@+id/advancedSearch_tv_dateStart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/advancedSearch_tv_dateStart"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/guideline17"
-        app:layout_constraintEnd_toStartOf="@+id/guideline22"
-        app:layout_constraintStart_toStartOf="@+id/guideline14"
-        app:layout_constraintTop_toTopOf="@+id/guideline12" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline18"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.58" />
-
-    <TextView
-        android:id="@+id/advancedSearch_tv_dateEnd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/advancedSearch_tv_dateEnd"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/guideline17"
-        app:layout_constraintEnd_toStartOf="@+id/guideline16"
-        app:layout_constraintStart_toStartOf="@+id/guideline22"
-        app:layout_constraintTop_toTopOf="@+id/guideline12" />
 
     <DatePicker
         android:id="@+id/advancedSearch_dp_DateTo"
@@ -132,9 +78,10 @@
         android:calendarViewShown="false"
         android:datePickerMode="spinner"
         android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/guideline13"
         app:layout_constraintEnd_toStartOf="@+id/guideline16"
         app:layout_constraintStart_toStartOf="@+id/guideline22"
-        app:layout_constraintTop_toTopOf="@+id/guideline17"
+        app:layout_constraintTop_toTopOf="@+id/guideline19"
         tools:visibility="visible" />
 
     <Button
@@ -146,7 +93,7 @@
         app:layout_constraintEnd_toStartOf="@+id/advancedSearch_tv_numberOfHits"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline11" />
+        app:layout_constraintTop_toBottomOf="@+id/advancedSearch_rg_searchPick" />
 
     <Button
         android:id="@+id/advancedSearch_btn_clear"
@@ -156,14 +103,14 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline19"
         app:layout_constraintEnd_toStartOf="@+id/guideline22"
         app:layout_constraintStart_toEndOf="@+id/advancedSearch_tv_numberOfHits"
-        app:layout_constraintTop_toTopOf="@+id/guideline11" />
+        app:layout_constraintTop_toBottomOf="@+id/advancedSearch_rg_searchPick" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline19"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.18" />
+        app:layout_constraintGuide_percent="0.28" />
 
     <EditText
         android:id="@+id/advancedSearch_et_Search"
@@ -172,10 +119,11 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/guideline12"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline16"
-        app:layout_constraintStart_toStartOf="@+id/guideline22"
-        app:layout_constraintTop_toTopOf="@+id/guideline19"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/advancedSearch_spn_SearchbyTextField"
+        app:layout_constraintTop_toTopOf="@+id/guideline28"
         tools:visibility="visible" />
 
     <Spinner
@@ -183,10 +131,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/guideline12"
         app:layout_constraintEnd_toStartOf="@+id/advancedSearch_et_Search"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/advancedSearch_rg_searchPick"
         app:layout_constraintStart_toStartOf="@+id/guideline22"
-        app:layout_constraintTop_toTopOf="@+id/guideline19"
+        app:layout_constraintTop_toTopOf="@+id/guideline28"
         tools:visibility="visible" />
 
     <TextView
@@ -200,7 +149,7 @@
         app:layout_constraintEnd_toStartOf="@+id/advancedSearch_btn_clear"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/advancedSearch_btn_Search"
-        app:layout_constraintTop_toTopOf="@+id/guideline11"
+        app:layout_constraintTop_toBottomOf="@+id/advancedSearch_rg_searchPick"
         tools:text="5"
         tools:visibility="visible" />
 
@@ -210,6 +159,13 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline28"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.04" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

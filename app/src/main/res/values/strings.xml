@@ -49,11 +49,9 @@
 
     <!-- fragment_advanced_search -->
     <string name="advancedSearch_rb_DateSearch">Search by date</string>
-    <string name="advancedSearch_rb_ByTextField">Search by text field</string>
+    <string name="advancedSearch_rb_ByTextField">Search by field</string>
     <string name="advancedSearch_btn_Search">Search</string>
     <string name="advancedSearch_btn_Clear">Clear</string>
-    <string name="advancedSearch_tv_dateStart">Start date</string>
-    <string name="advancedSearch_tv_dateEnd">End date</string>
 
     <!-- advancedSearch_spinner_SearchbyTextField -->
     <string-array name="advancedSearch_spinner_SearchbyTextField">

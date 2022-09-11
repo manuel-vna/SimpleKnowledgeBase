@@ -62,10 +62,9 @@
         android:backgroundTint="@color/black"
         android:text="Update"
         app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontalBelowSource"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineVerticalRight"
+        app:layout_constraintEnd_toStartOf="@+id/updateDelete_btn_delete"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/updateDelete_btn_delete"
+        app:layout_constraintStart_toEndOf="@+id/updateDelete_tv_source"
         app:layout_constraintTop_toTopOf="@+id/guidelineHorizontalAboveSource" />
 
     <Button
@@ -75,9 +74,10 @@
         android:backgroundTint="@color/black"
         android:text="Delete"
         app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontalBelowSource"
-        app:layout_constraintEnd_toStartOf="@+id/updateDelete_btn_update"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineVerticalRight"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/updateDelete_tv_source"
+        app:layout_constraintStart_toEndOf="@+id/updateDelete_btn_update"
         app:layout_constraintTop_toTopOf="@+id/guidelineHorizontalAboveSource" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -106,35 +106,35 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.24" />
+        app:layout_constraintGuide_percent="0.22" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineHorizontalAboveDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.27" />
+        app:layout_constraintGuide_percent="0.24" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineHorizontalBelowDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.74" />
+        app:layout_constraintGuide_percent="0.56" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineHorizontalAboveSource"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.76" />
+        app:layout_constraintGuide_percent="0.54" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineHorizontalBelowSource"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.93" />
+        app:layout_constraintGuide_percent="0.72" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline27"

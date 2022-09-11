@@ -92,37 +92,12 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.24" />
 
-    <TextView
-        android:id="@+id/advancedSearch_tv_dateStart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/advancedSearch_tv_dateStart"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/guideline17"
-        app:layout_constraintEnd_toStartOf="@+id/guideline16"
-        app:layout_constraintStart_toStartOf="@+id/guideline14"
-        app:layout_constraintTop_toTopOf="@+id/guideline12" />
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline18"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.58" />
-
-    <TextView
-        android:id="@+id/advancedSearch_tv_dateEnd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/advancedSearch_tv_dateEnd"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/guideline18"
-        app:layout_constraintEnd_toStartOf="@+id/guideline16"
-        app:layout_constraintStart_toStartOf="@+id/guideline14" />
 
     <DatePicker
         android:id="@+id/advancedSearch_dp_DateTo"

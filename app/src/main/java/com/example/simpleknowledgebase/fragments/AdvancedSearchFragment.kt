@@ -69,14 +69,10 @@ class AdvancedSearchFragment : Fragment() {
         binding.advancedSearchRbDateSearch.setOnCheckedChangeListener { buttonView, isChecked ->
 
             if (isChecked) {
-                binding.advancedSearchTvDateStart.visibility = View.VISIBLE
-                binding.advancedSearchTvDateEnd.visibility = View.VISIBLE
                 binding.advancedSearchDpDateFrom.visibility = View.VISIBLE
                 binding.advancedSearchDpDateTo.visibility = View.VISIBLE
             }
             else {
-                binding.advancedSearchTvDateStart.visibility = View.GONE
-                binding.advancedSearchTvDateEnd.visibility = View.GONE
                 binding.advancedSearchDpDateFrom.visibility = View.GONE
                 binding.advancedSearchDpDateTo.visibility = View.GONE
             }
@@ -111,8 +107,6 @@ class AdvancedSearchFragment : Fragment() {
             if (binding.advancedSearchRbDateSearch.isChecked) {
 
                 //remove date input related fields
-                binding.advancedSearchTvDateStart.visibility = View.GONE
-                binding.advancedSearchTvDateEnd.visibility = View.GONE
                 binding.advancedSearchDpDateFrom.visibility = View.GONE
                 binding.advancedSearchDpDateTo.visibility = View.GONE
 
@@ -178,8 +172,6 @@ class AdvancedSearchFragment : Fragment() {
             binding.advancedSearchRgSearchPick.clearCheck()
 
             //remove date input related fields
-            binding.advancedSearchTvDateStart.visibility = View.GONE
-            binding.advancedSearchTvDateEnd.visibility = View.GONE
             binding.advancedSearchDpDateFrom.visibility = View.GONE
             binding.advancedSearchDpDateTo.visibility = View.GONE
 
