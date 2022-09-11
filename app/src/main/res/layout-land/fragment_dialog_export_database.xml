@@ -7,10 +7,10 @@
     android:background="@drawable/view_rectangle_border_lines">
 
     <TextView
-        android:id="@+id/import_tv_title"
+        android:id="@+id/export_tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/import_tv_title"
+        android:text="@string/export_tv_title"
         android:textColor="@android:color/black"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -19,37 +19,35 @@
         app:layout_constraintTop_toTopOf="@+id/guideline20" />
 
     <TextView
-        android:id="@+id/import_tv_description"
+        android:id="@+id/export_tv_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/import_tv_description"
-        android:textColor="@color/black"
-        android:textSize="12sp"
+        android:text="@string/export_tv_description"
         app:layout_constraintBottom_toTopOf="@+id/guideline15"
         app:layout_constraintEnd_toStartOf="@+id/guideline24"
         app:layout_constraintStart_toStartOf="@+id/guideline23"
-        app:layout_constraintTop_toBottomOf="@+id/import_tv_title" />
+        app:layout_constraintTop_toBottomOf="@+id/export_tv_title" />
 
     <Button
-        android:id="@+id/import_btn_cancel"
+        android:id="@+id/export_btn_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/import_btn_cancel"
+        android:text="@string/export_btn_cancel"
         app:layout_constraintBottom_toTopOf="@+id/guideline25"
-        app:layout_constraintEnd_toStartOf="@+id/import_btn_okay"
+        app:layout_constraintEnd_toStartOf="@+id/export_btn_okay"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline15" />
 
     <Button
-        android:id="@+id/import_btn_okay"
+        android:id="@+id/export_btn_okay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/export_btn_okay"
         app:layout_constraintBottom_toTopOf="@+id/guideline25"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/import_btn_cancel"
+        app:layout_constraintStart_toEndOf="@+id/export_btn_cancel"
         app:layout_constraintTop_toTopOf="@+id/guideline15" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -57,14 +55,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.55" />
+        app:layout_constraintGuide_percent="0.7" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline25"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.70" />
+        app:layout_constraintGuide_percent="0.95" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline20"
@@ -86,17 +84,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.9" />
-
-    <CheckBox
-        android:id="@+id/import_btn_DontShowAgain"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/import_btn_DontShowAgain"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline24"
-        app:layout_constraintStart_toStartOf="@+id/guideline23"
-        app:layout_constraintTop_toTopOf="@+id/guideline25" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
