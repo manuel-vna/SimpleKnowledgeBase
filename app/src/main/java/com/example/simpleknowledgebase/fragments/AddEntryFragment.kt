@@ -1,6 +1,10 @@
 package com.example.simpleknowledgebase.fragments
 
 import android.os.Bundle
+import android.renderscript.ScriptGroup
+import android.text.InputFilter
+import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +22,6 @@ import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 
 
-
 class AddEntryFragment() : Fragment() {
 
     // '_binding' provides a nullable binding-version for usage in onCreateView() and onDestroyView()
@@ -27,6 +30,8 @@ class AddEntryFragment() : Fragment() {
     private val binding get() = _binding!!
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
     private lateinit var addEntryViewModel: AddEntryViewModel
+
+    private var inputFilterLastCheckedCharacter = ""
 
 
     override fun onCreateView(
@@ -55,6 +60,38 @@ class AddEntryFragment() : Fragment() {
             }
         })
 
+
+        //implementation of the interface InputFilter
+        val characterExcludingFilter =
+            InputFilter { source, start, end, dest, dstart, dend ->
+                for (i in start until end) {
+                    Log.d("Debug_A", "AddEntryFragment-Filter: " + source[i].toString())
+                    //check if the current input character is a semicolon
+                    if (source[i].toString() == ";") {
+                        //check if there is an escape character '/' in front of the semicolon.
+                        //If yes, the input is fine, if no the input has to be blocked
+                        if(inputFilterLastCheckedCharacter != "/") {
+                            val toast =
+                                Toast.makeText(
+                                    context,
+                                    "Please use '/' to escape a semicolon: /;",
+                                    Toast.LENGTH_LONG
+                                )
+                            toast.setGravity(Gravity.CENTER, 0, 0)
+                            toast.show()
+                            return@InputFilter ""
+                        }
+                    }
+                    inputFilterLastCheckedCharacter = source[i].toString()
+                }
+                null
+            }
+        //The method setFilters() of class Editable takes an array of InputFilters that will be called one after another whenever text of the Editable is changed
+        //Editable.setFilters([filter1:InputFilter,filter2:InputFilter,filter3:InputFilter])
+        binding.addentryActvAddTitle.setFilters(arrayOf<InputFilter>(InputFilter.LengthFilter(50),characterExcludingFilter)) //alternative syntax
+        binding.addentryActvAddCategory.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(20),characterExcludingFilter)
+        binding.addentryActvAddDescription.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(500),characterExcludingFilter)
+        binding.addentryActvAddSource.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(400),characterExcludingFilter)
     }
 
 
