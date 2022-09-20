@@ -1,5 +1,6 @@
 package com.example.simpleknowledgebase.utils
 
+
 import android.content.Context
 import android.content.Intent
 import android.database.Cursor
@@ -8,9 +9,9 @@ import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.ActivityResultRegistry
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
+import androidx.navigation.fragment.findNavController
 import com.example.simpleknowledgebase.Entry
 import com.example.simpleknowledgebase.EntryDao
 import com.example.simpleknowledgebase.EntryDatabase
@@ -23,7 +24,7 @@ import java.io.InputStream
 import java.time.LocalDateTime
 
 
-class ImportDatabase(context: Context, private val registry : ActivityResultRegistry,fragmentManager: FragmentManager) : DefaultLifecycleObserver {
+class ImportDatabase(context: Context,private val registry : ActivityResultRegistry) : DefaultLifecycleObserver {
 
     lateinit var activityResultLauncherImport: ActivityResultLauncher<Intent>
     var context = context
@@ -46,6 +47,7 @@ class ImportDatabase(context: Context, private val registry : ActivityResultRegi
     private val categoryMax: Int = 20
     private val descriptionMax: Int = 500
     private val sourceMax: Int = 400
+
 
 
 
@@ -127,6 +129,7 @@ class ImportDatabase(context: Context, private val registry : ActivityResultRegi
                 entriesImportList = readCsv(inputStream!!)
 
 
+
                 //list of new table IDs (=rows) has to be empty for every new import run
                 newIdsInDb.clear()
 
@@ -146,6 +149,7 @@ class ImportDatabase(context: Context, private val registry : ActivityResultRegi
                 // clear entry elements
                 entriesImportList.clear()
 
+
                 //display the results of the import to the user
                 withContext(Dispatchers.Main) {
                     mainActivity.importFinishedMessage(
@@ -155,8 +159,9 @@ class ImportDatabase(context: Context, private val registry : ActivityResultRegi
                         lineCountError
                     )
                 }
-            }
 
+
+            }
         }
     }
 

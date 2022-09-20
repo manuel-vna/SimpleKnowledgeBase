@@ -1,6 +1,7 @@
 package com.example.simpleknowledgebase.activities
 
 
+import android.app.Application
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -10,10 +11,16 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -26,6 +33,7 @@ import com.example.simpleknowledgebase.viewmodels.MainActivityViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mainActivityViewModel: MainActivityViewModel
@@ -37,16 +45,8 @@ class MainActivity : AppCompatActivity() {
 
 
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
-        // create instance of class ImportDatabase in order to access its public methods later
-        observerImportDatabase = ImportDatabase(application,activityResultRegistry,supportFragmentManager)
-        // include class ImportDatabase into the lifecycle environment by adding it as observer
-        lifecycle.addObserver(observerImportDatabase)
 
 
         mainActivityViewModel =
@@ -56,6 +56,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
+
+
         setSupportActionBar(binding.appBarMain.toolbar)
 
 
@@ -63,6 +65,7 @@ class MainActivity : AppCompatActivity() {
         val navView: NavigationView = binding.navView
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation_view) // NEW: Bottom Navigation Bar
         val navController = findNavController(R.id.nav_host_fragment_content_main)
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
@@ -107,8 +110,7 @@ class MainActivity : AppCompatActivity() {
             true
         }
         R.id.action_settings_Import -> {
-
-            observerImportDatabase.selectImportFile()
+            findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.action_to_importDatabaseDialogFragment)
             true
         }
         else -> {
@@ -133,10 +135,29 @@ class MainActivity : AppCompatActivity() {
 
         if (importSuccess) {
             try {
+
+
                 Toast.makeText(context,
                     "Imported Lines: $lineCountSuccess \n" +
                         "Lines with Errors: $lineCountError",
                         Toast.LENGTH_LONG).show()
+
+
+                //method1
+                //val navHostFragment: Fragment? = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main)
+                //navHostFragment?.childFragmentManager?.fragments?.get(0)
+                //Log.i("Debug_A","abc")
+                //findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.action_nav_home_to_importDatabaseDialogFragment)
+
+
+                //method2
+                //val navController: NavController = Navigation.findNavController(this,R.id.nav_host_fragment_content_main)
+                //Log.i("Debug_A", "abc")
+                //navController.navigate(R.id.action_nav_home_to_nav_add_entry)
+                //navHostFragment.findNavController().navigate(R.id.action_to_updateDeleteEntryFragment)
+
+
+
             }
             catch(e:Exception){
                 Log.i("Debug_A", "Exception: $e")

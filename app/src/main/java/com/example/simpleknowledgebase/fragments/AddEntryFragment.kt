@@ -1,7 +1,6 @@
 package com.example.simpleknowledgebase.fragments
 
 import android.os.Bundle
-import android.renderscript.ScriptGroup
 import android.text.InputFilter
 import android.util.Log
 import android.view.Gravity
