@@ -16,6 +16,8 @@ import com.example.simpleknowledgebase.Entry
 import com.example.simpleknowledgebase.EntryDao
 import com.example.simpleknowledgebase.EntryDatabase
 import com.example.simpleknowledgebase.activities.MainActivity
+import com.example.simpleknowledgebase.databinding.FragmentDialogImportDatabaseBinding
+import com.example.simpleknowledgebase.fragments.ImportDatabaseDialogFragment
 import kotlinx.coroutines.*
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVParser
@@ -33,6 +35,7 @@ class ImportDatabase(context: Context,private val registry : ActivityResultRegis
 
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
     val mainActivity = MainActivity()
+    val importDatabaseDialogFragment = ImportDatabaseDialogFragment()
 
     var entriesImportList: MutableList<Entry> = ArrayList()
     var lastDbId: Int = 0 // default value for an empty database
@@ -47,6 +50,8 @@ class ImportDatabase(context: Context,private val registry : ActivityResultRegis
     private val categoryMax: Int = 20
     private val descriptionMax: Int = 500
     private val sourceMax: Int = 400
+
+    private lateinit var bindingFragmentDialogImportDatabaseBinding: FragmentDialogImportDatabaseBinding
 
 
 
@@ -152,21 +157,23 @@ class ImportDatabase(context: Context,private val registry : ActivityResultRegis
 
                 //display the results of the import to the user
                 withContext(Dispatchers.Main) {
-                    mainActivity.importFinishedMessage(
+                    //mainActivity.importFinishedMessage(
+                    importDatabaseDialogFragment.importFinishedMessage(
                         context,
                         importSuccess,
                         lineCountSuccess,
-                        lineCountError
+                        lineCountError,
+                        bindingFragmentDialogImportDatabaseBinding
                     )
                 }
-
-
             }
         }
     }
 
 
-    fun selectImportFile(){
+    fun selectImportFile(binding: FragmentDialogImportDatabaseBinding){
+
+        bindingFragmentDialogImportDatabaseBinding = binding
 
         var data = Intent(Intent.ACTION_GET_CONTENT)
         data.addCategory(Intent.CATEGORY_OPENABLE)
