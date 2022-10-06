@@ -92,7 +92,7 @@ class EntryRepository(private val entryDao: EntryDao) {
         returnEntriesOfDateTimeSpan: (List<Entry>) -> Unit
     ) {
         // context 'IO' for call to the DAO
-        GlobalScope.launch(Dispatchers.IO) {
+        coroutineScope.launch(Dispatchers.IO) {
             searchResultsDate = entryDao.findEntriesOfDateTimeSpan(dateFrom, dateTo)
             //Log.i("Debug_A", "EntryRepository -Date: " + searchResultsDate.toString())
 
@@ -112,7 +112,7 @@ class EntryRepository(private val entryDao: EntryDao) {
         returnEntriesOfAdvancedSearchField: (List<Entry>) -> Unit
     ) {
         // context 'IO' for call to the DAO
-        GlobalScope.launch(Dispatchers.IO) {
+        coroutineScope.launch(Dispatchers.IO) {
             when(field){
                 "title" -> searchResultsAdvancedSearchField = entryDao.findAdvancedSearchTitle(keyword)
                 "description" -> searchResultsAdvancedSearchField = entryDao.findAdvancedSearchDescription(keyword)

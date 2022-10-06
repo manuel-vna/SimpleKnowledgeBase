@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.lifecycleScope
 import com.example.simpleknowledgebase.EntryDatabase
 import com.example.simpleknowledgebase.databinding.FragmentDialogExportDatabaseBinding
 import com.example.simpleknowledgebase.utils.AppPermissions
@@ -92,11 +93,11 @@ class ExportDatabaseDialogFragment  : DialogFragment(){
             }
 
             fun doWorkAsync(): Deferred<String> =
-                GlobalScope.async(Dispatchers.IO) {
+                viewLifecycleOwner.lifecycleScope.async(Dispatchers.IO) {
                 return@async exportDatabase.runExport() }
 
             //Dispatchers.Main is important since the ui-toast 'displayToast()' is called within this coroutine. lifecycleScope.launch() could be used alternatively {
-            GlobalScope.launch(Dispatchers.Main) {
+            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
             exportSuccess = doWorkAsync().await()
                 displayToast(exportSuccess)
             }
