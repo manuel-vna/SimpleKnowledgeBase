@@ -72,7 +72,7 @@ class ImportDatabaseDialogFragment  : DialogFragment() {
                 try {
 
                     dialogMessage =
-                        "<h2><br><br>Report</h2><br>Successfully imported Lines: $lineCountSuccess<br>Lines with import errors: $lineCountError"
+                        "<h2><br><br>Report</h2><br>Successfully imported lines: $lineCountSuccess<br>Lines with import Errors: $lineCountError<br><br>"
 
                     binding.importTvDescription.text = Html.fromHtml(dialogMessage)
                     Log.i("Debug_A", "$dialogMessage")

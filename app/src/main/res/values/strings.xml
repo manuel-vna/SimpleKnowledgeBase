@@ -42,7 +42,7 @@
 
     <!-- fragment_dialog_import_database -->
     <string name="import_tv_title">Import database</string>
-    <string name="import_tv_description">\n- Expected delimiter = ;\n- Expected escape character / \n- Expected columns: Title, Category, Description, Source\n- Expected column size: 4</string>
+    <string name="import_tv_description">\n- Delimiter: ;\n- Escape character: / \n- Columns: Title, Category, Description, Source\n- Column size: 4\n\n</string>
     <string name="import_btn_cancel">Cancel</string>
     <string name="import_btn_okay">Okay</string>
     <string name="import_btn_DontShowAgain">Dont show this again</string>
