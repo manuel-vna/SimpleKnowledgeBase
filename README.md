@@ -1,7 +1,7 @@
 # SimpleKnowledgeBase
 
 <br>
-Project status: In Progress
+Project status: DEPRECATED
 <br>
 
 ### Context
